@@ -310,3 +310,61 @@
 .impl-text b {
   font-weight: 700;
 }
+
+.subscribe {
+  width: 1600px;
+  height: 598px;
+  margin: 0 auto;
+  background: url(./assets/img/image-bg.png);
+  display: flex;
+}
+
+.subs-cont {
+  width: 406px;
+  height: 104px;
+  margin: 218px 0px 0px 597px;
+}
+
+.subs-title {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin-left: 12px;
+}
+
+.subs-form {
+  width: 406px;
+  height: 46px;
+  margin-top: 30px;
+  background-color: aqua;
+  display: flex;
+}
+
+.subs-input {
+  padding: 0;
+  border: none;
+  width: 340px;
+  height: 100%;
+  font-family: Roboto;
+  font-style: normal;
+  font-size: 14px;
+  padding-left: 25px;
+}
+
+.subs-btn {
+  padding: 0;
+  border: none;
+  width: 66px;
+  height: 100%; 
+  background: #00AFDB;
+  background-image: url(./assets/img/check-solid.svg);
+  background-repeat: no-repeat;
+  background-size: 27%;
+  background-position: center;
+
+}
