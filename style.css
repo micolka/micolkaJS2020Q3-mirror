@@ -85,11 +85,9 @@
   text-align: center;
 }
 
-.btn-main {
-  display: table;
+.btn-cmn {
   width: 184px;
-  height: 46px;
-  margin: 30px auto 0 auto;
+  height: 46px; 
   background: #00AFDB;
   text-transform: uppercase;
   border: none;
@@ -101,9 +99,14 @@
   color: #FFFFFF;
 }
 
-.btn-main:hover {
+.btn-cmn:hover {
   cursor: pointer;
   background: #009CC2;
+}
+
+.btn-main {
+  display: table;
+  margin: 30px auto 0 auto;
 }
 
 .socials { 
@@ -158,23 +161,7 @@
 }
 
 .btn-get-st {
-  width: 184px;
-  height: 46px; 
-  background: #00AFDB;
-  text-transform: uppercase;
-  border: none;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 16px;
-  color: #FFFFFF;
   margin-top: 32px;
-}
-
-.btn-get-st:hover {
-  cursor: pointer;
-  background: #009CC2;
 }
 
 .rapp-title {
@@ -197,6 +184,10 @@
   line-height: 140%;
   color: #4E4E4E;
   margin-top: 24px;
+}
+
+.rapp-text b {
+  font-weight: 700;
 }
 
 .our-community {
@@ -224,6 +215,10 @@
 .rect-5 {
   width: 8px;
   height: 8px;
+}
+
+.rect-5:hover {
+  cursor: pointer;
 }
 
 .comm-content {
@@ -266,4 +261,52 @@
   margin: 22px 0 0 139px;
   display: flex;
   justify-content: space-between;
+}
+
+.implement {
+  width: 1600px;
+  height: 842px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.implement img {
+  margin: 120px 0px 0px 270px;
+}
+
+.btn-lrn-mr {
+  width: 180px;
+  margin-top: 32px;
+}
+
+.impl-content {
+  width: 407px;
+  height: 184px;
+  margin: 319px 0px 0px 138px;
+}
+
+.impl-title {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.impl-text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 140%;
+  color: #4E4E4E;
+  margin-top: 22px;
+}
+
+.impl-text b {
+  font-weight: 700;
 }
