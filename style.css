@@ -1,0 +1,177 @@
+.body {
+
+}
+
+.first-screen {
+  width: 1600px;
+  height: 788px;
+  background: url(./assets/img/bg-image.png);
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  margin: 0px auto; 
+}
+.header {
+  height: 95px;
+}
+
+.navbar a {
+  position: absolute;
+  text-decoration: none; 
+  font-size: 14px;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.navbar a:hover {
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.about {
+  width: 38px;
+  height: 21px;
+  left: 502px;
+  top: 38px;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.syllabus {
+  width: 53px;
+  height: 20px;
+  left: 625px;
+  top: 38px;
+}
+
+.projects {
+  width: 52px;
+  height: 20px;
+  left: 923px;
+  top: 38px;
+}
+
+.faq {
+  width: 26px;
+  height: 20px;
+  left: 1058px;
+  top: 38px;
+}
+
+.logo {
+  position: absolute;
+  width: 44px;
+  height: 45px;
+  left: 778px;
+  top: 25px;
+}
+
+.slogan {
+  position: absolute;
+  width: auto;
+  height: 75px;
+  left: 435px;
+  top: 231px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 75px;
+  text-transform: uppercase;
+  letter-spacing: 4.5px;
+  text-align: center;
+}
+
+.first-text {
+  position: absolute;
+  width: 504px;
+  height: 50px;
+  left: 548px;
+  top: 326px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 140%;
+  text-align: center;
+}
+
+.btn-main {
+  display: flex;
+  flex-direction: row;  
+  padding: 15px 47px;
+  position: absolute;
+  width: 184px;
+  height: 46px;
+  left: 707px;
+  top: 406px;
+  background: #00AFDB;
+  text-transform: uppercase;
+  border: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #FFFFFF;
+}
+
+.btn-main:hover {
+  cursor: pointer;
+  background: #009CC2;
+}
+
+.socials {
+  position: absolute;
+  width: 170px;
+  height: 20px;
+  left: 715px;
+  top: 635px;
+}
+
+.socials .mail {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 0px;
+  top: 0px;
+}
+
+.socials .facebook {
+  position: absolute;
+  left: 33.93%;
+  right: 63.32%;
+  top: 25%;
+  bottom: 25%;
+}
+
+.socials .face_el {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 50px;
+  top: 0px;
+}
+
+.socials .insta {
+  position: absolute;
+  left: 58.82%;
+  right: 29.41%;
+  top: 0%;
+  bottom: 0%;
+}
+
+.socials .youtube {
+  position: absolute;
+  width: 10px;
+  height: 7.8px;
+  left: 155px;
+  top: 6px;
+}
+
+.socials .youtube_el {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 150px;
+  top: 0px;
+}
+
+.socials img:hover{
+  cursor: pointer;
+}
