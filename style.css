@@ -366,5 +366,139 @@
   background-repeat: no-repeat;
   background-size: 27%;
   background-position: center;
-
 }
+
+.subs-btn:hover {
+  cursor: pointer;
+  background: #009CC2;
+  background-image: url(./assets/img/check-solid.svg);
+  background-repeat: no-repeat;
+  background-size: 27%;
+  background-position: center;
+}
+
+.download {
+  height: 468px;
+  width: 1600px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.dnl-content {
+  width: 480px;
+  height: 172px;
+  margin: 121px auto;
+}
+
+.dnl-title {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #373737;
+  text-align: center;
+}
+
+.dnl-text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 140%;
+  color: #4E4E4E;
+  text-align: center;
+  margin-top: 22px;
+}
+
+.btns-apple {
+  height: 50px;
+  width: 406px;
+  margin-top: 30px;
+  margin-left: 38px;
+  display: flex;
+}
+
+.btns-common {
+  padding: 0;
+  border: none;
+  height: 100%;
+  background: #00AFDB;
+}
+
+.dnl-apple-1 {
+  width: 129px;
+}
+
+.bt-ico-com {
+  width: 59px;
+  background: #009CC2;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: 27%;
+  background-position: center;
+}
+
+.dnl-apple-2 {
+  background-image: url(./assets/img/Combined\ shape\ 755.png);
+}
+
+.dnl-android-1 {
+  width: 129px;
+  margin-left: 31px;
+}
+
+.dnl-android-2 {
+  background-image: url(./assets/img/Combined\ shape\ 761.png);
+}
+
+.footer {
+  height: 184px;
+  width: 1600px;
+  margin: 0 auto;
+  background-color: #000000;
+  display: flex;
+}
+
+.navbar_footer {
+  width: 236px;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin: 74px 0px 0px 160px;
+}
+
+.navbar_footer a, div {
+  text-decoration: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 140%;
+  color: #FFFFFF;
+  opacity: 0.98;
+}
+
+.navbar_footer a:hover {
+  text-decoration: underline;
+}
+
+.logo-foot {
+  width: 44px;
+  height: 45px;
+  margin: 59px 0px 0px 382px;
+}
+
+.author {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 140%;
+  color: #818181;
+  margin: 74px 0px 0px 448px;
+}
+
+
