@@ -318,7 +318,7 @@
 
 .subscribe {
   width: 1600px;
-  height: 598px;
+  height: 524px;
   margin: 0 auto;
   background: url(./assets/img/image-bg.png);
   display: flex;
@@ -327,7 +327,7 @@
 .subs-cont {
   width: 406px;
   height: 104px;
-  margin: 218px 0px 0px 597px;
+  margin: 200px 0px 0px 596px;
 }
 
 .subs-title {
@@ -383,7 +383,7 @@
 }
 
 .download {
-  height: 468px;
+  height: 464px;
   width: 1600px;
   margin: 0 auto;
   display: flex;
@@ -460,7 +460,7 @@
 }
 
 .footer {
-  height: 184px;
+  height: 185px;
   width: 1600px;
   margin: 0 auto;
   background-color: #000000;
