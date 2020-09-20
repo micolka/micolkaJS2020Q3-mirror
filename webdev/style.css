@@ -23,6 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 1px;
 }
 
 .navbar_left, .navbar_right {
@@ -37,33 +38,38 @@
   font-weight: 400;
   color: #FFFFFF;
   text-align: center;
+  text-decoration: none;
 }
 
 .navbar a:hover {
-  text-decoration: underline;
+  border-bottom: 1px solid white;
+  opacity: 1;
 }
 
 .about {
   margin-left: 54px;
+  border-bottom: 1px solid white;
 }
 
 .syllabus, .faq {
   margin-left: 86px;
-  text-decoration: none;
+  opacity: 0.7;
 }
 
 .projects {
   margin-left: 102px;
-  text-decoration: none;
+  opacity: 0.7;
 }
 
 .logo {
+  margin-bottom: 2px;
   width: 44px;
-  height: 44px;
+  height: 45px;
 }
 
 .slogan {
-  margin-top: 119px;
+  margin-top: 118px;
+  margin-left: 4px;
   font-style: normal;
   font-weight: bold;
   font-size: 64px;
@@ -106,7 +112,7 @@
 
 .btn-main {
   display: table;
-  margin: 30px auto 0 auto;
+  margin: 29px auto 0 auto;
 }
 
 .btn-cmn:active, :focus {
@@ -124,22 +130,27 @@
 }
 
 .socials .facebook {
-  margin-left: 51px;
+  margin-left: 50px;
   position: absolute;
 }
 
 .socials .facebook_el {
-  margin-left: 58px;
+  margin-left: 57px;
   position: absolute;
 }
 
-.socials .youtube {
+.socials .insta {
   margin-left: 100px;
   position: absolute;
 }
 
+.socials .youtube {
+  margin-left: 150px;
+  position: absolute;
+}
+
 .socials .youtube_el {
-  margin-left: 105px;
+  margin-left: 155px;
   position: absolute;
 }
 
@@ -158,7 +169,7 @@
 .content_block {
   width: 407px;
   height: 233px;
-  margin: 295px 0px 0px 268px;
+  margin: 296px 0px 0px 269px;
 }
 
 .rappresent img {
@@ -166,7 +177,7 @@
 }
 
 .btn-get-st {
-  margin-top: 32px;
+  margin-top: 29px;
 }
 
 .rapp-title {
@@ -179,6 +190,7 @@
   align-items: flex-end;
   letter-spacing: 1px;
   text-transform: uppercase;
+  
 }
 
 .rapp-text {
@@ -186,9 +198,9 @@
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 140%;
+  line-height: 144%;
   color: #4E4E4E;
-  margin-top: 24px;
+  margin-top: 22px;
 }
 
 .rapp-text b {
@@ -205,24 +217,29 @@
 }
 
 .nav-items {
-  width: 79px;
-  height: 20px;
+  width: 83px;
+  height: 18px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 140%;
   color: #373737;
-  margin: 78px 0 0 1252px;
+  margin: 82px 0 0 1248px;
+}
+
+.rect-1 {
+  margin-left: 10px;
 }
 
 .rect-5 {
-  width: 8px;
-  height: 8px;
+  margin-right: 10px;
 }
 
-.rect-5:hover {
+.nav-items img:hover {
   cursor: pointer;
 }
 
@@ -234,7 +251,7 @@
   width: 298px;
   height: 175px;
   text-align: center;
-  margin: 57px 0 0 269px;
+  margin: 55px 0 0 269px;
 }
 
 .comm-title {
@@ -255,7 +272,7 @@
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 140%;
+  line-height: 144%;
   color: #4E4E4E;
   margin-top: 12px;
 }
@@ -263,7 +280,7 @@
 .slider-items {
   width: 894px;
   height: 244px;
-  margin: 22px 0 0 139px;
+  margin: 20px 0 0 139px;
   display: flex;
   justify-content: space-between;
 }
@@ -276,18 +293,18 @@
 }
 
 .implement img {
-  margin: 120px 0px 0px 270px;
+  margin: 120px 0px 0px 269px;
 }
 
 .btn-lrn-mr {
   width: 180px;
-  margin-top: 32px;
+  margin-top: 29px;
 }
 
 .impl-content {
   width: 407px;
   height: 184px;
-  margin: 319px 0px 0px 138px;
+  margin: 319px 0px 0px 139px;
 }
 
 .impl-title {
@@ -307,7 +324,7 @@
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 140%;
+  line-height: 144%;
   color: #4E4E4E;
   margin-top: 22px;
 }
@@ -327,7 +344,7 @@
 .subs-cont {
   width: 406px;
   height: 104px;
-  margin: 200px 0px 0px 596px;
+  margin: 200px 0px 0px 599px;
 }
 
 .subs-title {
@@ -346,6 +363,7 @@
   width: 406px;
   height: 46px;
   margin-top: 30px;
+  margin-right: 3px;
   background-color: aqua;
   display: flex;
 }
@@ -353,7 +371,7 @@
 .subs-input {
   padding: 0;
   border: none;
-  width: 340px;
+  width: 315px;
   height: 100%;
   font-family: Roboto;
   font-style: normal;
@@ -392,7 +410,7 @@
 .dnl-content {
   width: 480px;
   height: 172px;
-  margin: 121px auto;
+  margin: 120px auto;
 }
 
 .dnl-title {
@@ -412,17 +430,17 @@
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
-  line-height: 140%;
+  line-height: 144%;
   color: #4E4E4E;
   text-align: center;
   margin-top: 22px;
 }
 
 .btns-apple {
-  height: 50px;
+  height: 46px;
   width: 406px;
-  margin-top: 30px;
-  margin-left: 38px;
+  margin-top: 28px;
+  margin-left: 39px;
   display: flex;
 }
 
@@ -434,7 +452,8 @@
 }
 
 .dnl-apple-1 {
-  width: 129px;
+  width: 127px;
+  padding-top: 2px;
 }
 
 .bt-ico-com {
@@ -444,19 +463,23 @@
   background-repeat: no-repeat;
   background-size: 27%;
   background-position: center;
+  text-align: center;
 }
 
 .dnl-apple-2 {
   background-image: url(./assets/img/Combined\ shape\ 755.png);
+  background-size: 29%;
 }
 
 .dnl-android-1 {
-  width: 129px;
-  margin-left: 31px;
+  width: 127px;
+  margin-left: 30px;
+  padding-top: 2px;
 }
 
 .dnl-android-2 {
   background-image: url(./assets/img/Combined\ shape\ 761.png);
+  background-size: 34%;
 }
 
 .footer {
@@ -504,6 +527,12 @@
   line-height: 140%;
   color: #818181;
   margin: 74px 0px 0px 448px;
+}
+
+.foot-dash {
+  font-size: 10px;
+  margin-top: 3px;
+  opacity: 50%;
 }
 
 
