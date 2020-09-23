@@ -7,66 +7,73 @@ class Calculator {
   }
 
   allClear() {
-    this.currentOperandText = '0';
-    this.previousOperandText = '';
+    this.currentOperandValue = '0';
+    this.previousOperandValue = '';
     this.operator = undefined;
+    this.isCalculated = false;
   }
 
   deleteNumber() {
-    if (this.currentOperandText === '0') return;
-    this.currentOperandText = String(this.currentOperandText)
-      .slice(0, this.currentOperandText.length - 1);
-    if (this.currentOperandText === '') this.currentOperandText = '0';
+    if (this.currentOperandValue === '0') return;
+    this.currentOperandValue = String(this.currentOperandValue)
+      .slice(0, this.currentOperandValue.length - 1);
+    if (this.currentOperandValue === '') this.currentOperandValue = '0';
   }
 
   inputNumbers(number) {
-    if (this.currentOperandText.includes('.') && number === '.') return;
-    if (this.currentOperandText === '0' && number === '0') {
+    if (this.isCalculated) {
+      this.isCalculated = false;
+      this.currentOperandValue = '';
+    }
+    if (this.currentOperandValue.includes('.') && number === '.') return;
+    if (this.currentOperandValue === '0' && number === '0') {
       return;
-    } else if (this.currentOperandText === '0' && number === '.') {
-      this.currentOperandText = `${this.currentOperandText}${number}`;
-    } else if (this.currentOperandText === '0' && number !== '0'){
-      this.currentOperandText = number;
+    } else if (this.currentOperandValue === '0' && number === '.') {
+      this.currentOperandValue = `${this.currentOperandValue}${number}`;
+    } else if (this.currentOperandValue === '0' && number !== '0'){
+      this.currentOperandValue = number;
     } else {
-      this.currentOperandText = `${this.currentOperandText}${number}`;
+      this.currentOperandValue = `${this.currentOperandValue}${number}`;
     }
   }
 
   inputOperation(operator) {
     if (this.operator) {
-      this.previousOperandText = this.previousOperandText
-      .slice(0, this.previousOperandText.length - 1);
-      this.previousOperandText = `${this.previousOperandText}${operator}`;
+      this.previousOperandValue = this.previousOperandValue
+      .slice(0, this.previousOperandValue.length - 1);
+      this.previousOperandValue = `${this.previousOperandValue}${operator}`;
     } else {
-      this.previousOperandText = `${this.currentOperandText}${operator}`;
+      this.previousOperandValue = `${this.currentOperandValue}${operator}`;
     }
-    this.currentOperandText = '0';
+    this.currentOperandValue = '0';
     this.operator = operator;
   }
 
   display() {
-    this.currentOperand.textContent = String(this.currentOperandText);
-    this.previousOperand.textContent = String(this.previousOperandText);
+    this.currentOperand.textContent = String(this.currentOperandValue);
+    this.previousOperand.textContent = String(this.previousOperandValue);
   }
 
   calculate() {
     switch(this.operator) {
-      case '+': this.currentOperandText = Number(this.currentOperandText) 
-      + Number(this.previousOperandText.slice(0, this.previousOperandText.length - 1));
+      case '+': this.currentOperandValue = Number(this.currentOperandValue) 
+      + Number(this.previousOperandValue.slice(0, this.previousOperandValue.length - 1));
       break;
-      case '-': this.currentOperandText = Number(this.previousOperandText
-        .slice(0, this.previousOperandText.length - 1)) - Number(this.currentOperandText);
+      case '-': this.currentOperandValue = Number(this.previousOperandValue
+        .slice(0, this.previousOperandValue.length - 1)) - Number(this.currentOperandValue);
       break;
-      case '*': this.currentOperandText = Number(this.currentOperandText) 
-      * Number(this.previousOperandText.slice(0, this.previousOperandText.length - 1));
+      case '*': this.currentOperandValue = Number(this.currentOperandValue) 
+      * Number(this.previousOperandValue.slice(0, this.previousOperandValue.length - 1));
       break;
-      case '÷': this.currentOperandText = Number(this.previousOperandText
-        .slice(0, this.previousOperandText.length - 1)) / Number(this.currentOperandText);
+      case '÷': this.currentOperandValue = Number(this.previousOperandValue
+        .slice(0, this.previousOperandValue.length - 1)) / Number(this.currentOperandValue);
       break;
       default: return;
     }
-    this.previousOperandText = '';
+    this.currentOperandValue = Math.floor(this.currentOperandValue * 1e15) / 1e15;
+    this.previousOperandValue = '';
     this.operator = undefined;
+    this.isCalculated = true;
   }
 }
 
