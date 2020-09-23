@@ -14,7 +14,7 @@ class Calculator {
 
   deleteNumber() {
     if (this.currentOperandText === '0') return;
-    this.currentOperandText = this.currentOperandText
+    this.currentOperandText = String(this.currentOperandText)
       .slice(0, this.currentOperandText.length - 1);
     if (this.currentOperandText === '') this.currentOperandText = '0';
   }
@@ -32,7 +32,7 @@ class Calculator {
     }
   }
 
-  inputOperation(operator){
+  inputOperation(operator) {
     if (this.operator) {
       this.previousOperandText = this.previousOperandText
       .slice(0, this.previousOperandText.length - 1);
@@ -45,8 +45,28 @@ class Calculator {
   }
 
   display() {
-    this.currentOperand.textContent = this.currentOperandText;
-    this.previousOperand.textContent = this.previousOperandText;
+    this.currentOperand.textContent = String(this.currentOperandText);
+    this.previousOperand.textContent = String(this.previousOperandText);
+  }
+
+  calculate() {
+    switch(this.operator) {
+      case '+': this.currentOperandText = Number(this.currentOperandText) 
+      + Number(this.previousOperandText.slice(0, this.previousOperandText.length - 1));
+      break;
+      case '-': this.currentOperandText = Number(this.previousOperandText
+        .slice(0, this.previousOperandText.length - 1)) - Number(this.currentOperandText);
+      break;
+      case '*': this.currentOperandText = Number(this.currentOperandText) 
+      * Number(this.previousOperandText.slice(0, this.previousOperandText.length - 1));
+      break;
+      case '÷': this.currentOperandText = Number(this.previousOperandText
+        .slice(0, this.previousOperandText.length - 1)) / Number(this.currentOperandText);
+      break;
+      default: return;
+    }
+    this.previousOperandText = '';
+    this.operator = undefined;
   }
 }
 
@@ -85,6 +105,7 @@ acButton.addEventListener("click", () => {
   myCalc.display();
 });
 
-equalsButton.addEventListener("click", () =>
-  console.log(equalsButton.textContent)
-);
+equalsButton.addEventListener("click", () => {
+  myCalc.calculate();
+  myCalc.display();
+});
