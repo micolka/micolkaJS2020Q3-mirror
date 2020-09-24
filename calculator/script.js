@@ -39,12 +39,10 @@ class Calculator {
 
   inputOperation(operator) {
     if (this.operator) {
-      this.previousOperandValue = this.previousOperandValue
-      .slice(0, this.previousOperandValue.length - 1);
-      this.previousOperandValue = `${this.previousOperandValue}${operator}`;
-    } else {
-      this.previousOperandValue = `${this.currentOperandValue}${operator}`;
-    }
+      this.calculate();
+      this.previousOperandValue = this.currentOperandValue;
+    } 
+    this.previousOperandValue = `${this.currentOperandValue}${operator}`;
     this.currentOperandValue = '0';
     this.operator = operator;
   }
