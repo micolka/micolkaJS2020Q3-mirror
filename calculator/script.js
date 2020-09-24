@@ -38,10 +38,19 @@ class Calculator {
   }
 
   inputOperation(operator) {
+    if(operator === '√') {
+      if (this.currentOperandValue < 0) {
+        alert('Number must be positive!');
+      } else {
+        this.currentOperandValue = Number(Math.sqrt(this.currentOperandValue));
+      }
+      return
+    }
     if (this.operator) {
       this.calculate();
       this.previousOperandValue = this.currentOperandValue;
-    } 
+    }
+    if (operator === 'x^y') operator = '^'
     this.previousOperandValue = `${this.currentOperandValue}${operator}`;
     this.currentOperandValue = '0';
     this.operator = operator;
@@ -50,6 +59,11 @@ class Calculator {
   display() {
     this.currentOperand.textContent = String(this.currentOperandValue);
     this.previousOperand.textContent = String(this.previousOperandValue);
+  }
+
+  changeSign() {
+    if (this.currentOperandValue === '0') return
+    this.currentOperandValue *= -1; 
   }
 
   calculate() {
@@ -66,6 +80,9 @@ class Calculator {
       case '÷': this.currentOperandValue = Number(this.previousOperandValue
         .slice(0, this.previousOperandValue.length - 1)) / Number(this.currentOperandValue);
       break;
+      case '^': this.currentOperandValue = Number(this.previousOperandValue
+        .slice(0, this.previousOperandValue.length - 1)) ** Number(this.currentOperandValue);
+      break;
       default: return;
     }
     this.currentOperandValue = Math.floor(this.currentOperandValue * 1e15) / 1e15;
@@ -80,12 +97,16 @@ let operationButtons = document.querySelectorAll("[data-operation]");
 let delButton = document.querySelector("[data-delete]");
 let acButton = document.querySelector("[data-all-clear]");
 let equalsButton = document.querySelector("[data-equals]");
+let changeSignButton = document.querySelector("[data-change-sign]");
 let currentOperand = document.querySelector("[data-current-operand]");
 let previousOperand = document.querySelector("[data-previous-operand]");
 
 let myCalc = new Calculator(currentOperand, previousOperand);
 
-
+changeSignButton.addEventListener('click', () => {
+  myCalc.changeSign();
+  myCalc.display();
+});
 numberButtons.forEach((el) => {
   el.addEventListener("click", () => {
     myCalc.inputNumbers(el.textContent);
