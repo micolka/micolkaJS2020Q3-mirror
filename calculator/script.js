@@ -74,8 +74,8 @@ class Calculator {
       case '-': this.currentOperandValue = (Number(this.previousOperandValue
         .slice(0, this.previousOperandValue.length - 1)) * 1e15 - Number(this.currentOperandValue) * 1e15) / 1e15;
       break;
-      case '*': this.currentOperandValue = Number(this.currentOperandValue) 
-      * Number(this.previousOperandValue.slice(0, this.previousOperandValue.length - 1));
+      case '*': this.currentOperandValue = (Number(this.currentOperandValue) * 1e15)
+      * Number(this.previousOperandValue.slice(0, this.previousOperandValue.length - 1) * 1e15) / 1e30;
       break;
       case '÷': this.currentOperandValue = Number(this.previousOperandValue
         .slice(0, this.previousOperandValue.length - 1)) / Number(this.currentOperandValue);
