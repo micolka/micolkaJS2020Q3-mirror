@@ -68,11 +68,11 @@ class Calculator {
 
   calculate() {
     switch(this.operator) {
-      case '+': this.currentOperandValue = Number(this.currentOperandValue) 
-      + Number(this.previousOperandValue.slice(0, this.previousOperandValue.length - 1));
+      case '+': this.currentOperandValue = (Number(this.currentOperandValue) * 1e15
+      + Number(this.previousOperandValue.slice(0, this.previousOperandValue.length - 1)) * 1e15) / 1e15;
       break;
-      case '-': this.currentOperandValue = Number(this.previousOperandValue
-        .slice(0, this.previousOperandValue.length - 1)) - Number(this.currentOperandValue);
+      case '-': this.currentOperandValue = (Number(this.previousOperandValue
+        .slice(0, this.previousOperandValue.length - 1)) * 1e15 - Number(this.currentOperandValue) * 1e15) / 1e15;
       break;
       case '*': this.currentOperandValue = Number(this.currentOperandValue) 
       * Number(this.previousOperandValue.slice(0, this.previousOperandValue.length - 1));
@@ -85,7 +85,6 @@ class Calculator {
       break;
       default: return;
     }
-    this.currentOperandValue = Math.floor(this.currentOperandValue * 1e15) / 1e15;
     this.previousOperandValue = '';
     this.operator = undefined;
     this.isCalculated = true;
