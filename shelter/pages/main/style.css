@@ -321,4 +321,59 @@ h3 {
   cursor: pointer;
 }
 
+.help {
+  height: 611px;
+}
+
+.help-container {
+  width: 62.5vw;
+  height: 431px;
+  margin: 0 auto;
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.help-heading {
+  text-align: center;
+  height: 90px;
+}
+
+.help-container-list {
+  width: fit-content;
+  height: 281px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.help-container-list-row {
+  width: fit-content;
+  display: flex;
+  column-gap: 115px;
+}
+
+.help-container-list-item {
+  height: 113px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.help-container-list-item img {
+  width: fit-content;
+}
+
+h4 {
+  margin: 0;
+  font-family: Georgia;
+  font-size: 20px;
+  line-height: 23px;
+  color: #545454;
+}
 
