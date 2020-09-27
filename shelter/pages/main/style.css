@@ -353,7 +353,7 @@ h3 {
 .help-container-list-row {
   width: fit-content;
   display: flex;
-  column-gap: 115px;
+  column-gap: 120px;
 }
 
 .help-container-list-item {
@@ -372,8 +372,71 @@ h3 {
 h4 {
   margin: 0;
   font-family: Georgia;
+  font-weight: 400;
   font-size: 20px;
+  letter-spacing: 0.06em;
   line-height: 23px;
   color: #545454;
 }
 
+.donation {
+  height: 464px;
+  background: #F6F6F6;
+}
+
+.donation-container {
+  width: 62.5vw;
+  height: 284px;
+  margin: 0 auto;
+  padding-top: 80px;
+  display: flex;
+  column-gap: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.donation-container-information {
+  width: 380px;
+  height: 282px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+h5 {
+  margin: 0;
+  font-family: Georgia;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 16.5px;
+  letter-spacing: 0.06em;
+  color: #545454;
+}
+
+.credit-card {
+  width: 349px;
+  height: 43px;
+  background: #F1CDB3;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+}
+
+.credit-card-content {
+  width: inherit;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.donation-description {
+  margin: 0;
+  font-family: Arial;
+  font-style: italic;
+  font-size: 12px;
+  line-height: 18px;
+  color: #B2B2B2;
+}
+
+.credit-card-number {
+  text-decoration: none;
+}
