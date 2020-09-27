@@ -140,6 +140,10 @@ h2 {
 .ssc-button {
   height: 52px;
   width: 207px;
+
+}
+
+.button-primary {
   font-family: Georgia;
   font-size: 17px;
   line-height: 130%;
@@ -149,7 +153,7 @@ h2 {
   background: #F1CDB3;
 }
 
-.ssc-button:hover {
+.button-primary:hover {
   cursor: pointer;
   background:#FDDCC4;
 }
@@ -169,7 +173,7 @@ h2 {
   width: 62.5vw;
   height: 408px;
   margin: 0 auto;
-  margin-top: 80px;
+  padding-top: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -195,7 +199,7 @@ h3 {
   font-size: 35px;
   font-weight: 400;
   color: #545454;
-  line-height: 130%;
+  line-height: 45.5px;
   letter-spacing: 0.06em;
 }
 
@@ -206,6 +210,115 @@ h3 {
 
 .act-subheading {
   color: #4C4C4C;
+}
+
+.pets {
+  height: 877px;
+  background: #F6F6F6;
+}
+
+.pets-wrapper {
+  width: 62.5vw;
+  height: 697px;
+  margin: 0 auto;
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pw-heading {
+  text-align: center;
+  width: 400px;
+  height: 90px;
+}
+
+.pw-content-wrapper {
+  width: 100%;
+  height: 435px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pets-button {
+  width: 261px;
+  height: 52px;
+}
+
+.pets-arrow{
+  width: 52px;
+  height: 52px;
+  border: 2px solid #F1CDB3;
+  background: #F6F6F6;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pets-arrow:hover {
+  background: #FDDCC4;
+  border: none;
+  cursor: pointer;
+}
+
+.pets-card-wrapper {
+  height: 100%;
+  width: 990px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pets-card {
+  width: 270px;
+  height: 100%;
+  background: #FAFAFA;
+  border-radius: 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.pets-card:hover {
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+}
+
+.pet-card-active {
+  background: #ffffff;
+  box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+}
+
+.pet-card-title {
+  margin: 0;
+  font-family: Georgia;
+  font-size: 20px;
+  line-height: 23px;
+  letter-spacing: 0.06em;
+}
+
+.pet-card-button {
+  width: 187px;
+  height: 52px;
+  border: 2px solid #F1CDB3;
+  background: #FAFAFA;
+  border-radius: 100px;
+  font-family: Georgia;
+  font-size: 17px;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+  color: #292929;
+}
+
+.pet-card-button:hover {
+  background: #FDDCC4;
+  border: none;
+  cursor: pointer;
 }
 
 
