@@ -77,8 +77,11 @@ body {
 
 .header-nav-active, .header-nav-link:hover {
   color: #FAFAFA;
-  border-bottom: 3px solid #F1CDB3;
   padding-bottom: 3px;
+}
+
+.header-nav-active {
+  border-bottom: 3px solid #F1CDB3;
 }
 
 .start-screen {
@@ -440,3 +443,77 @@ h5 {
 .credit-card-number {
   text-decoration: none;
 }
+
+.footer {
+  height: 355px;
+  background: linear-gradient(90deg, #5B483A, #211F20);
+}
+
+.footer-wrapper {
+  width: 62.5vw;
+  height: 315px;
+  margin: 0 auto;
+  padding-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.contacts {
+  width: 279px;
+}
+
+.location {
+  width: 302px;
+}
+
+.contacts,
+.location {
+  height: 234px;
+  padding-top: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contacts-title,
+.location-title {
+  color: #FFFFFF;
+}
+
+.footer-email {
+  width: 251px;
+}
+
+.footer-phone {
+  width: 239px;
+}
+
+.footer-london {
+  width: 270px;
+}
+
+.footer-email,
+.footer-phone,
+.footer-london {
+  text-decoration: none;
+  height: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-boston {
+  text-decoration: none;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  column-gap: 19px;
+}
+
+.footer-email h4,
+.footer-phone h4,
+.footer-boston h4,
+.footer-london h4 {
+  color: #F1CDB3;
+}
+
