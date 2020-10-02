@@ -1,16 +1,18 @@
 body {
-  width: 1920px;
+  /* width: 1920px;  */
 }
 
 .header {
   background: linear-gradient(90deg, #5B483A, #211F20);
+  margin: 0 auto;
+  width: 1280px;
   height: 120px;
   display: flex;
   align-items: flex-end;
 }
 
 .header-container {
-  width: 62.5vw;
+  width: 93.75%;
   height: 50%;
   margin: 0 auto;
   display: flex;
@@ -86,11 +88,13 @@ body {
 
 .start-screen {
   background: linear-gradient(90deg, #5B483A, #211F20);
+  margin: 0 auto;
+  width: 1280px;
   height: 788px;
 }
 
 .start-screen-wrapper {
-  width: 62.5vw;
+  width: 93.75%;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -169,11 +173,13 @@ h2 {
 }
 
 .about {
+  width: 1280px;
   height: 588px;
+  margin: 0 auto;
 }
 
 .about-content {
-  width: 62.5vw;
+  width: 93.75%;
   height: 408px;
   margin: 0 auto;
   padding-top: 80px;
@@ -216,12 +222,14 @@ h3 {
 }
 
 .pets {
+  width: 1280px;
+  margin: 0 auto;
   height: 877px;
   background: #F6F6F6;
 }
 
 .pets-wrapper {
-  width: 62.5vw;
+  width: 93.75%;
   height: 697px;
   margin: 0 auto;
   padding-top: 80px;
@@ -283,7 +291,6 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
 }
 
 .pets-card:hover {
@@ -292,13 +299,9 @@ h3 {
   box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
 }
 
-.pet-card-active {
-  background: #ffffff;
-  box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
-}
-
 .pet-card-title {
   margin: 0;
+  margin-top: 30px;
   font-family: Georgia;
   font-size: 20px;
   line-height: 23px;
@@ -308,6 +311,7 @@ h3 {
 .pet-card-button {
   width: 187px;
   height: 52px;
+  margin-top: 30px;
   border: 2px solid #F1CDB3;
   background: #FAFAFA;
   border-radius: 100px;
@@ -325,11 +329,13 @@ h3 {
 }
 
 .help {
+  width: 1280px;
+  margin: 0 auto;
   height: 611px;
 }
 
 .help-container {
-  width: 62.5vw;
+  width: 93.75%;
   height: 431px;
   margin: 0 auto;
   padding-top: 80px;
@@ -383,12 +389,14 @@ h4 {
 }
 
 .donation {
+  width: 1280px;
+  margin: 0 auto;
   height: 464px;
   background: #F6F6F6;
 }
 
 .donation-container {
-  width: 62.5vw;
+  width: 93.75%;
   height: 284px;
   margin: 0 auto;
   padding-top: 80px;
@@ -445,13 +453,15 @@ h5 {
 }
 
 .footer {
-  height: 355px;
+  width: 1280px;
+  margin: 0 auto;
+  height: 350px;
   background: linear-gradient(90deg, #5B483A, #211F20);
 }
 
 .footer-wrapper {
-  width: 62.5vw;
-  height: 315px;
+  width: 93.75%;
+  height: 310px;
   margin: 0 auto;
   padding-top: 40px;
   display: flex;
@@ -469,7 +479,7 @@ h5 {
 .contacts,
 .location {
   height: 234px;
-  padding-top: 22px;
+  padding-top: 17px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
