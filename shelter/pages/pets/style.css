@@ -4,11 +4,13 @@ body {
 
 .header {
   background: #FFFFFF;
+  position: sticky;
+  top: 0;
   margin: 0 auto;
   width: 1280px;
   height: 120px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .header-container {
@@ -40,7 +42,7 @@ body {
   font-size: 32px;
   font-weight: 400;
   letter-spacing: 0.0543em;
-  color: #F1CDB3;
+  color: #545454;
 }
 
 .header-logo-subtitle {
@@ -48,7 +50,7 @@ body {
   font-family: Arial;
   font-size: 13px;
   font-weight: 400;
-  color: #FFFFFF;
+  color: #292929;
   letter-spacing: 0.1em;
 }
 
@@ -74,11 +76,11 @@ body {
 }
 
 .header-nav-link {
-  color: #CDCDCD;
+  color: #545454;
 }
 
 .header-nav-active, .header-nav-link:hover {
-  color: #FAFAFA;
+  color: #292929;
   padding-bottom: 3px;
 }
 
@@ -137,14 +139,14 @@ h3 {
 
 .pets {
   width: 1280px;
+  height: 1342px;
   margin: 0 auto;
-  height: 877px;
   background: #F6F6F6;
 }
 
 .pets-wrapper {
   width: 93.75%;
-  height: 697px;
+  height: 1162px;
   margin: 0 auto;
   padding-top: 80px;
   display: flex;
@@ -157,14 +159,6 @@ h3 {
   text-align: center;
   width: 400px;
   height: 90px;
-}
-
-.pw-content-wrapper {
-  width: 100%;
-  height: 435px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .pets-button {
@@ -190,16 +184,17 @@ h3 {
 }
 
 .pets-card-wrapper {
-  height: 100%;
-  width: 990px;
+  width: 100%;
+  height: 930px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }
 
 .pets-card {
   width: 270px;
-  height: 100%;
+  height: 435px;
   background: #FAFAFA;
   border-radius: 9px;
   display: flex;
@@ -220,6 +215,7 @@ h3 {
   font-size: 20px;
   line-height: 23px;
   letter-spacing: 0.06em;
+  color: #545454;
 }
 
 .pet-card-button {
