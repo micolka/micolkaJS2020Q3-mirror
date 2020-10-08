@@ -17,7 +17,7 @@ h4 {
   position: sticky;
   top: 0;
   margin: 0 auto;
-  width: 1280px;
+  width: 100vw;
   height: 120px;
   display: flex;
   align-items: center;
