@@ -522,6 +522,9 @@ h3 {
   .jennifer {
     display: none;
   }
+  .pw-heading {
+    width: 100%;
+  }
   .pw-content-wrapper {
     width: 270px;
     height: 530px;
@@ -631,7 +634,6 @@ h4 {
     width: 100%;
     min-width: 320px;
     height: 745px;
-    /* display: inline; */
   }
   .help-container {
     padding: 0;

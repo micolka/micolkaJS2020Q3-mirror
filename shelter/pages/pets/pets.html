@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+
   <header class="header">
     <section class="header-container">
       <div class="header-logo">
@@ -22,11 +23,17 @@
          <li><a class="header-nav-link" href="#">Contacts</a></li>
        </ul>
       </div>
+      <div class="header-mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </section>
   </header>
+
   <article class="pets">
     <section class="pets-wrapper">
-      <h3 class="pw-heading">Our friends who<br/>
+      <h3 class="pw-heading h3-mobile">Our friends who<br/>
         are looking for a house</h3>
       <div class="pets-card-wrapper">
 
@@ -72,18 +79,18 @@
           <button class="button-clear-style pet-card-button">Learn more</button>
         </div>
       </div>
-      <section class="pagination">
 
+      <section class="pagination">
         <button disabled class="button-clear-style pagination-btn"><h4><<</h4></button>        
         <button disabled class="button-clear-style pagination-btn"><h4><</h4></button>       
         <button class="button-clear-style pagination-btn pagination-btn-static"><h4>1</h4></button>        
         <button class="button-clear-style pagination-btn"><h4>></h4></button>        
         <button class="button-clear-style pagination-btn"><h4>>></h4></button>
-
       </section>
-    </section>
 
+    </section>
   </article>
+
   <footer class="footer">
     <section class="footer-wrapper">
       <div class="contacts">
@@ -108,8 +115,9 @@
           <h4>18 South Park, London</h4>
         </a>
       </div>
-      <img src="../../assets/images/footer-puppy.png" alt="footer">
+      <img class="puppy-img" src="../../assets/images/footer-puppy.png" alt="footer">
     </section>
   </footer>
+  
 </body>
 </html>
