@@ -99,6 +99,11 @@
   display: flex;
 }
 
+.header-menu-background {
+  display: none;
+  transition: all 0.5s ease-out;
+}
+
 @media (max-width:767px){
   body.active{
     overflow: hidden;
@@ -114,10 +119,6 @@
     column-gap: 43px;
     margin-right: 30px;
   }
-  .header-menu-background {
-    display: none;
-    transition: all 0.5s ease-out;
-  }
   .header-menu-background.active {
     display: block;
     position: absolute;
@@ -132,8 +133,8 @@
     position: absolute;
     background: #292929;
     top: 0;
-    right: -100%;
-    width: 320px;
+    right: 0;
+    width: 0;
     flex-direction: column;
     transition: all 0.5s ease-out;
     justify-content: center;
@@ -147,12 +148,16 @@
   .header-nav-menu ul li a {
     text-decoration: none;
     font-family: Arial;
-    font-size: 32px;
+    font-size: 0px;
     font-weight: 400;
     line-height: 51.2px;
+    transition: all 0.5s ease-out;
   }
   .header-nav-menu.active {
-    right: 0px;
+    width: 320px;
+  }
+  .header-nav-menu.active ul li a {
+    font-size: 32px;
   }
   .header-mobile-menu {
     height: 22px;
