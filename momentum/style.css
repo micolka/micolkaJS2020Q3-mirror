@@ -6,13 +6,10 @@
 
 body {
   font-family: 'Quicksand', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   height: 100vh;
-  color: black;
+  color: white;
+  opacity: 0.8;
+  transition: background-image 1s ease-in-out 0.1s ;
 }
 
 #time {
@@ -25,7 +22,51 @@ h1 {
 
 h2 {
   margin-bottom: 0.5rem;
-  opacity: 0.6;
+}
+
+#focus {
+  font-size: 1.8rem;
+  border: 0;
+  background: none;
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  font-family: 'Quicksand', sans-serif;
+  outline: 0;
+  text-align: center;
+  width: 60%;
+}
+
+.change-bg-wrapper {
+}
+
+.timer-wrapper {
+  margin-top: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+
+#change-bg {
+  padding: 10px;
+  border: none;
+  background: none;
+  color: #fff;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.4rem;
+  outline: none;
+  border-radius: 10%;
+}
+
+#change-bg:hover {
+  cursor: pointer;
+  background: white;
+  color: #000000;
+}
+#change-bg:active {
+  opacity: 0.9;
 }
 
 @media(max-width: 700px) {
@@ -33,3 +74,4 @@ h2 {
     font-size: 6rem;
   } 
 }
+

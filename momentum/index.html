@@ -8,15 +8,23 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <time id="time">12:17:04 PM</time>
-  <h1>
-    <span id="greeting">Good Afternoon</span>
-    <span id="name" contenteditable="true">Micolka</span>
-  </h1>
-  <h2>What is your focus for today?</h2>
-  <h2 id="focus" contenteditable="true">Make cool progs</h2>
-
+  <div class="change-bg-wrapper">
+    <button id="change-bg">Change BG</button>
+  </div>
+  <div class="timer-wrapper">
+  <time id="time"></time>
+    <h1>
+      <span id="greeting"></span>
+      <span id="name" contenteditable="true"></span>
+    </h1>
+    <h2>
+      <span>What is your focus for today?</span></br>
+    </h2>
+    <input id="focus" type="text" autocomplete="off" contenteditable="true">
+  </div>
+  <div class="quotation-wrapper">
+    
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
