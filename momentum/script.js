@@ -2,8 +2,15 @@ const time = document.getElementById('time')
 const greeting = document.getElementById('greeting')
 const name = document.getElementById('name')
 const goal = document.getElementById('focus')
+
 const changeBG = document.getElementById('change-bg')
+
+const changeQuote= document.getElementById('change-q')
+const blockquote = document.querySelector('blockquote');
+const figcaption = document.querySelector('figcaption');
+
 let backgroundList = []
+let quotesList = JSON.parse(localStorage.getItem('quote')) || [];
 let currentBGIndx = 0
 let currentHour = 0
 
@@ -151,12 +158,26 @@ function clearInput(event){
 }
 
 async function getQuote() {
-  const url = `https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en`;
-  const res = await fetch(url);
-  const data = await res.json(); 
-  console.log(data);
+
+  if(localStorage.getItem('quote') === null) {
+      fetch("https://type.fit/api/quotes")
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        localStorage.setItem('quote', JSON.stringify(data))
+      });
+  } 
+
 }
 getQuote()
+generateQuote() 
+
+function generateQuote() {
+  let quote = quotesList[Math.floor(Math.random() * 1643)]
+  blockquote.textContent = quote.text
+  figcaption.textContent = quote.author
+}
 
 name.addEventListener('keypress', setName)
 name.addEventListener('blur', setName)
@@ -165,6 +186,7 @@ goal.addEventListener('keypress', setGoal)
 goal.addEventListener('blur', setGoal)
 goal.addEventListener('focus', clearInput)
 changeBG.addEventListener('click', forceChangeBG)
+changeQuote.addEventListener('click', generateQuote)
 
 generateBackgroundList()
 updateClockFace()
