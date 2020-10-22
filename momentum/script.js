@@ -1,14 +1,21 @@
+// Timer/date variables
 const time = document.getElementById('time')
 const greeting = document.getElementById('greeting')
 const name = document.getElementById('name')
 const goal = document.getElementById('focus')
-
+// BG variables
 const changeBG = document.getElementById('change-bg')
-
+// Quotes variables
 const changeQuote= document.getElementById('change-q')
 const blockquote = document.querySelector('blockquote');
 const figcaption = document.querySelector('figcaption');
-
+// Weather variables
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const humidity = document.querySelector('.humidity');
+const windSpeed = document.querySelector('.wind-speed');
+const city = document.querySelector('.city');
+// Additional variables
 let backgroundList = []
 let quotesList = JSON.parse(localStorage.getItem('quote')) || [];
 let currentBGIndx = 0
@@ -170,24 +177,62 @@ async function getQuote() {
   } 
 
 }
-getQuote()
-generateQuote() 
 
 function generateQuote() {
   let quote = quotesList[Math.floor(Math.random() * 1643)]
   blockquote.textContent = quote.text
-  figcaption.textContent = quote.author
+  figcaption.textContent = `© ${quote.author}`
+}
+
+async function getWeather() {  
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.textContent}&lang=en&appid=e65825c87af74eb3c577d91b59050622&units=metric`;
+  const res = await fetch(url)
+  const data = await res.json()
+  
+  weatherIcon.classList.add(`owf-${data.weather[0].id}`)
+  temperature.textContent = `${data.main.temp}°C`
+  humidity.textContent = `humidity: ${data.main.humidity}%`
+  windSpeed.textContent = `wind speed: ${data.wind.speed}m/s`
+}
+
+function setCity(event) {
+  if (event.type === 'keypress' && event.keyCode !== 13) {
+    return
+  } else {
+    city.blur()
+  }
+  if (event.target.innerText === '') {
+    getCity()
+    return
+  }
+  localStorage.setItem('city', event.target.innerText)
+  getWeather()
+}
+
+function getCity() {
+  if(localStorage.getItem('city') === null) {
+    city.textContent = 'Minsk'
+  } else {
+    city.textContent = localStorage.getItem('city')
+  }
 }
 
 name.addEventListener('keypress', setName)
 name.addEventListener('blur', setName)
-name.addEventListener('focus', clearInput)
+name.addEventListener('focus', clearName)
 goal.addEventListener('keypress', setGoal)
 goal.addEventListener('blur', setGoal)
 goal.addEventListener('focus', clearInput)
 changeBG.addEventListener('click', forceChangeBG)
 changeQuote.addEventListener('click', generateQuote)
+city.addEventListener('keypress', setCity)
+city.addEventListener('blur', setCity)
+city.addEventListener('focus', clearName)
 
+getCity()
+getWeather()
+getQuote()
+generateQuote() 
 generateBackgroundList()
 updateClockFace()
 setBgGreetMessage()
