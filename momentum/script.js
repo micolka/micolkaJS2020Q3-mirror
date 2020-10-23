@@ -115,7 +115,18 @@ function forceChangeBG() {
   } else if (currentBGIndx < 24) {
     dayPart = 'evening'
   }
-  document.body.style.backgroundImage = `url('./assets/images/${dayPart}/${backgroundList[currentBGIndx]}.jpg')`
+  changeBG.disabled = true;
+  viewBgImage(`./assets/images/${dayPart}/${backgroundList[currentBGIndx]}.jpg`)
+}
+
+function viewBgImage(data) {
+  const src = data;
+  const img = document.createElement('img');
+  img.src = src;
+  img.onload = () => {      
+    document.body.style.backgroundImage = `url(${src})`;
+    setTimeout(function() { changeBG.disabled = false }, 1000);
+  }; 
 }
 
 function getName() {
@@ -182,7 +193,6 @@ async function getQuote() {
 function generateQuote() {
   let quotesList = JSON.parse(localStorage.getItem('quote')) || [];
   let quote = quotesList[Math.floor(Math.random() * 1643)] || {text: 'You were not born a winner, and you were not born a loser. You are what you make yourself be.', author: 'Lou Holtz'}
-  console.log(quote);
   blockquote.textContent = quote.text || blockquote.textContent
   figcaption.textContent = `© ${quote.author}` || figcaption.textContent
 }
