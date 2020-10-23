@@ -1,5 +1,7 @@
 // Timer/date variables
 const time = document.getElementById('time')
+const currentDay = document.getElementById('day')
+const currentDate = document.getElementById('date')
 const greeting = document.getElementById('greeting')
 const name = document.getElementById('name')
 const goal = document.getElementById('focus')
@@ -17,7 +19,6 @@ const windSpeed = document.querySelector('.wind-speed');
 const city = document.querySelector('.city');
 // Additional variables
 let backgroundList = []
-let quotesList = JSON.parse(localStorage.getItem('quote')) || [];
 let currentBGIndx = 0
 let currentHour = 0
 
@@ -29,7 +30,9 @@ function updateClockFace() {
   let date = now.getDate()
   let day = now.getDay()
   let month = now.getMonth()
-  time.innerHTML = `${hour}:${addZero(min)}:${addZero(sec)} ${getDayOfWeek(day)}</br> ${date} ${getCurrentMonth(month)}`
+  time.innerHTML = `${hour}:${addZero(min)}:${addZero(sec)}`
+  currentDay.innerHTML = `${getDayOfWeek(day)}`
+  currentDate.innerHTML = ` ${date} ${getCurrentMonth(month)}`
 
   if (currentHour !== hour) {
     currentHour = hour
@@ -165,7 +168,6 @@ function clearInput(event){
 }
 
 async function getQuote() {
-
   if(localStorage.getItem('quote') === null) {
       fetch("https://type.fit/api/quotes")
       .then(function(response) {
@@ -175,13 +177,14 @@ async function getQuote() {
         localStorage.setItem('quote', JSON.stringify(data))
       });
   } 
-
 }
 
 function generateQuote() {
-  let quote = quotesList[Math.floor(Math.random() * 1643)]
-  blockquote.textContent = quote.text
-  figcaption.textContent = `© ${quote.author}`
+  let quotesList = JSON.parse(localStorage.getItem('quote')) || [];
+  let quote = quotesList[Math.floor(Math.random() * 1643)] || {text: 'You were not born a winner, and you were not born a loser. You are what you make yourself be.', author: 'Lou Holtz'}
+  console.log(quote);
+  blockquote.textContent = quote.text || blockquote.textContent
+  figcaption.textContent = `© ${quote.author}` || figcaption.textContent
 }
 
 async function getWeather() {  
@@ -189,10 +192,16 @@ async function getWeather() {
   const res = await fetch(url)
   const data = await res.json()
   
-  weatherIcon.classList.add(`owf-${data.weather[0].id}`)
-  temperature.textContent = `${data.main.temp}°C`
-  humidity.textContent = `humidity: ${data.main.humidity}%`
-  windSpeed.textContent = `wind speed: ${data.wind.speed}m/s`
+  if (data.cod === '404') {
+    temperature.textContent = `error:`
+    humidity.textContent = `${data.message}`
+    windSpeed.textContent = ``
+  } else {
+    weatherIcon.classList.add(`owf-${data.weather[0].id}`)
+    temperature.textContent = `${data.main.temp}°C`
+    humidity.textContent = `humidity: ${data.main.humidity}%`
+    windSpeed.textContent = `wind speed: ${data.wind.speed}m/s`
+  }
 }
 
 function setCity(event) {

@@ -16,7 +16,9 @@ body {
   justify-content: space-between;
 }
 
-#time {
+#time,
+#day,
+#date {
   font-size: 8rem;
 }
 
@@ -41,11 +43,9 @@ h2 {
   width: 60%;
 }
 
-.change-bg-wrapper {
-}
+
 
 .timer-wrapper {
-  /* margin-top: 200px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,7 +53,12 @@ h2 {
   text-align: center;
 }
 
-
+.time-day-wrapper {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .button {
   padding: 10px;
   border: none;
@@ -77,25 +82,46 @@ h2 {
 .change-quote-wrapper {
   display: flex;
   justify-content: space-between;
-  font-size: 25px;
+  font-size: 1.5rem;
 }
 .quote {
   width: fit-content;
-  padding-right: 5%;
+  padding-right: 1%;
 }
 .top-content{
   display: flex;
   justify-content: space-between;
 }
 .weather-wrapper {
-  margin-right: 5%;
-  font-size: 25px;
+  margin-right: 1%;
+  font-size: 1.5rem;
 }
 
-
-@media(max-width: 700px) {
-  #time {
+@media(max-width: 767px) {
+  #time,
+  #day,
+  #date {
     font-size: 6rem;
-  } 
+  }
+}
+
+@media(max-width: 400px) {
+  #time,
+  #day,
+  #date {
+    font-size: 1.8rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .button {
+    font-size: 1rem;
+  }
+  #focus {
+    font-size: 1rem;
+  }
+  .quote{
+    font-size: 1rem;
+  }
 }
 
