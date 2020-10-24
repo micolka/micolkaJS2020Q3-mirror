@@ -6,6 +6,8 @@ const body = document.querySelector('body');
 const backgroundMenu = document.querySelector('.header-menu-background');
 const activeLink = document.querySelector('.header-nav-active');
 
+
+
 const toggleMobileMenu = function() {
   mobileMenu.classList.toggle('active');
   navMenu.classList.toggle('active');
@@ -16,7 +18,6 @@ const toggleMobileMenu = function() {
 mobileMenu.addEventListener('click', toggleMobileMenu);
 backgroundMenu.addEventListener('click', toggleMobileMenu);
 activeLink.addEventListener('click', toggleMobileMenu);
-
 
 // Pets carousel implementation
 let carousel = function () {
@@ -115,5 +116,41 @@ function generatePrevCard() {
   fillPetsInfo(currentPetsIndexes)
 }
 
+function initModalWindow() {
+  const openModalButtons = document.querySelectorAll('[data-open-button]')
+  const closeModalButtons = document.querySelectorAll('[data-close-button]')
+  const overlay = document.getElementById('page-overlay')
+  const modal = document.querySelector('.pets-modal')
+
+  openModalButtons.forEach(button => {
+    button.addEventListener('click', () => {  
+      openModal()
+    })
+  })
+
+  closeModalButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      closeModal()
+    })
+  })
+
+  overlay.addEventListener('click', () => {
+      closeModal()
+  })
+
+  function openModal() {
+    if (modal === null) return
+    modal.classList.add('active')
+    overlay.classList.add('active')
+  }
+  
+  function closeModal() {
+    if (modal === null) return
+    modal.classList.remove('active')
+    overlay.classList.remove('active')
+  }
+}
+
 fillPetsInfo();
 carousel();
+initModalWindow();

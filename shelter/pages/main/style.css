@@ -1,3 +1,31 @@
+h3 {
+  margin: 0;
+  font-family: Georgia, sans-serif;
+  font-size: 35px;
+  font-weight: 400;
+  color: #545454;
+  line-height: 45.5px;
+  letter-spacing: 0.06em;
+}
+h4 {
+  margin: 0;
+  font-family: Georgia;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  line-height: 16.5px;
+  color: #545454;
+}
+h5 {
+  margin: 0;
+  font-family: Georgia;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 16.5px;
+  letter-spacing: 0.06em;
+  color: #545454;
+}
+
 .header {
   background: linear-gradient(90deg, #5B483A, #211F20);
   margin: 0 auto;
@@ -363,15 +391,7 @@ h2 {
   justify-content: space-between;
 }
 
-h3 {
-  margin: 0;
-  font-family: Georgia, sans-serif;
-  font-size: 35px;
-  font-weight: 400;
-  color: #545454;
-  line-height: 45.5px;
-  letter-spacing: 0.06em;
-}
+
 
 .act-heading {
   width: 370px;
@@ -494,7 +514,6 @@ h3 {
   width: 15%;
   display: flex;
   align-items: center;
-  
 }
 
 .btn-left-wrapper {
@@ -617,6 +636,92 @@ h3 {
   cursor: pointer;
 }
 
+.pets-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 300ms ease-out;
+  z-index: 10;
+  width: 952px;
+  height: 552px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.pets-modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-close-button {
+  align-self: flex-end;
+  margin-right: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  width: 900px;
+  height: 500px;
+  background: #FAFAFA;
+  border-radius: 9px;
+  box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+  display: flex;
+}
+
+.modal-body img {
+  width: 500px;
+}
+
+.modal-body-content {
+  width: 351px;
+  height: 362px;
+  margin: 50px 0 0 29px;
+}
+.modal-body-content h3,
+.modal-body-content h4,
+.modal-body-content h5 {
+  color: #000000;
+}
+.modal-body-content h3{
+  margin-bottom: 10px;
+}
+.modal-body-content h4,
+.modal-body-content h5{
+  margin-bottom: 40px;
+}
+.modal-body-content ul {
+  list-style: none;
+  padding-left: 17px;
+}
+.modal-body-content ul li {
+  margin-bottom: 10px;
+}
+.modal-body-content ul li::before {
+  content: "\2022";
+  color: #F1CDB3;
+  font-weight: bold;
+  display: inline-block; 
+  width: 1em;
+  margin-left: -1em;
+}
+
+#page-overlay {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #292929;
+  pointer-events: none;
+}
+
+#page-overlay.active {
+  opacity: 0.6;
+  pointer-events: all;
+}
+
 @media (max-width:1279px){
   .pets {
     width: 100%;
@@ -735,16 +840,6 @@ h3 {
   width: fit-content;
 }
 
-h4 {
-  margin: 0;
-  font-family: Georgia;
-  font-weight: 400;
-  font-size: 20px;
-  letter-spacing: 0.06em;
-  line-height: 16.5px;
-  color: #545454;
-}
-
 @media (max-width:1279px){
   .help {
     width: 100%;
@@ -829,16 +924,6 @@ h4 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-h5 {
-  margin: 0;
-  font-family: Georgia;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 16.5px;
-  letter-spacing: 0.06em;
-  color: #545454;
 }
 
 .credit-card {
