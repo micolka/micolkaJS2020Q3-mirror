@@ -41,52 +41,71 @@
         <div class="pets-card">
           <img src="../../assets/images/pets-katrine.png" alt="pet-img">
           <p class="pet-card-title">Katrine</p>
-          <button class="button-clear-style pet-card-button">Learn more</button>
+          <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
         </div>
          <div class="pets-card">
            <img src="../../assets/images/pets-jennifer.png" alt="pet-img">
            <p class="pet-card-title">Jennifer</p>
-           <button class="button-clear-style pet-card-button">Learn more</button>
+           <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
          </div>
          <div class="pets-card">
            <img src="../../assets/images/pets-woody.png" alt="pet-img">
            <p class="pet-card-title">Woody</p>
-           <button class="button-clear-style pet-card-button">Learn more</button>
+           <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
          </div>
          <div class="pets-card">
           <img src="../../assets/images/pets-sophia.png" alt="pet-img">
           <p class="pet-card-title">Sophia</p>
-          <button class="button-clear-style pet-card-button">Learn more</button>
+          <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
         </div>
 
         <div class="pets-card">
           <img src="../../assets/images/pets-timmy.png" alt="pet-img">
           <p class="pet-card-title">Timmy</p>
-          <button class="button-clear-style pet-card-button">Learn more</button>
+          <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
         </div>
          <div class="pets-card">
            <img src="../../assets/images/pets-charly.png" alt="pet-img">
            <p class="pet-card-title">Charly</p>
-           <button class="button-clear-style pet-card-button">Learn more</button>
+           <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
          </div>
          <div class="pets-card">
            <img src="../../assets/images/pets-scarlett.png" alt="pet-img">
            <p class="pet-card-title">Scarlett</p>
-           <button class="button-clear-style pet-card-button">Learn more</button>
+           <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
          </div>
          <div class="pets-card">
           <img src="../../assets/images/pets-freddie.png" alt="pet-img">
           <p class="pet-card-title">Freddie</p>
-          <button class="button-clear-style pet-card-button">Learn more</button>
+          <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
         </div>
       </div>
 
+      <div class="pets-modal" id="modal">
+        <button data-close-button class="modal-close-button button-clear-style pagination-btn">&times;</button>
+        <div class="modal-body">
+          <img src="" alt="pet-img">
+          <div class="modal-body-content">
+            <h3></h3>
+            <h4></h3>
+            <h5></h5>
+            <ul>
+              <li></li>
+              <li><b>Inoculations:</b> none</li>
+              <li><b>Diseases:</b> none</li>
+              <li><b>Parasites:</b> none</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="page-overlay"></div> 
+
       <section class="pagination">
-        <button disabled class="button-clear-style pagination-btn"><h4><<</h4></button>        
-        <button disabled class="button-clear-style pagination-btn"><h4><</h4></button>       
-        <button class="button-clear-style pagination-btn pagination-btn-static"><h4>1</h4></button>        
-        <button class="button-clear-style pagination-btn"><h4>></h4></button>        
-        <button class="button-clear-style pagination-btn"><h4>>></h4></button>
+        <button disabled data-start class="button-clear-style pagination-btn"><h4><<</h4></button>        
+        <button disabled data-left class="button-clear-style pagination-btn"><h4><</h4></button>       
+        <button data-counter class="button-clear-style pagination-btn pagination-btn-static"><h4>1</h4></button>        
+        <button data-right class="button-clear-style pagination-btn"><h4>></h4></button>        
+        <button data-end class="button-clear-style pagination-btn"><h4>>></h4></button>
       </section>
 
     </section>
@@ -119,6 +138,6 @@
       <img class="puppy-img" src="../../assets/images/footer-puppy.png" alt="footer">
     </section>
   </footer>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -17,6 +17,7 @@ h4 {
   height: 120px;
   display: flex;
   align-items: center;
+  z-index: 1;
 }
 
 .header-container {
@@ -293,6 +294,14 @@ h3 {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  /* transform: scale(1); */
+  opacity: 1;
+  transition: 300ms ease-out;
+}
+
+.pets-card-wrapper.active {
+  /* transform: scale(0); */
+  opacity: 0;
 }
 
 .pets-card {
@@ -464,6 +473,7 @@ h5 {
     grid-template-rows: repeat(3, 1fr);
     row-gap: 30px;
     padding: 0;
+    transition: all 1s ease-out;
   }
   .pets-wrapper div:nth-of-type(n+4) {
     display: none;
@@ -477,6 +487,154 @@ h5 {
   }
 }
 
+.pets-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 300ms ease-out;
+  z-index: 10;
+  width: 952px;
+  height: 552px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.pets-modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-close-button {
+  align-self: flex-end;
+  margin-right: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  pointer-events: all;
+}
+
+.modal-body {
+  width: 900px;
+  height: 500px;
+  background: #FAFAFA;
+  border-radius: 9px;
+  box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+  display: flex;
+  pointer-events: all;
+}
+
+.modal-body img {
+  width: 500px;
+}
+
+.modal-body-content {
+  width: 351px;
+  height: 362px;
+  margin: 50px 0 0 29px;
+}
+.modal-body-content h3,
+.modal-body-content h4,
+.modal-body-content h5 {
+  color: #000000;
+}
+.modal-body-content h3{
+  margin-bottom: 10px;
+}
+.modal-body-content h4,
+.modal-body-content h5{
+  margin-bottom: 40px;
+}
+.modal-body-content ul {
+  list-style: none;
+  padding-left: 17px;
+}
+.modal-body-content ul li {
+  margin-bottom: 10px;
+}
+.modal-body-content ul li::before {
+  content: "\2022";
+  color: #F1CDB3;
+  font-weight: bold;
+  display: inline-block; 
+  width: 1em;
+  margin-left: -1em;
+}
+
+@media (max-width:1279px){
+  .pets-modal {
+    width: 682px;
+    height: 402px;
+  }
+  .modal-body {
+    width: 630px;
+    height: 350px;
+  }
+  .modal-body img {
+    width: 350px;
+  }
+  .modal-body-content {
+    width: 260px;
+    height: 303px;
+    margin: 10px 0 0 11px;
+  }
+  .modal-body-content h4,
+  .modal-body-content h5{
+    margin-bottom: 20px;
+  }
+  .modal-body-content h5 {
+    font-size: 13px;
+    line-height: 110%;
+  }
+  .modal-body-content ul li {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width:767px){
+  .pets-modal {
+    width: 270px;
+    height: fit-content;
+  }
+  .modal-body {
+    width: 240px;
+    height: fit-content;
+  }
+  .modal-body img {
+    display: none;
+  }
+  .modal-body-content {
+    width: 220px;
+    height: fit-content;
+  }
+  .modal-body-content h3,
+  .modal-body-content h4 {
+    text-align: center;
+  }
+  .modal-body-content h5 {
+    text-align: justify;
+  }
+}
+
+#page-overlay {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #292929;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#page-overlay.active {
+  opacity: 0.6;
+  pointer-events: all;
+}
+#page-overlay.active:hover {
+  cursor: pointer;
+}
 
 .footer {
   width: 1280px;
