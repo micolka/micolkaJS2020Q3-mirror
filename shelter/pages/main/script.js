@@ -84,6 +84,7 @@ function fillPetsInfo() {
     let index = pseudoIndexes[i]
     petsCardArr[i + currentCard].children[0].src = petsData[index].img
     petsCardArr[i + currentCard].children[1].textContent = petsData[index].name
+    petsCardArr[i + currentCard].children[2].id = index
     currentPetsIndexes.push(index)
   }
 }
@@ -118,25 +119,36 @@ function generatePrevCard() {
 
 function initModalWindow() {
   const openModalButtons = document.querySelectorAll('[data-open-button]')
-  const closeModalButtons = document.querySelectorAll('[data-close-button]')
+  const closeModalButton = document.querySelector('[data-close-button]')
   const overlay = document.getElementById('page-overlay')
   const modal = document.querySelector('.pets-modal')
+  const modalContent = document.querySelector('.modal-body-content')
+  const modalImg = document.querySelector('.modal-body img')
 
   openModalButtons.forEach(button => {
-    button.addEventListener('click', () => {  
+    button.addEventListener('click', () => { 
+      setModalData(button) 
       openModal()
     })
   })
 
-  closeModalButtons.forEach(button => {
-    button.addEventListener('click', () => {
+  closeModalButton.addEventListener('click', () => {
       closeModal()
-    })
+  })
+  closeModalButton.addEventListener('mouseover', () => {
+    closeModalButton.style.background = '#FDDCC4'
   })
 
   overlay.addEventListener('click', () => {
       closeModal()
   })
+  overlay.addEventListener('mouseover', () => {  
+    closeModalButton.style.background = '#FDDCC4'
+  })
+  overlay.addEventListener('mouseleave', () => {
+    closeModalButton.style.background = '#F6F6F6'
+  })
+
 
   function openModal() {
     if (modal === null) return
@@ -148,6 +160,18 @@ function initModalWindow() {
     if (modal === null) return
     modal.classList.remove('active')
     overlay.classList.remove('active')
+  }
+
+  function setModalData(button) {
+    let index = button.id
+    modalImg.src = petsData[index].img
+    modalContent.children[0].textContent = petsData[index].name
+    modalContent.children[1].textContent = `${petsData[index].type} - ${petsData[index].breed}`
+    modalContent.children[2].textContent = petsData[index].description
+    modalContent.children[3].children[0].innerHTML = `<b>Age:</b> ${petsData[index].age}`
+    modalContent.children[3].children[1].innerHTML = `<b>Inoculations:</b> ${petsData[index].inoculations.join(', ')}`
+    modalContent.children[3].children[2].innerHTML = `<b>Diseases:</b> ${petsData[index].diseases.join(', ')}`
+    modalContent.children[3].children[3].innerHTML = `<b>Parasites:</b> ${petsData[index].parasites.join(', ')}`
   }
 }
 

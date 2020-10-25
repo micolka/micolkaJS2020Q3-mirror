@@ -487,6 +487,7 @@ h2 {
 .pets-cards-container {
   position: relative;
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -648,7 +649,9 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  pointer-events: none;
 }
+
 .pets-modal.active {
   transform: translate(-50%, -50%) scale(1);
 }
@@ -658,6 +661,7 @@ h2 {
   margin-right: 10px;
   font-size: 2rem;
   font-weight: bold;
+  pointer-events: all;
 }
 
 .modal-body {
@@ -667,6 +671,7 @@ h2 {
   border-radius: 9px;
   box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
   display: flex;
+  pointer-events: all;
 }
 
 .modal-body img {
@@ -706,6 +711,61 @@ h2 {
   margin-left: -1em;
 }
 
+@media (max-width:1279px){
+  .pets-modal {
+    width: 682px;
+    height: 402px;
+  }
+  .modal-body {
+    width: 630px;
+    height: 350px;
+  }
+  .modal-body img {
+    width: 350px;
+  }
+  .modal-body-content {
+    width: 260px;
+    height: 303px;
+    margin: 10px 0 0 11px;
+  }
+  .modal-body-content h4,
+  .modal-body-content h5{
+    margin-bottom: 20px;
+  }
+  .modal-body-content h5 {
+    font-size: 13px;
+    line-height: 110%;
+  }
+  .modal-body-content ul li {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width:767px){
+  .pets-modal {
+    width: 270px;
+    height: fit-content;
+  }
+  .modal-body {
+    width: 240px;
+    height: fit-content;
+  }
+  .modal-body img {
+    display: none;
+  }
+  .modal-body-content {
+    width: 220px;
+    height: fit-content;
+  }
+  .modal-body-content h3,
+  .modal-body-content h4 {
+    text-align: center;
+  }
+  .modal-body-content h5 {
+    text-align: justify;
+  }
+}
+
 #page-overlay {
   position: fixed;
   opacity: 0;
@@ -720,6 +780,9 @@ h2 {
 #page-overlay.active {
   opacity: 0.6;
   pointer-events: all;
+}
+#page-overlay.active:hover {
+  cursor: pointer;
 }
 
 @media (max-width:1279px){
