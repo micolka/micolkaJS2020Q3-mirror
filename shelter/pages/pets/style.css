@@ -1,3 +1,7 @@
+body.active{
+  overflow: hidden;
+}
+
 h4 {
   margin: 0;
   font-family: Georgia;
@@ -99,6 +103,13 @@ h4 {
   border-bottom: 3px solid #F1CDB3;
 }
 
+.disabled-link {
+  color: #545454;
+}
+.disabled-link:hover {
+  cursor: default;
+}
+
 h2 {
   margin: 0;
   font-family: Georgia, sans-serif;
@@ -168,9 +179,6 @@ h3 {
 }
 
 @media (max-width:767px){
-  body.active{
-    overflow: hidden;
-  }
   .header {
     min-width: 320px;
   }

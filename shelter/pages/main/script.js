@@ -6,8 +6,6 @@ const body = document.querySelector('body');
 const backgroundMenu = document.querySelector('.header-menu-background');
 const activeLink = document.querySelector('.header-nav-active');
 
-
-
 const toggleMobileMenu = function() {
   mobileMenu.classList.toggle('active');
   navMenu.classList.toggle('active');
@@ -84,7 +82,7 @@ function fillPetsInfo() {
     let index = pseudoIndexes[i]
     petsCardArr[i + currentCard].children[0].src = petsData[index].img
     petsCardArr[i + currentCard].children[1].textContent = petsData[index].name
-    petsCardArr[i + currentCard].children[2].id = index
+    petsCardArr[i + currentCard].id = index
     currentPetsIndexes.push(index)
   }
 }
@@ -118,22 +116,24 @@ function generatePrevCard() {
 }
 
 function initModalWindow() {
-  const openModalButtons = document.querySelectorAll('[data-open-button]')
   const closeModalButton = document.querySelector('[data-close-button]')
   const overlay = document.getElementById('page-overlay')
   const modal = document.querySelector('.pets-modal')
   const modalContent = document.querySelector('.modal-body-content')
   const modalImg = document.querySelector('.modal-body img')
-
-  openModalButtons.forEach(button => {
-    button.addEventListener('click', () => { 
-      setModalData(button) 
+  const petsCards = document.querySelectorAll('.pets-card')
+  
+  petsCards.forEach(el => {
+    el.addEventListener('click', (e) => { 
+      setModalData(e.currentTarget) 
       openModal()
+      body.classList.toggle('active');
     })
   })
 
   closeModalButton.addEventListener('click', () => {
       closeModal()
+      body.classList.toggle('active');
   })
   closeModalButton.addEventListener('mouseover', () => {
     closeModalButton.style.background = '#FDDCC4'
@@ -141,6 +141,7 @@ function initModalWindow() {
 
   overlay.addEventListener('click', () => {
       closeModal()
+      body.classList.toggle('active');
   })
   overlay.addEventListener('mouseover', () => {  
     closeModalButton.style.background = '#FDDCC4'
@@ -148,7 +149,6 @@ function initModalWindow() {
   overlay.addEventListener('mouseleave', () => {
     closeModalButton.style.background = '#F6F6F6'
   })
-
 
   function openModal() {
     if (modal === null) return

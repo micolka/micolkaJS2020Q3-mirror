@@ -127,7 +127,7 @@ function initFriendsData() {
       let index = petsDataId[i];
       petsCardArr[j].children[0].src = petsData[index].img;
       petsCardArr[j].children[1].textContent = petsData[index].name;
-      petsCardArr[j].children[2].id = index;
+      petsCardArr[j].id = index;
       j++;
     }
   }
@@ -135,10 +135,9 @@ function initFriendsData() {
   window.addEventListener(`resize`, () => {
     let friendsCount =  getFriendCountPerPage()
     if (friendsCount !== numberOfFriends) {
+      numberOfFriends = friendsCount;
       petsDataId = generateFriendsIds(friendsCount);
       fillFriendsCarts();
-      numberOfFriends = friendsCount;
-
       currentPage = 1;
       btnStart.disabled = true;
       btnLeft.disabled = true;
@@ -152,22 +151,24 @@ function initFriendsData() {
 }
 
 function initModalWindow() {
-  const openModalButtons = document.querySelectorAll('[data-open-button]')
+  const petsCards = document.querySelectorAll('.pets-card')
   const closeModalButton = document.querySelector('[data-close-button]')
   const overlay = document.getElementById('page-overlay')
   const modal = document.querySelector('.pets-modal')
   const modalContent = document.querySelector('.modal-body-content')
   const modalImg = document.querySelector('.modal-body img')
 
-  openModalButtons.forEach(button => {
-    button.addEventListener('click', () => { 
-      setModalData(button) 
+  petsCards.forEach(el => {
+    el.addEventListener('click', (e) => { 
+      setModalData(e.currentTarget) 
       openModal()
+      body.classList.toggle('active');
     })
   })
 
   closeModalButton.addEventListener('click', () => {
       closeModal()
+      body.classList.toggle('active');
   })
   closeModalButton.addEventListener('mouseover', () => {
     closeModalButton.style.background = '#FDDCC4'
@@ -175,6 +176,7 @@ function initModalWindow() {
 
   overlay.addEventListener('click', () => {
       closeModal()
+      body.classList.toggle('active');
   })
   overlay.addEventListener('mouseover', () => {  
     closeModalButton.style.background = '#FDDCC4'

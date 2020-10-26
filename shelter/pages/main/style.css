@@ -1,3 +1,7 @@
+body.active{
+  overflow: hidden;
+}
+
 h3 {
   margin: 0;
   font-family: Georgia, sans-serif;
@@ -109,6 +113,12 @@ h5 {
   border-bottom: 3px solid #F1CDB3;
 }
 
+.disabled-link {
+  color: #CDCDCD;
+}
+.disabled-link:hover {
+  cursor: default;
+}
 
 @media (max-width:1279px){
   .header {
@@ -505,6 +515,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: all;
 }
 
 .btn-left-wrapper,
@@ -515,6 +526,7 @@ h2 {
   width: 15%;
   display: flex;
   align-items: center;
+  pointer-events: none;
 }
 
 .btn-left-wrapper {
@@ -996,6 +1008,11 @@ h2 {
   border-radius: 9px;
   display: flex;
   align-items: center;
+}
+
+.credit-card:hover {
+  cursor: pointer;
+  background: #FDDCC4;
 }
 
 .credit-card-content {
