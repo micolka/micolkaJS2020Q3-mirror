@@ -17,7 +17,7 @@ h4 {
   position: sticky;
   top: 0;
   margin: 0 auto;
-  width: 1280px;
+  max-width: 1280px;
   height: 120px;
   display: flex;
   align-items: center;
@@ -170,8 +170,7 @@ h3 {
 
 @media (max-width:1279px){
   .header {
-    width: 100%;
-    min-width: 768px;
+    max-width: 768px;
   }
   .header-container {
     width: 92.1875%;    
@@ -267,7 +266,7 @@ h3 {
 }
 
 .pets {
-  width: 1280px;
+  max-width: 1280px;
   height: 1342px;
   margin: 0 auto;
   background: #F6F6F6;
@@ -413,8 +412,7 @@ h5 {
 
 @media (max-width:1279px){
   .pets {
-    width: 100%;
-    min-width: 768px;
+    max-width: 768px;
     height: 1733px;
   }
   .pets-wrapper {
@@ -645,7 +643,7 @@ h5 {
 }
 
 .footer {
-  width: 1280px;
+  max-width: 1280px;
   margin: 0 auto;
   height: 350px;
   background: linear-gradient(90deg, #5B483A, #211F20);
@@ -721,8 +719,7 @@ h5 {
 
 @media (max-width:1279px){
   .footer {
-    width: 100%;
-    min-width: 768px;
+    max-width: 768px;
     height: 639px;  
   }
   .footer-wrapper {
