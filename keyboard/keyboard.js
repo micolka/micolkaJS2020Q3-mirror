@@ -1,40 +1,4 @@
-const keyConfig = {
-  en: [
-    "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "backspace",
-    "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
-    "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter",
-    "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/",
-    "done", "space", "en / ru", "left", "right"
-  ],
-  enShifted: [
-    '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'skip',
-    'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', '{', '}',
-    'skip', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', ':', '"', 'skip',
-    'skip', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', '<', '>', '?',
-    'skip', 'skip', 'skip', 'skip', 'skip'
-  ],
-  ru: [
-    "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "skip",
-    "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ",
-    "skip", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "skip",
-    "skip", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".",
-    "skip", "skip", "skip", 'skip', 'skip'
-  ],
-  ruShifted: [
-    "!", '"', "№", ";", "%", ":", "?", "*", "(", ")", "_", "+", "skip",
-    "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr",
-    "skip", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "skip",
-    "skip", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", ",",
-    "skip", "skip", "skip", 'skip', 'skip'
-  ],
-  keyCodes: [
-  49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 8,
-  81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 219, 221,
-  20, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222, 13,
-  16, 90, 88, 67, 86, 66, 78, 77, 188, 190, 191,
-  -1, 32, -1, 37, 39
-  ]
-}
+import {keyConfig} from './config.js'
 
 class VirtualKeyboard {
   constructor(keyConfig) {
@@ -55,6 +19,7 @@ class VirtualKeyboard {
     this.keyboard = this._buildKeyboard();
     this._setTextAreaBindings();
     this._buildOptionsPanel();
+    this._initVoiceRecognition();
     this.keyboardKeys = document.querySelectorAll('.keyboard__key');
   }
 
@@ -106,7 +71,7 @@ class VirtualKeyboard {
           this.engKeyConfig[el] = 'skip';
 
           key.addEventListener('click', () => {
-            this.addSymbol(' ');
+            this.addString(' ');
             this._playSound('space_bar');
           })
 
@@ -175,7 +140,7 @@ class VirtualKeyboard {
           this.engKeyConfig[el] = 'skip';
 
           key.addEventListener('click', () => {
-            this.addSymbol('\n');
+            this.addString('\n');
             this._playSound('return');
           })  
 
@@ -209,7 +174,7 @@ class VirtualKeyboard {
 
         default:
           key.addEventListener('click', () => {
-            this.addSymbol(key.textContent);
+            this.addString(key.textContent);
             (this.language === 'en') ? this._playSound('any_key') : this._playSound('any_key_ru');
           })  
       }
@@ -238,32 +203,71 @@ class VirtualKeyboard {
     soundKey.addEventListener('click', () => {
       this._toggleSound();
       this._playSound('onoff');
-      if (this.isSoundOn) {
-        soundKey.innerHTML = createIconHTML('volume_up');
-      } else {
-        soundKey.innerHTML = createIconHTML('volume_off');
-      }
+      soundKey.innerHTML = this.isSoundOn ? createIconHTML('volume_up') : createIconHTML('volume_off');
     })  
     panel.appendChild(soundKey);
 
     let recordKey = document.createElement('button');
     recordKey.classList.add('options__key', 'microphone');
-    recordKey.innerHTML = createIconHTML('mic');
+    recordKey.innerHTML = createIconHTML('mic_off');
     recordKey.addEventListener('click', () => {
       this._toggleVoiceInput();
       this._playSound('onoff');
+      recordKey.innerHTML = this.isVoiceInputOn ? createIconHTML('mic') : createIconHTML('mic_off');
+      this._recognizeVoiceInput();
     })  
     panel.appendChild(recordKey);
 
     document.querySelector('body').append(panel);
   }
+  
+  _toggleVoiceInput() {
+    this.isVoiceInputOn = !this.isVoiceInputOn;
+  }
+
+  _initVoiceRecognition() {
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    this.recognition = new SpeechRecognition();
+    this.recognition.interimResults = true;
+    this.recognition.lang = 'en-US';
+    this.tmpResult = '';
+    this.recognitionResult = [];
+
+    this.recognition.addEventListener('result', e => {
+      this.transcript = Array.from(e.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('')
+
+      console.log(this.transcript);
+      this.tmpResult = this.transcript;
+      if (e.results[0].isFinal) {
+        this.recognitionResult.push(this.tmpResult);
+      }
+    });    
+
+    this.recognition.addEventListener('end', () => {
+      if (this.isVoiceInputOn) {
+        this.recognition.start();
+      } else {
+        this.addString(this.recognitionResult.join(' '));
+      }
+    });
+  }
+
+  _recognizeVoiceInput() {
+    if (this.isVoiceInputOn) {
+      this.recognition.lang = this.language === 'en' ? 'en-US' : 'ru-RU';
+      this.recognitionResult = [];
+      this.recognition.start();
+    } else {
+      this.recognition.stop();
+    }
+  }
 
   _toggleSound() {
     this.isSoundOn = !this.isSoundOn;
-  }
-
-  _toggleVoiceInput() {
-    this.isVoiceInputOn = !this.isVoiceInputOn;
   }
 
   _playSound(filename) {
@@ -387,21 +391,21 @@ class VirtualKeyboard {
   }
 
   _toggleCaps() {
-    this.isCaps ? this.isCaps = false : this.isCaps = true; 
+    this.isCaps = !this.isCaps;
   }  
 
   _toggleShift() {
-    this.isShifted ? this.isShifted = false : this.isShifted = true;
+    this.isShifted != this.isShifted;
   }
 
   _toggleLang() {
     this.language === 'en' ? this.language = 'ru' : this.language = 'en';
   }
 
-  addSymbol(symbol) {
+  addString(text) {
     this.value = this.value.slice(0, this.cursorPosition) 
-      + symbol + this.value.slice(this.cursorPosition);
-    this.cursorPosition++;
+      + text + this.value.slice(this.cursorPosition);
+    this.cursorPosition += text.length;
     this.textArea.value = this.value;
     this._textAreaReturnFocus();
   }
