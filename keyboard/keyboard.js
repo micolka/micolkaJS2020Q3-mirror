@@ -4,28 +4,28 @@ const keyConfig = {
     "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
     "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter",
     "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/",
-    "done", "space", "en / ru"
+    "done", "space", "en / ru", "left", "right"
   ],
   enShifted: [
     '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'skip',
     'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', '{', '}',
     'skip', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', ':', '"', 'skip',
     'skip', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', 'ltr', '<', '>', '?',
-    'skip', 'skip', 'skip'
+    'skip', 'skip', 'skip', 'skip', 'skip'
   ],
   ru: [
     "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "skip",
     "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ",
     "skip", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "skip",
     "skip", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".",
-    "skip", "skip", "skip"
+    "skip", "skip", "skip", 'skip', 'skip'
   ],
   ruShifted: [
     "!", '"', "№", ";", "%", ":", "?", "*", "(", ")", "_", "+", "skip",
     "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr",
     "skip", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "skip",
     "skip", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", ",",
-    "skip", "skip", "skip"
+    "skip", "skip", "skip", 'skip', 'skip'
   ],
 }
 
@@ -38,6 +38,8 @@ class VirtualKeyboard {
     this.isCaps = false;
     this.isShifted = false;
     this.language = 'en';
+    this.isSoundOn = true;
+    this.isVoiceInputOn = false;
   }
 
   init() {
@@ -45,6 +47,7 @@ class VirtualKeyboard {
     this.value = this.textArea.value;
     this.keyboard = this._buildKeyboard();
     this._setTextAreaBindings();
+    this._buildOptionsPanel();
     this.keyboardKeys = document.querySelectorAll('.keyboard__key');
   }
 
@@ -84,6 +87,7 @@ class VirtualKeyboard {
 
           key.addEventListener('click', () => {
             this.removeSymbol();
+            this._playSound('backspace');
           })       
 
           break;
@@ -95,6 +99,7 @@ class VirtualKeyboard {
 
           key.addEventListener('click', () => {
             this.addSymbol(' ');
+            this._playSound('space_bar');
           })
 
           break;
@@ -108,6 +113,7 @@ class VirtualKeyboard {
             this._toggleShift();
             this._shiftKeys();
             key.classList.toggle('keyboard__key--active');
+            this._playSound('shift');
           });
           
           break;
@@ -121,6 +127,7 @@ class VirtualKeyboard {
             key.textContent === 'EN / ru' ? key.textContent = 'en / RU' : key.textContent = 'EN / ru';
             this._toggleLang();
             this._changeLang();
+            this._playSound('lang');
           });
           
           break;
@@ -137,7 +144,7 @@ class VirtualKeyboard {
                 el.textContent = this._convertCase(el);
               } 
             });
-            
+            this._playSound('caps');
             key.classList.toggle('keyboard__key--active');
           });
 
@@ -161,13 +168,41 @@ class VirtualKeyboard {
 
           key.addEventListener('click', () => {
             this.addSymbol('\n');
+            this._playSound('return');
           })  
 
           break;
 
+          case `left`:
+            key.classList.add('keyboard__key');
+            key.innerHTML = createIconHTML('keyboard_arrow_left');
+            this.engKeyConfig[el] = 'skip';
+  
+            key.addEventListener('click', () => {          
+              this.cursorPosition !== 0 ? this.cursorPosition-- : this.cursorPosition = 0;
+              this._textAreaReturnFocus();
+              this._playSound('caps');
+            })  
+  
+            break;          
+            
+          case `right`:
+            key.classList.add('keyboard__key');
+            key.innerHTML = createIconHTML('keyboard_arrow_right');
+            this.engKeyConfig[el] = 'skip';
+  
+            key.addEventListener('click', () => {
+              this.cursorPosition !== this.value.length ? this.cursorPosition++ : this.cursorPosition = this.value.length;
+              this._textAreaReturnFocus();
+              this._playSound('caps');
+            })  
+  
+            break;
+
         default:
           key.addEventListener('click', () => {
             this.addSymbol(key.textContent);
+            (this.language === 'en') ? this._playSound('any_key') : this._playSound('any_key_ru');
           })  
       }
       fragment.appendChild(key);
@@ -181,6 +216,58 @@ class VirtualKeyboard {
     return fragment;
   }
 
+  _buildOptionsPanel() {
+    let panel = document.createElement('div');
+    panel.classList.add('options_panel');
+
+    const createIconHTML = (icon) => {
+      return `<i class="material-icons">${icon}</i>`
+    }
+
+    let soundKey = document.createElement('button');
+    soundKey.classList.add('options__key', 'sound');
+    soundKey.innerHTML = createIconHTML('volume_up');
+    soundKey.addEventListener('click', () => {
+      this._toggleSound();
+      this._playSound('onoff');
+      if (this.isSoundOn) {
+        soundKey.innerHTML = createIconHTML('volume_up');
+      } else {
+        soundKey.innerHTML = createIconHTML('volume_off');
+      }
+
+    })  
+    panel.appendChild(soundKey);
+
+    let recordKey = document.createElement('button');
+    recordKey.classList.add('options__key', 'microphone');
+    recordKey.innerHTML = createIconHTML('mic');
+    recordKey.addEventListener('click', () => {
+      this._toggleVoiceInput();
+      this._playSound('onoff');
+    })  
+    panel.appendChild(recordKey);
+
+    document.querySelector('body').append(panel);
+  }
+
+  _toggleSound() {
+    this.isSoundOn = !this.isSoundOn;
+  }
+
+  _toggleVoiceInput() {
+    this.isVoiceInputOn = !this.isVoiceInputOn;
+  }
+
+  _playSound(filename) {
+    if (this.isSoundOn) {
+      let audio = new Audio();
+      audio.preload = 'auto';
+      audio.src = `keyboard/assets/sound/${filename}.mp3`;
+      audio.play();
+    }
+  }
+
   _shiftKeys() {
     this.keyboardKeys.forEach( (el, i) => { 
       if (this.language === 'en') {
@@ -192,6 +279,7 @@ class VirtualKeyboard {
               ? this._swingKeys(el, this.keyConfig.ru[i]) 
               : this._swingKeys(el, this.keyConfig.ruShifted[i]);
       }
+      this._convertCase(el);
     })
   }
 
@@ -223,8 +311,10 @@ class VirtualKeyboard {
       a4Tech.open();
     })
 
-    this.textArea.addEventListener('input', () => {
+    this.textArea.addEventListener('input', (e) => {
+      console.log(e);
       this.value = this.textArea.value;
+      this.cursorPosition = this.textArea.selectionStart;
     })
 
     this.textArea.addEventListener('click', () => {
@@ -245,17 +335,14 @@ class VirtualKeyboard {
 
   _toggleCaps() {
     this.isCaps ? this.isCaps = false : this.isCaps = true; 
-    console.log('isCaps:' + this.isCaps);
   }  
 
   _toggleShift() {
     this.isShifted ? this.isShifted = false : this.isShifted = true;
-    console.log('isShifted:' + this.isShifted);
   }
 
   _toggleLang() {
     this.language === 'en' ? this.language = 'ru' : this.language = 'en';
-    console.log(this.language);
   }
 
   addSymbol(symbol) {
@@ -275,13 +362,16 @@ class VirtualKeyboard {
   }
 
   open() {
-    this.keyboard.classList.remove('keyboard--hidden');
+    if (this.keyboard.classList.contains('keyboard--hidden')) {
+      this.keyboard.classList.remove('keyboard--hidden');
+      this._playSound('show');
+    }
   }
 
   close() {
     this.keyboard.classList.add('keyboard--hidden');
+    this._playSound('hide');
   }
-
 }
 
 const a4Tech = new VirtualKeyboard(keyConfig);

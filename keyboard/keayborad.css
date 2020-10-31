@@ -1,3 +1,11 @@
+body {
+  padding: 20px 2.5% 0 2.5%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
 .keyboard {
   position: fixed;
   left: 0;
@@ -70,4 +78,16 @@
 
 .keyboard__key--dark {
   background: rgba(0, 0, 0, 0.25);
+}
+
+.options_panel {
+  width: fit-content;
+  display: flex;
+  column-gap: 5px;
+}
+
+.options_key {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
