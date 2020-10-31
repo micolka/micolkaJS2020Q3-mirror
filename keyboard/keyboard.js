@@ -27,6 +27,13 @@ const keyConfig = {
     "skip", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", "ltr", ",",
     "skip", "skip", "skip", 'skip', 'skip'
   ],
+  keyCodes: [
+  49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 8,
+  81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 219, 221,
+  20, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222, 13,
+  16, 90, 88, 67, 86, 66, 78, 77, 188, 190, 191,
+  -1, 32, -1, 37, 39
+  ]
 }
 
 class VirtualKeyboard {
@@ -75,6 +82,7 @@ class VirtualKeyboard {
     for (let el in this.engKeyConfig) {
       let key = document.createElement('button');
       key.classList.add('keyboard__key');
+      key.setAttribute('data-key-code', keyConfig.keyCodes[el]);
       key.textContent = this.engKeyConfig[el];
       key.type = 'button';
 
@@ -235,7 +243,6 @@ class VirtualKeyboard {
       } else {
         soundKey.innerHTML = createIconHTML('volume_off');
       }
-
     })  
     panel.appendChild(soundKey);
 
@@ -309,17 +316,63 @@ class VirtualKeyboard {
   _setTextAreaBindings() {
     this.textArea.addEventListener('focus', () => {
       a4Tech.open();
-    })
+    });
 
-    this.textArea.addEventListener('input', (e) => {
-      console.log(e);
+    this.textArea.addEventListener('input', () => {
       this.value = this.textArea.value;
       this.cursorPosition = this.textArea.selectionStart;
-    })
+    });
 
     this.textArea.addEventListener('click', () => {
       this.cursorPosition = this.textArea.selectionStart;
-    })
+    });
+
+    this.textArea.addEventListener('keydown', (event) => {
+      this.keyboardKeys.forEach( (el) => {
+        if (+event.keyCode === +el.dataset.keyCode) {
+
+          switch (+el.dataset.keyCode) {
+            case 20: 
+             if (event.repeat === false) {
+                this._toggleCaps();
+                document.querySelectorAll('.keyboard__key').forEach( (key) => {
+                  if (key.textContent.length === 1) {
+                    key.textContent = this._convertCase(key);
+                  } 
+                });
+                el.classList.toggle('keyboard__key--active');
+                el.classList.toggle('keyboard__key_pressed');
+              }
+              break;
+              
+            case 16:
+              if (event.repeat === false) {
+                this._toggleShift();
+                this._shiftKeys();
+                el.classList.toggle('keyboard__key--active');
+                el.classList.toggle('keyboard__key_pressed');
+              }
+              break;
+            default:
+              el.classList.toggle('keyboard__key_pressed');
+          }
+        }
+      });
+    });
+
+    this.textArea.addEventListener('keyup', (event) => {
+      this.keyboardKeys.forEach( (el) => {
+        if (+event.keyCode === +el.dataset.keyCode) {
+          el.classList.toggle('keyboard__key_pressed');
+          if (+el.dataset.keyCode === 16) {
+            this._toggleShift();
+            this._shiftKeys();
+            el.classList.toggle('keyboard__key--active');
+          }
+        }  
+      });
+    });
+
   }
 
   _textAreaReturnFocus() {
