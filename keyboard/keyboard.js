@@ -274,7 +274,7 @@ class VirtualKeyboard {
     if (this.isSoundOn) {
       let audio = new Audio();
       audio.preload = 'auto';
-      audio.src = `keyboard/assets/sound/${filename}.mp3`;
+      audio.src = `assets/sound/${filename}.mp3`;
       audio.play();
     }
   }
