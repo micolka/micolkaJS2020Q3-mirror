@@ -18,7 +18,7 @@ class VirtualKeyboard {
     this.value = this.textArea.value;
     this.keyboard = this._buildKeyboard();
     this._setTextAreaBindings();
-    this._buildOptionsPanel();
+    this.panel = this._buildOptionsPanel();
     this._initVoiceRecognition();
     this.keyboardKeys = document.querySelectorAll('.keyboard__key');
   }
@@ -27,7 +27,7 @@ class VirtualKeyboard {
     let keyboard = document.createElement('div');
     let keyboardKeys = document.createElement('div');
 
-    keyboard.classList.add('keyboard');//, 'keyboard--hidden');
+    keyboard.classList.add('keyboard', 'keyboard--hidden');
     keyboardKeys.classList.add('keyboard__keys');
     keyboardKeys.appendChild(this._createKeys());
 
@@ -191,14 +191,14 @@ class VirtualKeyboard {
 
   _buildOptionsPanel() {
     let panel = document.createElement('div');
-    panel.classList.add('options_panel');
+    panel.classList.add('options_panel', 'options_panel-hidden');
 
     const createIconHTML = (icon) => {
       return `<i class="material-icons">${icon}</i>`
     }
 
     let soundKey = document.createElement('button');
-    soundKey.classList.add('options__key', 'sound');
+    soundKey.classList.add('options__key-sound');
     soundKey.innerHTML = createIconHTML('volume_up');
     soundKey.addEventListener('click', () => {
       this._toggleSound();
@@ -208,17 +208,20 @@ class VirtualKeyboard {
     panel.appendChild(soundKey);
 
     let recordKey = document.createElement('button');
-    recordKey.classList.add('options__key', 'microphone');
+    recordKey.classList.add('options__key-microphone');
     recordKey.innerHTML = createIconHTML('mic_off');
     recordKey.addEventListener('click', () => {
       this._toggleVoiceInput();
       this._playSound('onoff');
       recordKey.innerHTML = this.isVoiceInputOn ? createIconHTML('mic') : createIconHTML('mic_off');
+      recordKey.classList.toggle('options__key-active');
       this._recognizeVoiceInput();
     })  
     panel.appendChild(recordKey);
 
     document.querySelector('body').append(panel);
+
+    return panel;
   }
   
   _toggleVoiceInput() {
@@ -232,26 +235,22 @@ class VirtualKeyboard {
     this.recognition.interimResults = true;
     this.recognition.lang = 'en-US';
     this.tmpResult = '';
-    this.recognitionResult = [];
 
     this.recognition.addEventListener('result', e => {
-      this.transcript = Array.from(e.results)
+      let transcript = Array.from(e.results)
         .map(result => result[0])
         .map(result => result.transcript)
         .join('')
 
-      console.log(this.transcript);
-      this.tmpResult = this.transcript;
+      console.log(transcript);
       if (e.results[0].isFinal) {
-        this.recognitionResult.push(this.tmpResult);
+        this.addString(transcript);
       }
     });    
 
     this.recognition.addEventListener('end', () => {
       if (this.isVoiceInputOn) {
         this.recognition.start();
-      } else {
-        this.addString(this.recognitionResult.join(' '));
       }
     });
   }
@@ -259,7 +258,6 @@ class VirtualKeyboard {
   _recognizeVoiceInput() {
     if (this.isVoiceInputOn) {
       this.recognition.lang = this.language === 'en' ? 'en-US' : 'ru-RU';
-      this.recognitionResult = [];
       this.recognition.start();
     } else {
       this.recognition.stop();
@@ -290,7 +288,9 @@ class VirtualKeyboard {
               ? this._swingKeys(el, this.keyConfig.ru[i]) 
               : this._swingKeys(el, this.keyConfig.ruShifted[i]);
       }
-      this._convertCase(el);
+      if (el.textContent.length === 1) {
+        el.textContent = this._convertCase(el);
+      } 
     })
   }
 
@@ -386,8 +386,12 @@ class VirtualKeyboard {
   }
 
   _convertCase(el) {
-    if ( (this.isCaps && this.isShifted) || (!this.isCaps && !this.isShifted)) return el.textContent.toLowerCase();
-    if ( (!this.isCaps && this.isShifted) || (this.isCaps && !this.isShifted)) return el.textContent.toUpperCase();
+      if ( (this.isCaps && this.isShifted) || (!this.isCaps && !this.isShifted)) {
+        return el.textContent.toLowerCase();
+      }
+      if ( (!this.isCaps && this.isShifted) || (this.isCaps && !this.isShifted)) {
+        return el.textContent.toUpperCase();
+      }
   }
 
   _toggleCaps() {
@@ -395,7 +399,7 @@ class VirtualKeyboard {
   }  
 
   _toggleShift() {
-    this.isShifted != this.isShifted;
+    this.isShifted = !this.isShifted;
   }
 
   _toggleLang() {
@@ -421,12 +425,14 @@ class VirtualKeyboard {
   open() {
     if (this.keyboard.classList.contains('keyboard--hidden')) {
       this.keyboard.classList.remove('keyboard--hidden');
+      this.panel.classList.remove('options_panel-hidden');
       this._playSound('show');
     }
   }
 
   close() {
     this.keyboard.classList.add('keyboard--hidden');
+    this.panel.classList.add('options_panel-hidden');
     this._playSound('hide');
   }
 }

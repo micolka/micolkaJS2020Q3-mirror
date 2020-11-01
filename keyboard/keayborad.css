@@ -88,10 +88,24 @@ body {
   width: fit-content;
   display: flex;
   column-gap: 5px;
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 0.4s ease-out 0.4s;
 }
 
-.options_key {
+.options_panel-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.options__key-microphone,
+.options__key-sound {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.options__key-active i {
+  color: red;
 }
