@@ -50,10 +50,20 @@ body {
 
 .keyboard__key:active {
   background: rgba(255, 255, 255, 0.12);
+  -webkit-box-shadow: 0px 0px 12px 5px #e5f50a;
+  -moz-box-shadow: 0px 0px 12px 5px #e5f50a;
+  box-shadow: 0px 0px 12px 5px #e5f50a;
+  color:#e5f50a;
+  font-size: 1.5rem;
 }
 
 .keyboard__key_pressed {
   background: rgba(255, 255, 255, 0.12);
+  -webkit-box-shadow: 0px 0px 12px 5px rgba(8,245,166,1);
+  -moz-box-shadow: 0px 0px 12px 5px rgba(8,245,166,1);
+  box-shadow: 0px 0px 12px 5px rgba(8,245,166,1);
+  color: rgba(8,245,166,1);
+  font-size: 1.5rem;
 }
 
 .keyboard__key--wide {

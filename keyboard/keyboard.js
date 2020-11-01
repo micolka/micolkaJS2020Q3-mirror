@@ -181,7 +181,7 @@ class VirtualKeyboard {
       fragment.appendChild(key);
 
       if (key.textContent === 'backspace' || key.textContent === ']' 
-            || key.textContent === 'keyboard_return' || key.textContent === '/') {
+            || key.textContent === "'" || key.textContent === '/') {
         fragment.appendChild(document.createElement('br'));
       }
     }
@@ -204,6 +204,7 @@ class VirtualKeyboard {
       this._toggleSound();
       this._playSound('onoff');
       soundKey.innerHTML = this.isSoundOn ? createIconHTML('volume_up') : createIconHTML('volume_off');
+      this._textAreaReturnFocus();
     })  
     panel.appendChild(soundKey);
 
@@ -216,6 +217,7 @@ class VirtualKeyboard {
       recordKey.innerHTML = this.isVoiceInputOn ? createIconHTML('mic') : createIconHTML('mic_off');
       recordKey.classList.toggle('options__key-active');
       this._recognizeVoiceInput();
+      this._textAreaReturnFocus();
     })  
     panel.appendChild(recordKey);
 
