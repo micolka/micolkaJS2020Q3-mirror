@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shelter</title>
+  <link rel="stylesheet" href="../normalize.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <header class="header">
+    <section class="header-container">
+      <div class="header-menu-background" ></div>
+      <div onclick="return location.href='../main/index.html'" class="header-logo">
+        <h1 class="header-logo-title">Cozy House</h1>
+        <p class="header-logo-subtitle">Shelter for pets in Boston</p>
+      </div>
+       <div class="header-nav-menu">
+       <ul>
+         <li><a class="header-nav-link" href="../main/index.html">About the shelter</a></li>
+         <li><a class="header-nav-active" href="#">Our pets</a></li>
+         <li><a class="disabled-link" href="#">Help the shelter</a></li>
+         <li><a class="disabled-link" href="#">Contacts</a></li>
+       </ul>
+      </div>
+      <div class="header-mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </section>
+  </header>
+
+  <article class="pets">
+    <section class="pets-wrapper">
+      <h3 class="pw-heading h3-mobile">Our friends who<br/>
+        are looking for a house</h3>
+      <div class="pets-card-wrapper">
+
+        <div class="pets-card">
+          <img src="" alt="pet-img">
+          <p class="pet-card-title"></p>
+          <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
+        </div>
+         <div class="pets-card">
+           <img src="" alt="pet-img">
+           <p class="pet-card-title"></p>
+           <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
+         </div>
+         <div class="pets-card">
+           <img src="" alt="pet-img">
+           <p class="pet-card-title"></p>
+           <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
+         </div>
+         <div class="pets-card">
+          <img src="" alt="pet-img">
+          <p class="pet-card-title"></p>
+          <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
+        </div>
+
+        <div class="pets-card">
+          <img src="" alt="pet-img">
+          <p class="pet-card-title"></p>
+          <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
+        </div>
+         <div class="pets-card">
+           <img src="" alt="pet-img">
+           <p class="pet-card-title"></p>
+           <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
+         </div>
+         <div class="pets-card">
+           <img src="" alt="pet-img">
+           <p class="pet-card-title"></p>
+           <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
+         </div>
+         <div class="pets-card">
+          <img src="" alt="pet-img">
+          <p class="pet-card-title"></p>
+          <button data-open-button id="0" class="button-clear-style pet-card-button">Learn more</button>
+        </div>
+      </div>
+
+      <div class="pets-modal" id="modal">
+        <button data-close-button class="modal-close-button button-clear-style pagination-btn">&times;</button>
+        <div class="modal-body">
+          <img src="" alt="pet-img">
+          <div class="modal-body-content">
+            <h3></h3>
+            <h4></h3>
+            <h5></h5>
+            <ul>
+              <li></li>
+              <li><b>Inoculations:</b> none</li>
+              <li><b>Diseases:</b> none</li>
+              <li><b>Parasites:</b> none</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="page-overlay"></div> 
+
+      <section class="pagination">
+        <button disabled data-start class="button-clear-style pagination-btn"><h4><<</h4></button>        
+        <button disabled data-left class="button-clear-style pagination-btn"><h4><</h4></button>       
+        <button data-counter class="button-clear-style pagination-btn pagination-btn-static"><h4>1</h4></button>        
+        <button data-right class="button-clear-style pagination-btn"><h4>></h4></button>        
+        <button data-end class="button-clear-style pagination-btn"><h4>>></h4></button>
+      </section>
+
+    </section>
+  </article>
+
+  <footer class="footer">
+    <section class="footer-wrapper">
+      <div class="contacts">
+        <h3 class="contacts-title">For questions and suggestions</h3>
+          <a class="footer-email" href="mailto:email@shelter.com">
+            <img src="../../assets/icons/icon-email.png" alt="email">
+            <h4>email@shelter.com</h4>
+          </a>      
+        <a href="tel:+13 674 567 75 54" class="footer-phone">
+          <img src="../../assets/icons/icon-phone.png" alt="phone">
+          <h4>+13 674 567 75 54</h4>
+        </a>
+      </div>
+      <div class="location">
+        <h3 class="location-title">We are waiting for your visit</h3>
+        <a href="https://www.google.ru/maps/place/1+Central+St,+Boston,+MA+02109,+USA/@42.3619321,-71.0564382,14z/data=!4m5!3m4!1s0x89e370868bc2ce7b:0x82fa7db94f5fea9e!8m2!3d42.3585519!4d-71.0547263" class="footer-boston">
+          <img src="../../assets/icons/icon-marker.png" alt="marker">
+          <h4>1 Central Street, Boston (entrance from the store)</h4>
+        </a>
+        <a href="https://www.google.ru/maps/place/South+Park+Court,+18+S+Park+Rd,+London+SW19+8TD,+UK/@51.4201522,-0.201989,17.25z/data=!4m5!3m4!1s0x487608baa7401b31:0x873a95ca58e122b2!8m2!3d51.4202122!4d-0.2001554" class="footer-london">
+          <img src="../../assets/icons/icon-marker.png" alt="marker">
+          <h4>18 South Park, London</h4>
+        </a>
+      </div>
+      <img class="puppy-img" src="../../assets/images/footer-puppy.png" alt="footer">
+    </section>
+  </footer>
+  <script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  height: 100vh;
+  color: white;
+  text-shadow: 4px 4px 2px rgba(150, 150, 150, 1);
+  opacity: 0.8;
+  transition: background-image 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#time,
+#day,
+#date {
+  font-size: 8rem;
+}
+
+h1 {
+  margin-bottom: 3rem;
+}
+
+h2 {
+  margin-bottom: 0.5rem;
+}
+
+#focus {
+  font-size: 1.8rem;
+  border: 0;
+  background: none;
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  text-shadow: 4px 4px 2px rgba(150, 150, 150, 1);
+  font-family: 'Quicksand', sans-serif;
+  outline: 0;
+  text-align: center;
+  width: 60%;
+}
+
+
+
+.timer-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.time-day-wrapper {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.button {
+  padding: 10px;
+  border: none;
+  background: none;
+  color: #fff;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.4rem;
+  outline: none;
+}
+
+.button:hover {
+  cursor: pointer;
+  background: white;
+  color: #000000;
+  transition: all 0.4s ease-in-out;
+}
+.button:active {
+  opacity: 0.9;
+}
+
+.change-quote-wrapper {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+}
+.quote {
+  width: fit-content;
+  padding-right: 1%;
+}
+.top-content{
+  display: flex;
+  justify-content: space-between;
+}
+.weather-wrapper {
+  margin-right: 1%;
+  font-size: 1.5rem;
+}
+
+@media(max-width: 767px) {
+  #time,
+  #day,
+  #date {
+    font-size: 6rem;
+  }
+}
+
+@media(max-width: 400px) {
+  #time,
+  #day,
+  #date {
+    font-size: 1.8rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .button {
+    font-size: 1rem;
+  }
+  #focus {
+    font-size: 1rem;
+  }
+  .quote{
+    font-size: 1rem;
+  }
+}
+

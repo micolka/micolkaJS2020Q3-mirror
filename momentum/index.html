@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Momentum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/owfont-regular.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="top-content">
+    <div class="change-bg-wrapper">
+      <button class="button" id="change-bg">Change BG</button>
+    </div>
+    <div class="weather-wrapper">
+      <div class="city" contenteditable="true"></div>
+      <i class="weather-icon owf"></i>
+      <div class="temperature"></div>
+      <div class="humidity"></div>
+      <div class="wind-speed"></div>
+    </div>
+  </div>
+
+  <div class="timer-wrapper">
+      <time id="time"></time>
+      <span id="day"></span>
+    <span id="date"></span>
+    <h1>
+      <span id="greeting"></span>
+      <span id="name" contenteditable="true"></span>
+    </h1>
+    <h2>
+      <span>What is your focus for today?</span></br>
+    </h2>
+    <input id="focus" type="text" autocomplete="off" contenteditable="true">
+  </div>
+  <div class="change-quote-wrapper">
+    <button class="button" id="change-q">Change Quote</button>
+    <figure class="quote">
+      <blockquote>
+        You were not born a winner, and you were not born a loser. You are what you make yourself be.
+      </blockquote>
+      <figcaption> 
+        Lou Holtz
+      </figcaption>
+    </figure>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
