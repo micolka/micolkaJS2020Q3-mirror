@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.tile {
+  width: 80px;
+  height: 80px;
+  margin: 0;
+
+  position: fixed;
+
+  background: aqua;
+  border: 1px solid teal;
+  border-radius: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  user-select: none;
+}
+
+.tile:hover {
+  cursor: pointer;
+  opacity: .7;
+  transition: .2s;
+}
+
+.empty,
+.empty:hover {
+  opacity: 0;
+}
+
+.field {
+  width: 400px;
+  height: 400px;
+  background-color: tomato;
+}
