@@ -1,22 +1,18 @@
-const config = [
-  {},
-
-]
-
-
 class gemPuzzle {
   constructor() {
+    this.turnsCount = 0;
     this.tileSize = 80;
     this.tileGap = 10;
     this.fieldSize = 4;
   }
 
   init() {
+    this.body = document.querySelector('body');
     this.field = this.createTileFiled();
+    this.stats = this.createStatsPanel();
   }
 
   createTileFiled() {
-    const body = document.querySelector('body');
     const field = document.createElement('div');
     field.classList.add('field');
     
@@ -51,11 +47,10 @@ class gemPuzzle {
       field.appendChild(tile);
     }
 
-    body.appendChild(field);
+    this.body.appendChild(field);
 
     return field;
   }
-
 
   shiftTiles(target) {
     let top = target.style.top;
@@ -71,9 +66,35 @@ class gemPuzzle {
       target.style.left = emptyChild.style.left;
       emptyChild.style.left = left;
       emptyChild.style.top = top;
+      this.turnsCount++;
+      this.stats.innerText = this.turnsCount;
     }
   }
 
+  createStatsPanel() {
+    const panel = document.createElement('div');
+    panel.classList.add('stats-panel');
+    panel.innerText = this.turnsCount;
+
+    const shuffle = document.createElement('button');
+    shuffle.classList.add('shuffle-button');
+    shuffle.innerText = 'shuffle';
+    shuffle.addEventListener('click', () => {
+      this.shuffleTiles();
+    })
+
+    this.body.appendChild(panel);
+    this.body.appendChild(shuffle);
+
+    return panel;
+  }
+
+  shuffleTiles() {
+    for (let i = 0; i < 1000; i++) {
+      let index = Math.floor(Math.random() * (this.fieldSize ** 2 - 1));
+      this.shiftTiles(this.field.childNodes[index]);
+    }
+  }
 }
 
 const superPuzzle = new gemPuzzle();

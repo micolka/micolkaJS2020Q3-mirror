@@ -29,6 +29,8 @@
 .empty,
 .empty:hover {
   opacity: 0;
+  cursor: auto;
+  pointer-events: none;
 }
 
 .field {
