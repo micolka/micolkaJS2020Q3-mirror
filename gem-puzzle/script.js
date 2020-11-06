@@ -37,7 +37,7 @@ class GemPuzzle {
       tile.style.left = `${xOffset + (i % fieldSize) * (tileSize + tileGap)}px`;
       if (i % fieldSize === 0) j += 1;
       tile.style.top = `${yOffset + j * (tileSize + tileGap)}px`;
-
+      tile.id = i;
       if (i < fieldSize ** 2 - 1) {
         tile.innerText = `${i + 1}`;
       } else {
@@ -63,18 +63,21 @@ class GemPuzzle {
 
   // Shift tile with and empty space if it nearby
   shiftTiles(target) {
-    const tile = target;
-    const { top, left } = target.style;
-
-    const emptyChildIndex = this.fieldSize ** 2 - 1;
-    const emptyChild = this.field.childNodes[emptyChildIndex];
-
     if (this.isTargetNearEmptySpace(target)) {
+      const tile = target;
+      const { top, left } = target.style;
+      const { id } = target;
+
+      const emptyChildIndex = this.fieldSize ** 2 - 1;
+      const emptyChild = this.field.childNodes[emptyChildIndex];
+
       tile.style.top = emptyChild.style.top;
       tile.style.left = emptyChild.style.left;
+      tile.id = emptyChild.id;
 
       emptyChild.style.left = left;
       emptyChild.style.top = top;
+      emptyChild.id = id;
       this.updateCounter();
     }
   }
@@ -100,6 +103,13 @@ class GemPuzzle {
       && Math.abs(parseInt(left, 10) - parseInt(emptyChild.style.left, 10)) === delta)
       || (left === emptyChild.style.left
       && Math.abs(parseInt(top, 10) - parseInt(emptyChild.style.top, 10)) === delta);
+  }
+
+  isGameSolved() {
+    for (let i = 0; i < this.fieldSize ** 2; i += 1) {
+      if (+this.field.childNodes[i].id !== i) return false;
+    }
+    return true;
   }
 
   runGameTimer(countDate) {
@@ -225,6 +235,7 @@ class GemPuzzle {
 
     let isMoved = false;
     const { top, left } = target.style;
+    const { id } = target;
     const shiftX = event.clientX - target.getBoundingClientRect().left;
     const shiftY = event.clientY - target.getBoundingClientRect().top;
     target.style.zIndex = 1000;
@@ -248,14 +259,22 @@ class GemPuzzle {
         || !isMoved) {
         target.style.top = emptyChild.style.top;
         target.style.left = emptyChild.style.left;
+        target.id = emptyChild.id;
         emptyChild.style.left = left;
         emptyChild.style.top = top;
+        emptyChild.id = id;
       } else {
         target.style.top = top;
         target.style.left = left;
       }
       target.style.zIndex = 'auto';
       this.updateCounter();
+
+      if (this.isGameSolved()) {
+        alert(`Ура! Вы решили головоломку за ${this.gameTimer.innerHTML} и ${this.turnsCount} ходов`);
+        clearInterval(this.timer);
+      }
+
       target.onmouseup = null;
     }
 
