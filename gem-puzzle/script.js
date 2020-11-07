@@ -3,14 +3,14 @@ import { getFormattedTimerData, createIconHTML } from './utils.js';
 class GemPuzzle {
   constructor() {
     this.tileSize = 80;
-    this.tileGap = 10;
+    this.tileGap = 3;
     this.fieldSize = 4;
     this.xOffset = 10;
     this.yOffset = 10;
     this.turnsCount = 0;
     this.initTimeValue = 0;
     this.duration = 0;
-    this.isSoundOn = true;
+    this.isSoundOn = false;
   }
 
   init() {
@@ -31,6 +31,7 @@ class GemPuzzle {
     field.classList.add('field');
     field.style.width = `${(tileGap + tileSize) * fieldSize + tileGap}px`;
     field.style.height = field.style.width;
+    const pictureNumber = Math.floor(Math.random() * 149) + 1;
 
     let j = -1;
     for (let i = 0; i < fieldSize ** 2; i += 1) {
@@ -46,6 +47,7 @@ class GemPuzzle {
       } else {
         tile.classList.add('empty');
       }
+      this.setBackGround(tile, i, j, pictureNumber);
 
       tile.addEventListener('mousedown', (event) => {
         this.grabTile(event);
@@ -62,6 +64,20 @@ class GemPuzzle {
     }
 
     return field;
+  }
+
+  setBackGround(tile, i, j, n) {
+    tile.style.backgroundImage = `url('./assets/images/${n}.jpg')`;
+    tile.style.backgroundSize = `${this.tileSize * this.fieldSize}px`;
+    tile.style.backgroundPositionX = `${(i % this.fieldSize) * -this.tileSize}px`;
+    tile.style.backgroundPositionY = `${j * -this.tileSize}px`;
+  }
+
+  changeBackGround() {
+    const pictureNumber = Math.floor(Math.random() * 149) + 1;
+    this.field.childNodes.forEach((el) => {
+      el.style.backgroundImage = `url('./assets/images/${pictureNumber}.jpg')`;
+    });
   }
 
   // Shift tile with and empty space if it nearby
@@ -209,11 +225,13 @@ class GemPuzzle {
       const index = Math.floor(Math.random() * (this.fieldSize ** 2 - 1));
       this.shiftTiles(this.field.childNodes[index]);
     }
+    this.playSound('shuffle');
   }
 
   // Resets counter, timer and generates new field
   newGame() {
     this.shuffleTiles();
+    this.changeBackGround();
     this.resetCounter();
     this.duration = 0;
     this.initTimeValue = 0;
@@ -243,6 +261,19 @@ class GemPuzzle {
     this.initTimeValue = JSON.parse(localStorage.getItem('duration'));
     this.duration = 0;
     this.runGameTimer(new Date().getTime());
+  }
+
+  updateScores(time) {
+    const scores = [];
+    const date = new Date().toLocaleDateString();
+    const data = {
+      date,
+      fieldSize: this.fieldSize,
+      turnsCount: this.turnsCount,
+      time,
+    };
+    scores.push(data);
+    localStorage.setItem('scores', JSON.stringify(scores));
   }
 
   // Mousedown function for drag and drop tiles
@@ -289,10 +320,12 @@ class GemPuzzle {
       this.updateCounter();
 
       if (this.isGameSolved()) {
-        const data = getFormattedTimerData(this.duration);
-        alert(`Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`);
-        clearInterval(this.timer);
         this.playSound('win31');
+
+        const data = getFormattedTimerData(this.duration);
+        // alert(`Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`);
+        clearInterval(this.timer);
+        this.updateScores(data);
       }
 
       target.onmouseup = null;
