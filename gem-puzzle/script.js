@@ -1,3 +1,5 @@
+import { getFormattedTimerData, createIconHTML } from './utils.js';
+
 class GemPuzzle {
   constructor() {
     this.tileSize = 80;
@@ -8,6 +10,7 @@ class GemPuzzle {
     this.turnsCount = 0;
     this.initTimeValue = 0;
     this.duration = 0;
+    this.isSoundOn = true;
   }
 
   init() {
@@ -112,22 +115,15 @@ class GemPuzzle {
     return true;
   }
 
+  // Display time wasted for puzzle solution
   runGameTimer(countDate) {
     clearInterval(this.timer);
     this.timer = setInterval(() => {
       const now = new Date().getTime();
       this.duration = now - countDate + this.initTimeValue;
+      const data = getFormattedTimerData(this.duration);
 
-      function addZero(param) {
-        const result = param < 10 ? `0${param}` : param;
-        return result;
-      }
-
-      const hours = addZero(Math.floor((this.duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-      const minutes = addZero(Math.floor((this.duration % (1000 * 60 * 60)) / (1000 * 60)));
-      const seconds = addZero(Math.floor((this.duration % (1000 * 60)) / 1000));
-
-      this.gameTimer.innerHTML = `Time: ${hours}:${minutes}:${seconds}`;
+      this.gameTimer.innerHTML = `Time: ${data}`;
     }, 1000);
   }
 
@@ -137,9 +133,11 @@ class GemPuzzle {
     panel.classList.add('stats-panel');
     // Turns counter
     panel.innerText = this.turnsCount;
+    this.body.appendChild(panel);
     // Game timer
     const timer = document.createElement('span');
     timer.classList.add('game_timer');
+    this.body.appendChild(timer);
     // New game button
     const newGame = document.createElement('button');
     newGame.classList.add('new_game-button');
@@ -147,6 +145,7 @@ class GemPuzzle {
     newGame.addEventListener('click', () => {
       this.newGame();
     });
+    this.body.appendChild(newGame);
     // Save game button
     const saveGame = document.createElement('button');
     saveGame.classList.add('save_game-button');
@@ -154,14 +153,16 @@ class GemPuzzle {
     saveGame.addEventListener('click', () => {
       this.saveGame();
     });
-    // Save game button
+    this.body.appendChild(saveGame);
+    // Load game button
     const loadGame = document.createElement('button');
     loadGame.classList.add('load_game-button');
     loadGame.innerText = 'Load Game';
     loadGame.addEventListener('click', () => {
       this.loadGame();
     });
-
+    this.body.appendChild(loadGame);
+    // Field size selector
     const select = document.createElement('select');
     for (let i = 3; i <= 8; i += 1) {
       const option = document.createElement('option');
@@ -175,15 +176,31 @@ class GemPuzzle {
       this.field = this.createTileFiled();
       this.newGame();
     });
-
-    this.body.appendChild(timer);
-    this.body.appendChild(panel);
-    this.body.appendChild(newGame);
-    this.body.appendChild(saveGame);
-    this.body.appendChild(loadGame);
     this.body.appendChild(select);
+    // Sound on/off key
+    const soundKey = document.createElement('button');
+    soundKey.classList.add('options__key-sound');
+    soundKey.innerHTML = createIconHTML('volume_up');
+    soundKey.addEventListener('click', () => {
+      this.toggleSound();
+      soundKey.innerHTML = this.isSoundOn ? createIconHTML('volume_up') : createIconHTML('volume_off');
+    });
+    this.body.appendChild(soundKey);
 
     return panel;
+  }
+
+  toggleSound() {
+    this.isSoundOn = !this.isSoundOn;
+  }
+
+  playSound(filename) {
+    if (this.isSoundOn) {
+      const audio = new Audio();
+      audio.preload = 'auto';
+      audio.src = `assets/sound/${filename}.mp3`;
+      audio.play();
+    }
   }
 
   // Move tiles in random order
@@ -263,6 +280,7 @@ class GemPuzzle {
         emptyChild.style.left = left;
         emptyChild.style.top = top;
         emptyChild.id = id;
+        this.playSound('move');
       } else {
         target.style.top = top;
         target.style.left = left;
@@ -271,8 +289,10 @@ class GemPuzzle {
       this.updateCounter();
 
       if (this.isGameSolved()) {
-        alert(`Ура! Вы решили головоломку за ${this.gameTimer.innerHTML} и ${this.turnsCount} ходов`);
+        const data = getFormattedTimerData(this.duration);
+        alert(`Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`);
         clearInterval(this.timer);
+        this.playSound('win31');
       }
 
       target.onmouseup = null;
