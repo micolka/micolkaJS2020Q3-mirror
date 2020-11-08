@@ -1,46 +1,60 @@
-import { getFormattedTimerData, createIconHTML } from './utils.js';
+import {
+  getFormattedTimerData, createIconHTML, genUrlNumber, playSound,
+} from './utils.js';
 
 class GemPuzzle {
   constructor() {
-    this.tileSize = 80;
+    this.tileSize = 75;
     this.tileGap = 3;
     this.fieldSize = 4;
-    this.xOffset = 10;
-    this.yOffset = 10;
+    this.xOffset = 0;
+    this.yOffset = 0;
     this.turnsCount = 0;
     this.initTimeValue = 0;
     this.duration = 0;
     this.isSoundOn = false;
+    this.scores = [];
   }
 
   init() {
     this.body = document.querySelector('body');
     this.field = this.createTileFiled();
     this.stats = this.createStatsPanel();
-    this.newGame();
+    this.turnsCounter = document.querySelector('.turns-counter');
     this.gameTimer = document.querySelector('.game_timer');
+    this.newGame();
   }
 
   // Create field of tiles
   createTileFiled() {
     const {
-      tileSize, tileGap, fieldSize, yOffset, xOffset,
+      tileSize, tileGap, fieldSize,
     } = this;
 
     const field = document.createElement('div');
     field.classList.add('field');
     field.style.width = `${(tileGap + tileSize) * fieldSize + tileGap}px`;
     field.style.height = field.style.width;
-    const pictureNumber = Math.floor(Math.random() * 149) + 1;
+    if (this.field) {
+      this.body.replaceChild(field, this.field);
+    } else {
+      this.body.appendChild(field);
+    }
+
+    this.xOffset = field.offsetLeft;
+    this.yOffset = field.offsetTop;
+    const pictureNumber = genUrlNumber();
 
     let j = -1;
     for (let i = 0; i < fieldSize ** 2; i += 1) {
       // Create tile and place it on the field
       const tile = document.createElement('div');
       tile.classList.add('tile');
-      tile.style.left = `${xOffset + (i % fieldSize) * (tileSize + tileGap)}px`;
+      tile.style.width = `${tileSize}px`;
+      tile.style.height = `${tileSize}px`;
+      tile.style.left = `${this.xOffset + tileGap + (i % fieldSize) * (tileSize + tileGap)}px`;
       if (i % fieldSize === 0) j += 1;
-      tile.style.top = `${yOffset + j * (tileSize + tileGap)}px`;
+      tile.style.top = `${this.yOffset + tileGap + j * (tileSize + tileGap)}px`;
       tile.id = i;
       if (i < fieldSize ** 2 - 1) {
         tile.innerText = `${i + 1}`;
@@ -57,12 +71,6 @@ class GemPuzzle {
       field.appendChild(tile);
     }
 
-    if (this.field) {
-      this.body.replaceChild(field, this.field);
-    } else {
-      this.body.appendChild(field);
-    }
-
     return field;
   }
 
@@ -74,18 +82,27 @@ class GemPuzzle {
   }
 
   changeBackGround() {
-    const pictureNumber = Math.floor(Math.random() * 149) + 1;
+    const n = genUrlNumber();
     this.field.childNodes.forEach((el) => {
-      el.style.backgroundImage = `url('./assets/images/${pictureNumber}.jpg')`;
+      el.style.backgroundImage = `url('./assets/images/${n}.jpg')`;
     });
   }
 
+  // Move tiles in random order
+  shuffleTiles() {
+    for (let i = 0; i < 125 * this.fieldSize; i += 1) {
+      const index = Math.floor(Math.random() * (this.fieldSize ** 2 - 1));
+      this.shiftTiles(index);
+    }
+    playSound('shuffle', this.isSoundOn);
+  }
+
   // Shift tile with and empty space if it nearby
-  shiftTiles(target) {
-    if (this.isTargetNearEmptySpace(target)) {
-      const tile = target;
-      const { top, left } = target.style;
-      const { id } = target;
+  shiftTiles(index) {
+    const tile = this.field.childNodes[index];
+    if (this.isTargetNearEmptySpace(tile)) {
+      const { top, left } = tile.style;
+      const { id } = tile;
 
       const emptyChildIndex = this.fieldSize ** 2 - 1;
       const emptyChild = this.field.childNodes[emptyChildIndex];
@@ -103,12 +120,12 @@ class GemPuzzle {
 
   updateCounter() {
     this.turnsCount += 1;
-    this.stats.innerText = `Turns: ${this.turnsCount}`;
+    this.turnsCounter.innerText = `Turns: ${this.turnsCount}`;
   }
 
   resetCounter() {
     this.turnsCount = 0;
-    this.stats.innerText = `Turns: ${this.turnsCount}`;
+    this.turnsCounter.innerText = `Turns: ${this.turnsCount}`;
   }
 
   isTargetNearEmptySpace(target) {
@@ -147,13 +164,30 @@ class GemPuzzle {
   createStatsPanel() {
     const panel = document.createElement('div');
     panel.classList.add('stats-panel');
-    // Turns counter
-    panel.innerText = this.turnsCount;
+    panel.style.width = this.field.style.width;
     this.body.appendChild(panel);
+    // Turns counter
+    const turnsCounter = document.createElement('div');
+    turnsCounter.classList.add('turns-counter');
+    turnsCounter.innerText = this.turnsCount;
+    panel.appendChild(turnsCounter);
     // Game timer
     const timer = document.createElement('span');
     timer.classList.add('game_timer');
-    this.body.appendChild(timer);
+    panel.appendChild(timer);
+    // Sound on/off key
+    const soundKey = document.createElement('button');
+    soundKey.classList.add('options__key-sound');
+    soundKey.innerHTML = createIconHTML('volume_up');
+    soundKey.addEventListener('click', () => {
+      this.toggleSound();
+      soundKey.innerHTML = this.isSoundOn ? createIconHTML('volume_up') : createIconHTML('volume_off');
+    });
+    panel.appendChild(soundKey);
+    const buttonsPanel = document.createElement('div');
+    buttonsPanel.classList.add('buttons-panel');
+    buttonsPanel.style.width = this.field.style.width;
+    this.body.appendChild(buttonsPanel);
     // New game button
     const newGame = document.createElement('button');
     newGame.classList.add('new_game-button');
@@ -161,7 +195,7 @@ class GemPuzzle {
     newGame.addEventListener('click', () => {
       this.newGame();
     });
-    this.body.appendChild(newGame);
+    buttonsPanel.appendChild(newGame);
     // Save game button
     const saveGame = document.createElement('button');
     saveGame.classList.add('save_game-button');
@@ -169,7 +203,7 @@ class GemPuzzle {
     saveGame.addEventListener('click', () => {
       this.saveGame();
     });
-    this.body.appendChild(saveGame);
+    buttonsPanel.appendChild(saveGame);
     // Load game button
     const loadGame = document.createElement('button');
     loadGame.classList.add('load_game-button');
@@ -177,7 +211,7 @@ class GemPuzzle {
     loadGame.addEventListener('click', () => {
       this.loadGame();
     });
-    this.body.appendChild(loadGame);
+    buttonsPanel.appendChild(loadGame);
     // Field size selector
     const select = document.createElement('select');
     for (let i = 3; i <= 8; i += 1) {
@@ -192,40 +226,12 @@ class GemPuzzle {
       this.field = this.createTileFiled();
       this.newGame();
     });
-    this.body.appendChild(select);
-    // Sound on/off key
-    const soundKey = document.createElement('button');
-    soundKey.classList.add('options__key-sound');
-    soundKey.innerHTML = createIconHTML('volume_up');
-    soundKey.addEventListener('click', () => {
-      this.toggleSound();
-      soundKey.innerHTML = this.isSoundOn ? createIconHTML('volume_up') : createIconHTML('volume_off');
-    });
-    this.body.appendChild(soundKey);
-
+    buttonsPanel.appendChild(select);
     return panel;
   }
 
   toggleSound() {
     this.isSoundOn = !this.isSoundOn;
-  }
-
-  playSound(filename) {
-    if (this.isSoundOn) {
-      const audio = new Audio();
-      audio.preload = 'auto';
-      audio.src = `assets/sound/${filename}.mp3`;
-      audio.play();
-    }
-  }
-
-  // Move tiles in random order
-  shuffleTiles() {
-    for (let i = 0; i < 5000 * this.fieldSize; i += 1) {
-      const index = Math.floor(Math.random() * (this.fieldSize ** 2 - 1));
-      this.shiftTiles(this.field.childNodes[index]);
-    }
-    this.playSound('shuffle');
   }
 
   // Resets counter, timer and generates new field
@@ -257,14 +263,13 @@ class GemPuzzle {
     });
 
     this.turnsCount = JSON.parse(localStorage.getItem('turns'));
-    this.stats.innerText = `Turns: ${this.turnsCount}`;
+    this.turnsCounter.innerText = `Turns: ${this.turnsCount}`;
     this.initTimeValue = JSON.parse(localStorage.getItem('duration'));
     this.duration = 0;
     this.runGameTimer(new Date().getTime());
   }
 
   updateScores(time) {
-    const scores = [];
     const date = new Date().toLocaleDateString();
     const data = {
       date,
@@ -272,8 +277,8 @@ class GemPuzzle {
       turnsCount: this.turnsCount,
       time,
     };
-    scores.push(data);
-    localStorage.setItem('scores', JSON.stringify(scores));
+    this.scores.push(data);
+    localStorage.setItem('scores', JSON.stringify(this.scores));
   }
 
   // Mousedown function for drag and drop tiles
@@ -311,7 +316,7 @@ class GemPuzzle {
         emptyChild.style.left = left;
         emptyChild.style.top = top;
         emptyChild.id = id;
-        this.playSound('move');
+        playSound('move', this.isSoundOn);
       } else {
         target.style.top = top;
         target.style.left = left;
@@ -320,7 +325,7 @@ class GemPuzzle {
       this.updateCounter();
 
       if (this.isGameSolved()) {
-        this.playSound('win31');
+        playSound('win31', this.isSoundOn);
 
         const data = getFormattedTimerData(this.duration);
         // alert(`Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`);
@@ -334,7 +339,21 @@ class GemPuzzle {
     target.onmouseup = onMouseUp.bind(this);
     return true;
   }
+
+  repositionTiles() {
+    const {
+      tileSize, tileGap, fieldSize,
+    } = this;
+    this.xOffset = this.field.offsetLeft;
+    this.field.childNodes.forEach((el) => {
+      el.style.left = `${this.xOffset + tileGap + (el.id % fieldSize) * (tileSize + tileGap)}px`;
+    });
+  }
 }
 
 const superPuzzle = new GemPuzzle();
 superPuzzle.init();
+
+window.onresize = () => {
+  superPuzzle.repositionTiles();
+};

@@ -4,15 +4,12 @@
 }
 
 .tile {
-  width: 80px;
-  height: 80px;
   margin: 0;
-
   position: fixed;
   color: white;
   text-shadow: 2px 2px 4px #000000;
   background: aqua;
-  border: 1px solid teal;
+  border: 1px solid lightskyblue;
   border-radius: 5%;
   display: flex;
   justify-content: center;
@@ -35,7 +32,17 @@
 }
 
 .field {
+  margin: 0 auto;
   width: 400px;
   height: 400px;
-  /* background-color: tomato; */
+  background-color: lightgrey;
+}
+
+.stats-panel,
+.buttons-panel {
+  background-color: lightgrey;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
