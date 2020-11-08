@@ -282,21 +282,25 @@ class GemPuzzle {
   }
 
   // Mousedown function for drag and drop tiles
-  grabTile(event) {
-    const target = event.currentTarget;
+  grabTile(grabEvent) {
+    const target = grabEvent.currentTarget;
     if (!this.isTargetNearEmptySpace(target)) return false;
 
     let isMoved = false;
     const { top, left } = target.style;
     const { id } = target;
-    const shiftX = event.clientX - target.getBoundingClientRect().left;
-    const shiftY = event.clientY - target.getBoundingClientRect().top;
+    const shiftX = grabEvent.clientX - target.getBoundingClientRect().left;
+    const shiftY = grabEvent.clientY - target.getBoundingClientRect().top;
     target.style.zIndex = 1000;
-
-    function onMouseMove(e) {
-      isMoved = true;
-      target.style.left = `${e.pageX - shiftX}px`;
-      target.style.top = `${e.pageY - shiftY}px`;
+    function onMouseMove(moveEvent) {
+      if (Math.abs(grabEvent.pageX - moveEvent.pageX) > 10
+          || Math.abs(grabEvent.pageY - moveEvent.pageY) > 10) {
+        isMoved = true;
+      }
+      if (isMoved) {
+        target.style.left = `${moveEvent.pageX - shiftX}px`;
+        target.style.top = `${moveEvent.pageY - shiftY}px`;
+      }
     }
 
     document.addEventListener('mousemove', onMouseMove);
