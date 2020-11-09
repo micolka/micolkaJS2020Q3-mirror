@@ -14,6 +14,7 @@ class GemPuzzle {
     this.duration = 0;
     this.isSoundOn = false;
     this.scores = [];
+    this.stackOfSteps = [];
   }
 
   init() {
@@ -62,7 +63,6 @@ class GemPuzzle {
         tile.classList.add('empty');
       }
       this.setBackGround(tile, i, j, pictureNumber);
-
       tile.addEventListener('mousedown', (event) => {
         this.grabTile(event);
       });
@@ -92,30 +92,31 @@ class GemPuzzle {
   shuffleTiles() {
     for (let i = 0; i < 125 * this.fieldSize; i += 1) {
       const index = Math.floor(Math.random() * (this.fieldSize ** 2 - 1));
-      this.shiftTiles(index);
+      const tile = this.field.childNodes[index];
+      if (this.isTargetNearEmptySpace(tile)) {
+        this.shiftTiles(tile);
+        this.stackOfSteps.push(tile.innerText);
+        this.updateCounter();
+      }
     }
     playSound('shuffle', this.isSoundOn);
   }
 
-  // Shift tile with and empty space if it nearby
-  shiftTiles(index) {
-    const tile = this.field.childNodes[index];
-    if (this.isTargetNearEmptySpace(tile)) {
-      const { top, left } = tile.style;
-      const { id } = tile;
+  // Shift tile with and empty space
+  shiftTiles(tile) {
+    const { top, left } = tile.style;
+    const { id } = tile;
 
-      const emptyChildIndex = this.fieldSize ** 2 - 1;
-      const emptyChild = this.field.childNodes[emptyChildIndex];
+    const emptyChildIndex = this.fieldSize ** 2 - 1;
+    const emptyChild = this.field.childNodes[emptyChildIndex];
 
-      tile.style.top = emptyChild.style.top;
-      tile.style.left = emptyChild.style.left;
-      tile.id = emptyChild.id;
+    tile.style.top = emptyChild.style.top;
+    tile.style.left = emptyChild.style.left;
+    tile.id = emptyChild.id;
 
-      emptyChild.style.left = left;
-      emptyChild.style.top = top;
-      emptyChild.id = id;
-      this.updateCounter();
-    }
+    emptyChild.style.left = left;
+    emptyChild.style.top = top;
+    emptyChild.id = id;
   }
 
   updateCounter() {
@@ -209,7 +210,8 @@ class GemPuzzle {
     loadGame.classList.add('load_game-button');
     loadGame.innerText = 'Load Game';
     loadGame.addEventListener('click', () => {
-      this.loadGame();
+      // this.loadGame();
+      this.resolvePuzzle();
     });
     buttonsPanel.appendChild(loadGame);
     // Field size selector
@@ -310,7 +312,7 @@ class GemPuzzle {
 
     function onMouseUp() {
       document.removeEventListener('mousemove', onMouseMove);
-      // If moved tile is farther then 45 returns to initial position, else moves to empty one
+      // If moved tile is farther then 45px returns to initial position, else moves to empty one
       if ((Math.sqrt((parseInt(target.style.top, 10) - parseInt(emptyChild.style.top, 10)) ** 2
         + (parseInt(target.style.left, 10) - parseInt(emptyChild.style.left, 10)) ** 2) < 45)
         || !isMoved) {
@@ -326,6 +328,7 @@ class GemPuzzle {
         target.style.left = left;
       }
       target.style.zIndex = 'auto';
+      this.stackOfSteps.push(target.innerText);
       this.updateCounter();
 
       if (this.isGameSolved()) {
@@ -344,6 +347,7 @@ class GemPuzzle {
     return true;
   }
 
+  // Keep tiles in the field during window resizing
   repositionTiles() {
     const {
       tileSize, tileGap, fieldSize,
@@ -352,6 +356,18 @@ class GemPuzzle {
     this.field.childNodes.forEach((el) => {
       el.style.left = `${this.xOffset + tileGap + (el.id % fieldSize) * (tileSize + tileGap)}px`;
     });
+  }
+
+  // Gives game solution (kind of)
+  resolvePuzzle() {
+    let timer = 0;
+    for (let i = this.stackOfSteps.length - 1; i >= 0; i -= 1) {
+      const tile = this.field.childNodes[this.stackOfSteps[i] - 1];
+      setTimeout(() => {
+        this.shiftTiles(tile);
+      }, timer += 200);
+    }
+    this.stackOfSteps = [];
   }
 }
 
