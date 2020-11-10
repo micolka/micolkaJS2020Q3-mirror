@@ -8,8 +8,6 @@
   position: fixed;
   color: white;
   text-shadow: 2px 2px 4px #000000;
-  background: aqua;
-  border: 1px solid lightskyblue;
   border-radius: 5%;
   display: flex;
   justify-content: center;
@@ -34,16 +32,48 @@
 .field {
   margin: 0 auto;
   margin-top: 20px;
-  width: 400px;
-  height: 400px;
-  background-color: lightgrey;
 }
 
 .stats-panel,
 .buttons-panel {
-  background-color: lightgrey;
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
+.wrapper {
+  background-color: #6cb3fa;
+  margin: 0 auto;
+  width: fit-content;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.btn,
+.select-field-size {
+  margin: 5px;
+  height: 30px;
+  width: 50px;
+  background-color: #4f8dca;
+  border-radius: 2px;
+  border: none;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: #6cb3fa;
+  border: 1px solid #4f8dca;
+}
+
+.btn, 
+.btn:active, 
+.btn:focus {
+    outline: none;
+}
+
+.turns-counter,
+.game_timer {
+  margin: 5px;
+}
+
