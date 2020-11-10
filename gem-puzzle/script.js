@@ -85,12 +85,12 @@ class GemPuzzle {
     // Game timer
     infoPanel.appendChild(createAnyElement('span', 'game_timer', 'Time: 00:00:00'));
     // Sound on/off key
-    const soundKey = document.createElement('button');
-    soundKey.classList.add('options__key-sound', 'btn');
+    const soundKey = createButton('options__key-sound', '', () => {});
     soundKey.innerHTML = createIconHTML('volume_up');
     soundKey.addEventListener('click', () => {
       this.toggleSound();
       soundKey.innerHTML = this.isSoundOn ? createIconHTML('volume_up') : createIconHTML('volume_off');
+      playSound('onoff', this.isSoundOn);
     });
     infoPanel.appendChild(soundKey);
 
@@ -108,7 +108,7 @@ class GemPuzzle {
     // Field size selector
     const select = createAnyElement('select', 'btn', '');
     for (let i = 3; i <= 8; i += 1) {
-      const option = document.createElement('option');
+      const option = createAnyElement('option', 'option-size', '');
       option.value = i;
       if (i === 4) option.selected = true;
       option.innerText = `${i}x${i}`;
@@ -241,14 +241,25 @@ class GemPuzzle {
     this.field.childNodes.forEach((el) => {
       acc.push({ style: el.style.cssText, id: el.id });
     });
-    localStorage.setItem('save', JSON.stringify(acc));
+    localStorage.setItem('saveGame', JSON.stringify(acc));
     localStorage.setItem('turns', JSON.stringify(this.turnsCount));
     localStorage.setItem('duration', JSON.stringify(this.duration));
+    localStorage.setItem('fieldSize', JSON.stringify(this.fieldSize));
+    localStorage.setItem('stackOfSteps', JSON.stringify(this.stackOfSteps));
   }
 
   // Load game status from local storage
   loadGame() {
-    const acc = JSON.parse(localStorage.getItem('save'));
+    this.fieldSize = JSON.parse(localStorage.getItem('fieldSize'));
+    this.field = this.createTileFiled();
+    document.querySelectorAll('.option-size').forEach((el) => {
+      if (+el.value === this.fieldSize) el.selected = true;
+    });
+    this.newGame();
+
+    this.stackOfSteps = JSON.parse(localStorage.getItem('stackOfSteps'));
+
+    const acc = JSON.parse(localStorage.getItem('saveGame'));
     this.field.childNodes.forEach((el, index) => {
       el.style.cssText = acc[index].style;
       el.id = acc[index].id;
