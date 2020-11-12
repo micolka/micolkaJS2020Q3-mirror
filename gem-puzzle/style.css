@@ -77,3 +77,9 @@
   margin: 5px;
 }
 
+.btn:disabled {
+  cursor: auto;
+  background-color: #4f8dca;
+  border: none;
+}
+

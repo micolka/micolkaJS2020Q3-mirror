@@ -1,7 +1,7 @@
 import {
   getFormattedTimerData, createIconHTML, genUrlNumber, playSound,
 } from './utils.js';
-import { createButton, createAnyElement } from './dom.js';
+import { createButton, createAnyElement, toggleDisabledProp } from './dom.js';
 
 class GemPuzzle {
   constructor() {
@@ -16,6 +16,7 @@ class GemPuzzle {
     this.isSoundOn = false;
     this.scores = [];
     this.stackOfSteps = [];
+    this.isButtonsDisabled = false;
   }
 
   init() {
@@ -364,6 +365,7 @@ class GemPuzzle {
 
   // Gives game solution (kind of)
   resolvePuzzle() {
+    this.toggleBlockMenu();
     clearInterval(this.timer);
     let timer = 0;
     for (let i = this.stackOfSteps.length - 1; i >= 0; i -= 1) {
@@ -375,8 +377,14 @@ class GemPuzzle {
     }
     setTimeout(() => {
       playSound('win31', this.isSoundOn);
+      this.toggleBlockMenu();
     }, timer += 200);
     this.stackOfSteps = [];
+  }
+
+  toggleBlockMenu() {
+    this.isButtonsDisabled = !this.isButtonsDisabled;
+    toggleDisabledProp(['.new_game-button', '.save_game-button', '.load_game-button', 'select'], this.isButtonsDisabled);
   }
 }
 
