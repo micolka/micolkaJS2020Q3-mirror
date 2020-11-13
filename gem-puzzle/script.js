@@ -1,3 +1,5 @@
+// TODO: панель с сообщением о победе, таблица результатов, нормальный рандом
+
 import {
   getFormattedTimerData, createIconHTML, genUrlNumber, playSound,
 } from './utils.js';
@@ -17,10 +19,12 @@ class GemPuzzle {
     this.scores = [];
     this.stackOfSteps = [];
     this.isButtonsDisabled = false;
+    this.pictureNumber = genUrlNumber();
   }
 
   init() {
     this.body = document.querySelector('body');
+    this.calculateTileSize();
     this.wrapper = createAnyElement('div', 'wrapper', '');
     this.body.appendChild(this.wrapper);
     this.field = this.createTileFiled();
@@ -28,6 +32,18 @@ class GemPuzzle {
     this.turnsCounter = document.querySelector('.turns-counter');
     this.gameTimer = document.querySelector('.game_timer');
     this.newGame();
+  }
+
+  // Main param depends of window size
+  calculateTileSize() {
+    const windowSize = this.body.getBoundingClientRect().width;
+    if (windowSize <= 610) {
+      this.tileSize = 300 / this.fieldSize;
+    } else if (windowSize > 1500) {
+      this.tileSize = 744 / this.fieldSize;
+    } else {
+      this.tileSize = (windowSize / 2 - (this.tileGap * this.fieldSize + 1)) / this.fieldSize;
+    }
   }
 
   // Create field of tiles
@@ -47,7 +63,6 @@ class GemPuzzle {
 
     this.xOffset = field.offsetLeft;
     this.yOffset = field.offsetTop;
-    const pictureNumber = genUrlNumber();
 
     let j = -1;
     for (let i = 0; i < fieldSize ** 2; i += 1) {
@@ -64,7 +79,7 @@ class GemPuzzle {
       } else {
         tile.classList.add('empty');
       }
-      this.setBackGround(tile, i, j, pictureNumber);
+      this.setBackGround(tile, i, j, this.pictureNumber);
       tile.addEventListener('mousedown', (event) => {
         this.grabTile(event);
       });
@@ -72,7 +87,6 @@ class GemPuzzle {
 
       field.appendChild(tile);
     }
-
     return field;
   }
 
@@ -111,12 +125,13 @@ class GemPuzzle {
     for (let i = 3; i <= 8; i += 1) {
       const option = createAnyElement('option', 'option-size', '');
       option.value = i;
-      if (i === 4) option.selected = true;
+      option.selected = (i === +this.fieldSize);
       option.innerText = `${i}x${i}`;
       select.appendChild(option);
     }
     select.addEventListener('change', () => {
       this.fieldSize = select.value;
+      this.calculateTileSize();
       this.field = this.createTileFiled();
       this.newGame();
     });
@@ -132,9 +147,9 @@ class GemPuzzle {
   }
 
   changeBackGround() {
-    const n = genUrlNumber();
+    this.pictureNumber = genUrlNumber();
     this.field.childNodes.forEach((el) => {
-      el.style.backgroundImage = `url('./assets/images/${n}.jpg')`;
+      el.style.backgroundImage = `url('./assets/images/${this.pictureNumber}.jpg')`;
     });
   }
 
@@ -193,14 +208,12 @@ class GemPuzzle {
   isTargetNearEmptySpace(target) {
     const { top, left } = target.style;
     const delta = this.tileSize + this.tileGap;
-
-    const emptyChildIndex = this.fieldSize ** 2 - 1;
-    const emptyChild = this.field.childNodes[emptyChildIndex];
+    const emptyChild = document.querySelector('.empty');
 
     return (top === emptyChild.style.top
-      && Math.abs(parseInt(left, 10) - parseInt(emptyChild.style.left, 10)) === delta)
+      && Math.abs(parseFloat(left, 10) - parseFloat(emptyChild.style.left, 10)) === delta)
       || (left === emptyChild.style.left
-      && Math.abs(parseInt(top, 10) - parseInt(emptyChild.style.top, 10)) === delta);
+      && Math.abs(parseFloat(top, 10) - parseFloat(emptyChild.style.top, 10)) === delta);
   }
 
   isGameSolved() {
@@ -228,6 +241,7 @@ class GemPuzzle {
 
   // Resets counter, timer and generates new field
   newGame() {
+    this.stackOfSteps = [];
     this.shuffleTiles();
     this.changeBackGround();
     this.resetCounter();
@@ -354,13 +368,11 @@ class GemPuzzle {
 
   // Keep tiles in the field during window resizing
   repositionTiles() {
-    const {
-      tileSize, tileGap, fieldSize,
-    } = this;
-    this.xOffset = this.field.offsetLeft;
-    this.field.childNodes.forEach((el) => {
-      el.style.left = `${this.xOffset + tileGap + (el.id % fieldSize) * (tileSize + tileGap)}px`;
-    });
+    this.calculateTileSize();
+    this.field = this.createTileFiled();
+    this.wrapper.removeChild(document.querySelector('.stats-panel'));
+    this.wrapper.removeChild(document.querySelector('.buttons-panel'));
+    this.stats = this.createStatsPanel();
   }
 
   // Gives game solution (kind of)
@@ -384,7 +396,7 @@ class GemPuzzle {
 
   toggleBlockMenu() {
     this.isButtonsDisabled = !this.isButtonsDisabled;
-    toggleDisabledProp(['.new_game-button', '.save_game-button', '.load_game-button', 'select'], this.isButtonsDisabled);
+    toggleDisabledProp(['.new_game-button', '.save_game-button', '.load_game-button', '.resolve_game-button', 'select'], this.isButtonsDisabled);
   }
 }
 
