@@ -1,4 +1,4 @@
-// TODO: панель с сообщением о победе, таблица результатов, нормальный рандом
+// TODO: таблица результатов, нормальный рандом
 
 import {
   getFormattedTimerData, createIconHTML, genUrlNumber, playSound,
@@ -15,7 +15,7 @@ class GemPuzzle {
     this.turnsCount = 0;
     this.initTimeValue = 0;
     this.duration = 0;
-    this.isSoundOn = false;
+    this.isSoundOn = true;
     this.scores = [];
     this.stackOfSteps = [];
     this.isButtonsDisabled = false;
@@ -354,7 +354,12 @@ class GemPuzzle {
       }
       target.style.zIndex = 'auto';
 
-      if (this.isGameSolved()) this.displayWinGameMessage();
+      if (this.isGameSolved()) {
+        setTimeout(() => {
+          playSound('win31', this.isSoundOn);
+          this.displayWinGameMessage();
+        }, 200);
+      }
 
       target.onmouseup = null;
     }
@@ -365,12 +370,31 @@ class GemPuzzle {
 
   // Win game function
   displayWinGameMessage() {
-    playSound('win31', this.isSoundOn);
-
     const data = getFormattedTimerData(this.duration);
-    alert(`Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`);
     clearInterval(this.timer);
     this.updateScores(data);
+    this.field.childNodes.forEach((el) => {
+      el.style.transform = 'scale(0)';
+    });
+    this.toggleBlockMenu();
+    // Add full image and win message
+    const fullImage = createAnyElement('div', 'result-image', '');
+    fullImage.style.backgroundImage = `url('./assets/images/${this.pictureNumber}.jpg')`;
+    fullImage.style.backgroundSize = 'cover';
+    this.field.appendChild(fullImage);
+    const winMessage = createAnyElement('div', 'result-message', '');
+    winMessage.innerText = `Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`;
+    fullImage.appendChild(winMessage);
+    // Close button
+    fullImage.appendChild(createButton('close-button', 'X', this.closeMessage.bind(this)));
+  }
+
+  closeMessage() {
+    this.toggleBlockMenu();
+    this.field.removeChild(document.querySelector('.result-image'));
+    this.field.childNodes.forEach((el) => {
+      el.style.transform = 'scale(1)';
+    });
   }
 
   // Keep tiles in the field during window resizing
