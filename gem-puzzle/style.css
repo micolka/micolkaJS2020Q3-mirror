@@ -1,12 +1,12 @@
 * {
   margin: 0;
   padding: 0;
+  color: aliceblue;
 }
 
 .tile {
   margin: 0;
   position: fixed;
-  color: white;
   text-shadow: 2px 2px 4px #000000;
   border-radius: 5%;
   display: flex;
@@ -87,7 +87,6 @@
 .result-image {
   width: 100%;
   height: 100%;
-  background: blanchedalmond;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -106,7 +105,6 @@
 
 .result-message,
 .scores-line {
-  color: white;
   text-shadow: 2px 2px 4px #000000;
   font-size: 18px;
   text-align: center;
@@ -115,4 +113,25 @@
 .scores_buttons-wrapper {
   display: flex;
   justify-content: space-between;
+}
+
+@media (min-width:1100px) {
+  * {
+    font-size: 24px;
+  }
+  .btn {
+    height: 50px;
+    width: 90px;
+  }
+  .close-button {
+    width: 50px;
+  }
+  .tile {
+    font-size: 24px;
+  }
+  
+  .result-message,
+  .scores-line {
+    font-size: 24px;
+  }
 }

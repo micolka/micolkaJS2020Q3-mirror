@@ -1,9 +1,10 @@
-// TODO: таблица результатов, нормальный рандом
+// TODO: нормальный рандом
 
 import {
   getFormattedTimerData, createIconHTML, genUrlNumber, playSound,
 } from './utils.js';
 import { createButton, createAnyElement, toggleDisabledProp } from './dom.js';
+import imagesText from './images.js';
 
 class GemPuzzle {
   constructor() {
@@ -394,6 +395,10 @@ class GemPuzzle {
     fullImage.appendChild(buttonsElem);
     // Scores button
     buttonsElem.appendChild(createButton('scores-button', 'Scores', this.showScores.bind(this)));
+    // Subscription of the painting
+    const subsData = imagesText[this.pictureNumber - 1];
+    const subsText = `"${subsData.name}" - ${subsData.author}, ${subsData.year}`;
+    buttonsElem.appendChild(createAnyElement('div', 'result-message', subsText));
     // Close button
     buttonsElem.appendChild(createButton('close-button', 'X', this.closeMessage.bind(this)));
     this.isScoresDisplayed = false;
