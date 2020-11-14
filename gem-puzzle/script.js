@@ -130,6 +130,7 @@ class GemPuzzle {
       select.appendChild(option);
     }
     select.addEventListener('change', () => {
+      this.stackOfSteps = [];
       this.fieldSize = select.value;
       this.calculateTileSize();
       this.field = this.createTileFiled();
@@ -210,10 +211,11 @@ class GemPuzzle {
     const delta = this.tileSize + this.tileGap;
     const emptyChild = document.querySelector('.empty');
 
-    return (top === emptyChild.style.top
-      && Math.abs(parseFloat(left, 10) - parseFloat(emptyChild.style.left, 10)) === delta)
-      || (left === emptyChild.style.left
-      && Math.abs(parseFloat(top, 10) - parseFloat(emptyChild.style.top, 10)) === delta);
+    const dLeft = Math.abs(parseFloat(left, 10) - parseFloat(emptyChild.style.left, 10)) - delta;
+    const dTop = Math.abs(parseFloat(top, 10) - parseFloat(emptyChild.style.top, 10)) - delta;
+
+    return (top === emptyChild.style.top && Math.round(dLeft) === 0)
+      || (left === emptyChild.style.left && Math.round(dTop) === 0);
   }
 
   isGameSolved() {
@@ -241,7 +243,6 @@ class GemPuzzle {
 
   // Resets counter, timer and generates new field
   newGame() {
-    this.stackOfSteps = [];
     this.shuffleTiles();
     this.changeBackGround();
     this.resetCounter();
@@ -261,16 +262,19 @@ class GemPuzzle {
     localStorage.setItem('duration', JSON.stringify(this.duration));
     localStorage.setItem('fieldSize', JSON.stringify(this.fieldSize));
     localStorage.setItem('stackOfSteps', JSON.stringify(this.stackOfSteps));
+    localStorage.setItem('backGroundId', JSON.stringify(this.pictureNumber));
+    playSound('onoff', this.isSoundOn);
   }
 
   // Load game status from local storage
   loadGame() {
+    this.pictureNumber = JSON.parse(localStorage.getItem('backGroundId'));
     this.fieldSize = JSON.parse(localStorage.getItem('fieldSize'));
+    this.repositionTiles();
     this.field = this.createTileFiled();
     document.querySelectorAll('.option-size').forEach((el) => {
       if (+el.value === this.fieldSize) el.selected = true;
     });
-    this.newGame();
 
     this.stackOfSteps = JSON.parse(localStorage.getItem('stackOfSteps'));
 
@@ -279,13 +283,13 @@ class GemPuzzle {
       el.style.cssText = acc[index].style;
       el.id = acc[index].id;
     });
-    this.repositionTiles();
 
     this.turnsCount = JSON.parse(localStorage.getItem('turns'));
     this.turnsCounter.innerText = `Turns: ${this.turnsCount}`;
     this.initTimeValue = JSON.parse(localStorage.getItem('duration'));
     this.duration = 0;
     this.runGameTimer(new Date().getTime());
+    playSound('shuffle', this.isSoundOn);
   }
 
   updateScores(time) {
@@ -350,20 +354,23 @@ class GemPuzzle {
       }
       target.style.zIndex = 'auto';
 
-      if (this.isGameSolved()) {
-        playSound('win31', this.isSoundOn);
-
-        const data = getFormattedTimerData(this.duration);
-        // alert(`Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`);
-        clearInterval(this.timer);
-        this.updateScores(data);
-      }
+      if (this.isGameSolved()) this.displayWinGameMessage();
 
       target.onmouseup = null;
     }
 
     target.onmouseup = onMouseUp.bind(this);
     return true;
+  }
+
+  // Win game function
+  displayWinGameMessage() {
+    playSound('win31', this.isSoundOn);
+
+    const data = getFormattedTimerData(this.duration);
+    alert(`Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`);
+    clearInterval(this.timer);
+    this.updateScores(data);
   }
 
   // Keep tiles in the field during window resizing
