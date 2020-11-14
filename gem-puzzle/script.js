@@ -15,7 +15,7 @@ class GemPuzzle {
     this.turnsCount = 0;
     this.initTimeValue = 0;
     this.duration = 0;
-    this.isSoundOn = true;
+    this.isSoundOn = false;
     this.scores = [];
     this.stackOfSteps = [];
     this.isButtonsDisabled = false;
@@ -25,6 +25,7 @@ class GemPuzzle {
   init() {
     this.body = document.querySelector('body');
     this.calculateTileSize();
+    this.scores = JSON.parse(localStorage.getItem('scores'));
     this.wrapper = createAnyElement('div', 'wrapper', '');
     this.body.appendChild(this.wrapper);
     this.field = this.createTileFiled();
@@ -101,7 +102,7 @@ class GemPuzzle {
     infoPanel.appendChild(createAnyElement('span', 'game_timer', 'Time: 00:00:00'));
     // Sound on/off key
     const soundKey = createButton('options__key-sound', '', () => {});
-    soundKey.innerHTML = createIconHTML('volume_up');
+    soundKey.innerHTML = createIconHTML('volume_off');
     soundKey.addEventListener('click', () => {
       this.toggleSound();
       soundKey.innerHTML = this.isSoundOn ? createIconHTML('volume_up') : createIconHTML('volume_off');
@@ -301,6 +302,8 @@ class GemPuzzle {
       time,
     };
     this.scores.push(data);
+    this.scores = this.scores.sort((a, b) => a.turnsCount - b.turnsCount);
+    this.scores = this.scores.filter((_, i) => i < 10);
     localStorage.setItem('scores', JSON.stringify(this.scores));
   }
 
@@ -385,8 +388,15 @@ class GemPuzzle {
     const winMessage = createAnyElement('div', 'result-message', '');
     winMessage.innerText = `Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`;
     fullImage.appendChild(winMessage);
+    this.scoresElem = createAnyElement('div', 'scores-wrapper', '');
+    fullImage.appendChild(this.scoresElem);
+    const buttonsElem = createAnyElement('div', 'scores_buttons-wrapper', '');
+    fullImage.appendChild(buttonsElem);
+    // Scores button
+    buttonsElem.appendChild(createButton('scores-button', 'Scores', this.showScores.bind(this)));
     // Close button
-    fullImage.appendChild(createButton('close-button', 'X', this.closeMessage.bind(this)));
+    buttonsElem.appendChild(createButton('close-button', 'X', this.closeMessage.bind(this)));
+    this.isScoresDisplayed = false;
   }
 
   closeMessage() {
@@ -395,6 +405,21 @@ class GemPuzzle {
     this.field.childNodes.forEach((el) => {
       el.style.transform = 'scale(1)';
     });
+  }
+
+  showScores() {
+    this.isScoresDisplayed = !this.isScoresDisplayed;
+    const data = JSON.parse(localStorage.getItem('scores'));
+    if (this.isScoresDisplayed) {
+      data.forEach((el, i) => {
+        const text = `${i + 1}. ${el.fieldSize}x${el.fieldSize}, turns: ${el.turnsCount}, time: ${el.time}`;
+        this.scoresElem.appendChild(createAnyElement('div', 'scores-line', text));
+      });
+    } else {
+      document.querySelectorAll('.scores-line').forEach((el) => {
+        this.scoresElem.removeChild(el);
+      });
+    }
   }
 
   // Keep tiles in the field during window resizing
