@@ -31,8 +31,6 @@ class GemPuzzle {
     this.body.appendChild(this.wrapper);
     this.field = this.createTileFiled();
     this.stats = this.createStatsPanel();
-    this.turnsCounter = document.querySelector('.turns-counter');
-    this.gameTimer = document.querySelector('.game_timer');
     this.newGame();
   }
 
@@ -98,9 +96,11 @@ class GemPuzzle {
     infoPanel.style.width = this.field.style.width;
     this.wrapper.appendChild(infoPanel);
     // Turns counter
-    infoPanel.appendChild(createAnyElement('span', 'turns-counter', this.turnsCount));
+    this.turnsCounter = createAnyElement('span', 'turns-counter', this.turnsCount);
+    infoPanel.appendChild(this.turnsCounter);
     // Game timer
-    infoPanel.appendChild(createAnyElement('span', 'game_timer', 'Time: 00:00:00'));
+    this.gameTimer = createAnyElement('span', 'game_timer', 'Time: 00:00:00');
+    infoPanel.appendChild(this.gameTimer);
     // Sound on/off key
     const soundKey = createButton('options__key-sound', '', () => {});
     soundKey.innerHTML = createIconHTML('volume_off');
@@ -236,8 +236,7 @@ class GemPuzzle {
       const now = new Date().getTime();
       this.duration = now - countDate + this.initTimeValue;
       const data = getFormattedTimerData(this.duration);
-
-      this.gameTimer.innerHTML = `Time: ${data}`;
+      this.gameTimer.innerText = `Time: ${data}`;
     }, 1000);
   }
 
@@ -292,7 +291,6 @@ class GemPuzzle {
       el.style.cssText = acc[index].style;
       el.id = acc[index].id;
     });
-
     this.turnsCount = JSON.parse(localStorage.getItem('turns'));
     this.turnsCounter.innerText = `Turns: ${this.turnsCount}`;
     this.initTimeValue = JSON.parse(localStorage.getItem('duration'));
@@ -389,7 +387,7 @@ class GemPuzzle {
 
       message = `Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`;
     } else {
-      message = 'Ура! Компьютер красавчик!. А вам нужно больше тренироваться.';
+      message = 'Компьютер красавчик!. А вам нужно больше тренироваться.';
     }
     this.field.childNodes.forEach((el) => {
       el.style.transform = 'scale(0)';
