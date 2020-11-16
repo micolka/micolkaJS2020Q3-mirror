@@ -368,7 +368,7 @@ class GemPuzzle {
       if (this.isGameSolved()) {
         setTimeout(() => {
           playSound('win31', this.isSoundOn);
-          this.displayWinGameMessage();
+          this.displayWinGameMessage(true);
         }, 200);
       }
 
@@ -380,10 +380,17 @@ class GemPuzzle {
   }
 
   // Win game function
-  displayWinGameMessage() {
-    const data = getFormattedTimerData(this.duration);
-    clearInterval(this.timer);
-    this.updateScores(data);
+  displayWinGameMessage(isClearVictory) {
+    let message = '';
+    if (isClearVictory) {
+      const data = getFormattedTimerData(this.duration);
+      clearInterval(this.timer);
+      this.updateScores(data);
+
+      message = `Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`;
+    } else {
+      message = 'Ура! Компьютер красавчик!. А вам нужно больше тренироваться.';
+    }
     this.field.childNodes.forEach((el) => {
       el.style.transform = 'scale(0)';
     });
@@ -394,7 +401,7 @@ class GemPuzzle {
     fullImage.style.backgroundSize = 'cover';
     this.field.appendChild(fullImage);
     const winMessage = createAnyElement('div', 'result-message', '');
-    winMessage.innerText = `Ура! Вы решили головоломку за ${data} и ${this.turnsCount} ходов`;
+    winMessage.innerText = message;
     fullImage.appendChild(winMessage);
     this.scoresElem = createAnyElement('div', 'scores-wrapper', '');
     fullImage.appendChild(this.scoresElem);
@@ -457,6 +464,7 @@ class GemPuzzle {
     }
     setTimeout(() => {
       playSound('win31', this.isSoundOn);
+      this.displayWinGameMessage(false);
       this.toggleBlockMenu();
     }, timer += 200);
     this.stackOfSteps = [];
