@@ -4,6 +4,11 @@
   color: aliceblue;
 }
 
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
 .tile {
   margin: 0;
   position: fixed;
@@ -31,7 +36,6 @@
 
 .field {
   margin: 0 auto;
-  margin-top: 20px;
 }
 
 .stats-panel,
@@ -49,6 +53,10 @@
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.wrapper {
+  margin-top: 20px;
 }
 
 .btn,
@@ -116,9 +124,6 @@
 }
 
 @media (min-width:1100px) {
-  * {
-    font-size: 24px;
-  }
   .btn {
     height: 50px;
     width: 90px;
@@ -132,6 +137,11 @@
   
   .result-message,
   .scores-line {
+    font-size: 24px;
+  }
+}
+@media (min-width:1500px) {
+  * {
     font-size: 24px;
   }
 }

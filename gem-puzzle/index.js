@@ -1,10 +1,9 @@
-// TODO: нормальный рандом
-
 import {
   getFormattedTimerData, createIconHTML, genUrlNumber, playSound,
-} from './utils.js';
-import { createButton, createAnyElement, toggleDisabledProp } from './dom.js';
-import imagesText from './images.js';
+} from './utils';
+import { createButton, createAnyElement, toggleDisabledProp } from './dom';
+import imagesText from './images';
+import './style.css';
 
 class GemPuzzle {
   constructor() {
@@ -17,7 +16,7 @@ class GemPuzzle {
     this.initTimeValue = 0;
     this.duration = 0;
     this.isSoundOn = false;
-    this.scores = [];
+    this.scores = null;
     this.stackOfSteps = [];
     this.isButtonsDisabled = false;
     this.pictureNumber = genUrlNumber();
@@ -26,7 +25,7 @@ class GemPuzzle {
   init() {
     this.body = document.querySelector('body');
     this.calculateTileSize();
-    this.scores = JSON.parse(localStorage.getItem('scores'));
+    this.scores = JSON.parse(localStorage.getItem('scores')) || [];
     this.wrapper = createAnyElement('div', 'wrapper', '');
     this.body.appendChild(this.wrapper);
     this.field = this.createTileFiled();
@@ -42,9 +41,9 @@ class GemPuzzle {
     if (windowSize <= 610) {
       this.tileSize = 300 / this.fieldSize;
     } else if (windowSize > 1500) {
-      this.tileSize = 744 / this.fieldSize;
+      this.tileSize = 600 / this.fieldSize;
     } else {
-      this.tileSize = (windowSize / 2 - (this.tileGap * this.fieldSize + 1)) / this.fieldSize;
+      this.tileSize = 400 / this.fieldSize;
     }
   }
 
@@ -158,7 +157,7 @@ class GemPuzzle {
 
   // Move tiles in random order
   shuffleTiles() {
-    for (let i = 0; i < 125 * this.fieldSize; i += 1) {
+    for (let i = 0; i < 125 * this.fieldSize ** 2; i += 1) {
       const index = Math.floor(Math.random() * (this.fieldSize ** 2 - 1));
       const tile = this.field.childNodes[index];
       if (this.isTargetNearEmptySpace(tile)) {
@@ -245,6 +244,9 @@ class GemPuzzle {
 
   // Resets counter, timer and generates new field
   newGame() {
+    this.stackOfSteps = [];
+    this.field = this.createTileFiled();
+
     this.shuffleTiles();
     this.changeBackGround();
     this.resetCounter();

@@ -10,6 +10,5 @@ module.exports = {
   },
   rules: {
     'no-param-reassign': 0,
-    'import/extensions': 0,
   },
 };
