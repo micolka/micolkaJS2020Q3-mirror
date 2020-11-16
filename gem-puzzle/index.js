@@ -19,6 +19,7 @@ class GemPuzzle {
     this.scores = null;
     this.stackOfSteps = [];
     this.isButtonsDisabled = false;
+    this.isGameSaved = (localStorage.getItem('saveGame') !== null);
     this.pictureNumber = genUrlNumber();
   }
 
@@ -118,7 +119,9 @@ class GemPuzzle {
     // Save game button
     buttonsPanel.appendChild(createButton('save_game-button', 'Save', this.saveGame.bind(this)));
     // Load game button
-    buttonsPanel.appendChild(createButton('load_game-button', 'Load', this.loadGame.bind(this)));
+    const loadButton = createButton('load_game-button', 'Load', this.loadGame.bind(this));
+    if (!this.isGameSaved) loadButton.disabled = true;
+    buttonsPanel.appendChild(loadButton);
     // Resolve game button
     buttonsPanel.appendChild(createButton('resolve_game-button', 'Give up', this.resolvePuzzle.bind(this)));
     // Field size selector
@@ -268,6 +271,8 @@ class GemPuzzle {
     localStorage.setItem('stackOfSteps', JSON.stringify(this.stackOfSteps));
     localStorage.setItem('backGroundId', JSON.stringify(this.pictureNumber));
     playSound('onoff', this.isSoundOn);
+    this.isGameSaved = true;
+    toggleDisabledProp(['.load_game-button'], !this.isGameSaved);
   }
 
   // Load game status from local storage
@@ -459,7 +464,8 @@ class GemPuzzle {
 
   toggleBlockMenu() {
     this.isButtonsDisabled = !this.isButtonsDisabled;
-    toggleDisabledProp(['.new_game-button', '.save_game-button', '.load_game-button', '.resolve_game-button', 'select'], this.isButtonsDisabled);
+    const loadButton = this.isGameSaved ? '.load_game-button' : '';
+    toggleDisabledProp(['.new_game-button', '.save_game-button', loadButton, '.resolve_game-button', 'select'], this.isButtonsDisabled);
   }
 }
 

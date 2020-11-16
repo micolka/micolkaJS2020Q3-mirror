@@ -18,6 +18,6 @@ export function createAnyElement(type, elClass, innerText) {
 
 export function toggleDisabledProp(selectors, flag) {
   selectors.forEach((el) => {
-    document.querySelector(el).disabled = flag;
+    if (el) document.querySelector(el).disabled = flag;
   });
 }
