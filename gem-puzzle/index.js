@@ -144,7 +144,8 @@ class GemPuzzle {
     return infoPanel;
   }
 
-  setBackGround(tile, i, j, n) {
+  setBackGround(el, i, j, n) {
+    const tile = el;
     tile.style.backgroundImage = `url('./assets/images/${n}.jpg')`;
     tile.style.backgroundSize = `${this.tileSize * this.fieldSize}px`;
     tile.style.backgroundPositionX = `${(i % this.fieldSize) * -this.tileSize}px`;
@@ -154,7 +155,8 @@ class GemPuzzle {
   changeBackGround() {
     this.pictureNumber = genUrlNumber();
     this.field.childNodes.forEach((el) => {
-      el.style.backgroundImage = `url('./assets/images/${this.pictureNumber}.jpg')`;
+      const tile = el;
+      tile.style.backgroundImage = `url('./assets/images/${this.pictureNumber}.jpg')`;
     });
   }
 
@@ -182,9 +184,11 @@ class GemPuzzle {
   }
 
   // Shift tile with and empty space
-  shiftTiles(tile, emptyChild) {
+  shiftTiles(elem, emptyElem) {
+    const tile = elem;
     const { top, left } = tile.style;
     const { id } = tile;
+    let emptyChild = emptyElem;
 
     if (!emptyChild) {
       const emptyChildIndex = this.fieldSize ** 2 - 1;
@@ -281,15 +285,17 @@ class GemPuzzle {
     this.repositionTiles();
     this.field = this.createTileFiled();
     document.querySelectorAll('.option-size').forEach((el) => {
-      if (+el.value === this.fieldSize) el.selected = true;
+      const tile = el;
+      if (+tile.value === this.fieldSize) tile.selected = true;
     });
 
     this.stackOfSteps = JSON.parse(localStorage.getItem('stackOfSteps'));
 
     const acc = JSON.parse(localStorage.getItem('saveGame'));
     this.field.childNodes.forEach((el, index) => {
-      el.style.cssText = acc[index].style;
-      el.id = acc[index].id;
+      const tile = el;
+      tile.style.cssText = acc[index].style;
+      tile.id = acc[index].id;
     });
     this.turnsCount = JSON.parse(localStorage.getItem('turns'));
     this.turnsCounter.innerText = `Turns: ${this.turnsCount}`;
@@ -390,7 +396,8 @@ class GemPuzzle {
       message = 'Компьютер красавчик!. А вам нужно больше тренироваться.';
     }
     this.field.childNodes.forEach((el) => {
-      el.style.transform = 'scale(0)';
+      const tile = el;
+      tile.style.transform = 'scale(0)';
     });
     this.toggleBlockMenu();
     // Add full image and win message
@@ -420,7 +427,8 @@ class GemPuzzle {
     this.toggleBlockMenu();
     this.field.removeChild(document.querySelector('.result-image'));
     this.field.childNodes.forEach((el) => {
-      el.style.transform = 'scale(1)';
+      const tile = el;
+      tile.style.transform = 'scale(1)';
     });
   }
 
