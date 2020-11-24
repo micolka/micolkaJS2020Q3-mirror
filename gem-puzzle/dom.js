@@ -1,17 +1,17 @@
-export function createButton(elClass, innerText, fn) {
+export function createButton({ classProp, innerText, eventListener }) {
   const elem = document.createElement('button');
-  elem.classList.add(elClass);
+  elem.classList.add(classProp);
   elem.classList.add('btn');
   elem.innerText = innerText;
   elem.addEventListener('click', () => {
-    fn();
+    eventListener();
   });
   return elem;
 }
 
-export function createAnyElement(type, elClass, innerText) {
-  const elem = document.createElement(type);
-  elem.classList.add(elClass);
+export function createAnyElement({ elementType, classProp, innerText }) {
+  const elem = document.createElement(elementType);
+  elem.classList.add(classProp);
   elem.innerText = innerText;
   return elem;
 }

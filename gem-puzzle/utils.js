@@ -15,9 +15,9 @@ export const createIconHTML = (icon) => `<i class="material-icons">${icon}</i>`;
 
 export const genUrlNumber = () => Math.floor(Math.random() * 149) + 1;
 
-export function playSound(filename, isSoundOn) {
+export function playSound(filename, isSoundOn, audioOutput) {
+  const audio = audioOutput;
   if (isSoundOn) {
-    const audio = new Audio();
     audio.preload = 'auto';
     audio.src = `assets/sound/${filename}.mp3`;
     audio.play();

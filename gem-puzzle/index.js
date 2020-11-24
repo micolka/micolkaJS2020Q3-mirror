@@ -3,6 +3,7 @@ import {
 } from './utils';
 import { createButton, createAnyElement, toggleDisabledProp } from './dom';
 import imagesText from './images';
+import sizeParams from './config';
 import './style.css';
 
 class GemPuzzle {
@@ -24,10 +25,11 @@ class GemPuzzle {
   }
 
   init() {
+    this.audio = new Audio();
     this.body = document.querySelector('body');
     this.calculateTileSize();
     this.scores = JSON.parse(localStorage.getItem('scores')) || [];
-    this.wrapper = createAnyElement('div', 'wrapper', '');
+    this.wrapper = createAnyElement({ elementType: 'div', classProp: 'wrapper', innerText: '' });
     this.body.appendChild(this.wrapper);
     this.field = this.createTileFiled();
     this.stats = this.createStatsPanel();
@@ -37,12 +39,16 @@ class GemPuzzle {
   // Main param depends of window size
   calculateTileSize() {
     const windowSize = this.body.getBoundingClientRect().width;
-    if (windowSize <= 610) {
-      this.tileSize = 300 / this.fieldSize;
-    } else if (windowSize > 1500) {
-      this.tileSize = 600 / this.fieldSize;
+    const {
+      smallWindow, hugeWindow, smallTile, mediumTile, bigTile,
+    } = sizeParams;
+
+    if (windowSize <= smallWindow) {
+      this.tileSize = smallTile / this.fieldSize;
+    } else if (windowSize > hugeWindow) {
+      this.tileSize = bigTile / this.fieldSize;
     } else {
-      this.tileSize = 400 / this.fieldSize;
+      this.tileSize = mediumTile / this.fieldSize;
     }
   }
 
@@ -52,7 +58,7 @@ class GemPuzzle {
       tileSize, tileGap, fieldSize,
     } = this;
 
-    const field = createAnyElement('div', 'field', '');
+    const field = createAnyElement({ elementType: 'div', classProp: 'field', innerText: '' });
     field.style.width = `${(tileGap + tileSize) * fieldSize + tileGap}px`;
     field.style.height = field.style.width;
     if (this.field) {
@@ -67,7 +73,7 @@ class GemPuzzle {
     let j = -1;
     for (let i = 0; i < fieldSize ** 2; i += 1) {
       // Create tile and place it on the field
-      const tile = createAnyElement('div', 'tile', '');
+      const tile = createAnyElement({ elementType: 'div', classProp: 'tile', innerText: '' });
       tile.style.width = `${tileSize}px`;
       tile.style.height = `${tileSize}px`;
       tile.style.left = `${this.xOffset + tileGap + (i % fieldSize) * (tileSize + tileGap)}px`;
@@ -92,42 +98,42 @@ class GemPuzzle {
 
   // Create panels for diff info and buttons
   createStatsPanel() {
-    const infoPanel = createAnyElement('div', 'stats-panel', '');
+    const infoPanel = createAnyElement({ elementType: 'div', classProp: 'stats-panel', innerText: '' });
     infoPanel.style.width = this.field.style.width;
     this.wrapper.appendChild(infoPanel);
     // Turns counter
-    this.turnsCounter = createAnyElement('span', 'turns-counter', this.turnsCount);
+    this.turnsCounter = createAnyElement({ elementType: 'span', classProp: 'turns-counter', innerText: this.turnsCount });
     infoPanel.appendChild(this.turnsCounter);
     // Game timer
-    this.gameTimer = createAnyElement('span', 'game_timer', 'Time: 00:00:00');
+    this.gameTimer = createAnyElement({ elementType: 'span', classProp: 'game_timer', innerText: 'Time: 00:00:00' });
     infoPanel.appendChild(this.gameTimer);
     // Sound on/off key
-    const soundKey = createButton('options__key-sound', '', () => {});
+    const soundKey = createButton({ classProp: 'options__key-sound', innerText: '', eventListener: () => {} });
     soundKey.innerHTML = createIconHTML('volume_off');
     soundKey.addEventListener('click', () => {
       this.toggleSound();
       soundKey.innerHTML = this.isSoundOn ? createIconHTML('volume_up') : createIconHTML('volume_off');
-      playSound('onoff', this.isSoundOn);
+      playSound('onoff', this.isSoundOn, this.audio);
     });
     infoPanel.appendChild(soundKey);
 
-    const buttonsPanel = createAnyElement('div', 'buttons-panel', '');
+    const buttonsPanel = createAnyElement({ elementType: 'div', classProp: 'buttons-panel', innerText: '' });
     buttonsPanel.style.width = this.field.style.width;
     this.wrapper.appendChild(buttonsPanel);
     // New game button
-    buttonsPanel.appendChild(createButton('new_game-button', 'New', this.newGame.bind(this)));
+    buttonsPanel.appendChild(createButton({ classProp: 'new_game-button', innerText: 'New', eventListener: this.newGame.bind(this) }));
     // Save game button
-    buttonsPanel.appendChild(createButton('save_game-button', 'Save', this.saveGame.bind(this)));
+    buttonsPanel.appendChild(createButton({ classProp: 'save_game-button', innerText: 'Save', eventListener: this.saveGame.bind(this) }));
     // Load game button
-    const loadButton = createButton('load_game-button', 'Load', this.loadGame.bind(this));
+    const loadButton = createButton({ classProp: 'load_game-button', innerText: 'Load', eventListener: this.loadGame.bind(this) });
     if (!this.isGameSaved) loadButton.disabled = true;
     buttonsPanel.appendChild(loadButton);
     // Resolve game button
-    buttonsPanel.appendChild(createButton('resolve_game-button', 'Give up', this.resolvePuzzle.bind(this)));
+    buttonsPanel.appendChild(createButton({ classProp: 'resolve_game-button', innerText: 'Give up', eventListener: this.resolvePuzzle.bind(this) }));
     // Field size selector
-    const select = createAnyElement('select', 'btn', '');
+    const select = createAnyElement({ elementType: 'select', classProp: 'btn', innerText: '' });
     for (let i = 3; i <= 8; i += 1) {
-      const option = createAnyElement('option', 'option-size', '');
+      const option = createAnyElement({ elementType: 'option', classProp: 'option-size', innerText: '' });
       option.value = i;
       option.selected = (i === +this.fieldSize);
       option.innerText = `${i}x${i}`;
@@ -144,12 +150,12 @@ class GemPuzzle {
     return infoPanel;
   }
 
-  setBackGround(el, i, j, n) {
-    const tile = el;
-    tile.style.backgroundImage = `url('./assets/images/${n}.jpg')`;
+  setBackGround(element, posInRow, posInColumn, imageID) {
+    const tile = element;
+    tile.style.backgroundImage = `url('./assets/images/${imageID}.jpg')`;
     tile.style.backgroundSize = `${this.tileSize * this.fieldSize}px`;
-    tile.style.backgroundPositionX = `${(i % this.fieldSize) * -this.tileSize}px`;
-    tile.style.backgroundPositionY = `${j * -this.tileSize}px`;
+    tile.style.backgroundPositionX = `${(posInRow % this.fieldSize) * -this.tileSize}px`;
+    tile.style.backgroundPositionY = `${posInColumn * -this.tileSize}px`;
   }
 
   changeBackGround() {
@@ -171,7 +177,7 @@ class GemPuzzle {
         this.updateCounter();
       }
     }
-    playSound('shuffle', this.isSoundOn);
+    playSound('shuffle', this.isSoundOn, this.audio);
   }
 
   // Gets rid of repetitive turns while logging
@@ -252,7 +258,6 @@ class GemPuzzle {
   newGame() {
     this.stackOfSteps = [];
     this.field = this.createTileFiled();
-
     this.shuffleTiles();
     this.changeBackGround();
     this.resetCounter();
@@ -263,17 +268,15 @@ class GemPuzzle {
 
   // Save game status into local storage
   saveGame() {
-    const acc = [];
-    this.field.childNodes.forEach((el) => {
-      acc.push({ style: el.style.cssText, id: el.id });
-    });
+    const nodesArray = Array.from(this.field.childNodes);
+    const acc = nodesArray.map((el) => ({ style: el.style.cssText, id: el.id }));
     localStorage.setItem('saveGame', JSON.stringify(acc));
     localStorage.setItem('turns', JSON.stringify(this.turnsCount));
     localStorage.setItem('duration', JSON.stringify(this.duration));
     localStorage.setItem('fieldSize', JSON.stringify(this.fieldSize));
     localStorage.setItem('stackOfSteps', JSON.stringify(this.stackOfSteps));
     localStorage.setItem('backGroundId', JSON.stringify(this.pictureNumber));
-    playSound('onoff', this.isSoundOn);
+    playSound('onoff', this.isSoundOn, this.audio);
     this.isGameSaved = true;
     toggleDisabledProp(['.load_game-button'], !this.isGameSaved);
   }
@@ -302,7 +305,7 @@ class GemPuzzle {
     this.initTimeValue = JSON.parse(localStorage.getItem('duration'));
     this.duration = 0;
     this.runGameTimer(new Date().getTime());
-    playSound('shuffle', this.isSoundOn);
+    playSound('shuffle', this.isSoundOn, this.audio);
   }
 
   updateScores(time) {
@@ -360,7 +363,7 @@ class GemPuzzle {
         emptyChild.style.top = top;
         emptyChild.id = id;
 
-        playSound('move', this.isSoundOn);
+        playSound('move', this.isSoundOn, this.audio);
         this.stackOfSteps.push(target.innerText);
         this.updateCounter();
       } else {
@@ -371,7 +374,7 @@ class GemPuzzle {
 
       if (this.isGameSolved()) {
         setTimeout(() => {
-          playSound('win31', this.isSoundOn);
+          playSound('win31', this.isSoundOn, this.audio);
           this.displayWinGameMessage(true);
         }, 200);
       }
@@ -401,25 +404,25 @@ class GemPuzzle {
     });
     this.toggleBlockMenu();
     // Add full image and win message
-    const fullImage = createAnyElement('div', 'result-image', '');
+    const fullImage = createAnyElement({ elementType: 'div', classProp: 'result-image', innerText: '' });
     fullImage.style.backgroundImage = `url('./assets/images/${this.pictureNumber}.jpg')`;
     fullImage.style.backgroundSize = 'cover';
     this.field.appendChild(fullImage);
-    const winMessage = createAnyElement('div', 'result-message', '');
+    const winMessage = createAnyElement({ elementType: 'div', classProp: 'result-message', innerText: '' });
     winMessage.innerText = message;
     fullImage.appendChild(winMessage);
-    this.scoresElem = createAnyElement('div', 'scores-wrapper', '');
+    this.scoresElem = createAnyElement({ elementType: 'div', classProp: 'scores-wrapper', innerText: '' });
     fullImage.appendChild(this.scoresElem);
-    const buttonsElem = createAnyElement('div', 'scores_buttons-wrapper', '');
+    const buttonsElem = createAnyElement({ elementType: 'div', classProp: 'scores_buttons-wrapper', innerText: '' });
     fullImage.appendChild(buttonsElem);
     // Scores button
-    buttonsElem.appendChild(createButton('scores-button', 'Scores', this.showScores.bind(this)));
+    buttonsElem.appendChild(createButton({ classProp: 'scores-button', innerText: 'Scores', eventListener: this.showScores.bind(this) }));
     // Subscription of the painting
     const subsData = imagesText[this.pictureNumber - 1];
     const subsText = `"${subsData.name}" - ${subsData.author}, ${subsData.year}`;
-    buttonsElem.appendChild(createAnyElement('div', 'result-message', subsText));
+    buttonsElem.appendChild(createAnyElement({ elementType: 'div', classProp: 'result-message', innerText: subsText }));
     // Close button
-    buttonsElem.appendChild(createButton('close-button', 'X', this.closeMessage.bind(this)));
+    buttonsElem.appendChild(createButton({ classProp: 'close-button', innerText: 'X', eventListener: this.closeMessage.bind(this) }));
     this.isScoresDisplayed = false;
   }
 
@@ -438,7 +441,7 @@ class GemPuzzle {
     if (this.isScoresDisplayed) {
       data.forEach((el, i) => {
         const text = `${i + 1}. ${el.fieldSize}x${el.fieldSize}, turns: ${el.turnsCount}, time: ${el.time}`;
-        this.scoresElem.appendChild(createAnyElement('div', 'scores-line', text));
+        this.scoresElem.appendChild(createAnyElement({ elementType: 'div', classProp: 'scores-line', innerText: text }));
       });
     } else {
       document.querySelectorAll('.scores-line').forEach((el) => {
@@ -465,11 +468,11 @@ class GemPuzzle {
       const tile = this.field.childNodes[this.stackOfSteps[i] - 1];
       setTimeout(() => {
         this.shiftTiles(tile);
-        playSound('move', this.isSoundOn);
+        playSound('move', this.isSoundOn, this.audio);
       }, timer += 200);
     }
     setTimeout(() => {
-      playSound('win31', this.isSoundOn);
+      playSound('win31', this.isSoundOn, this.audio);
       this.displayWinGameMessage(false);
       this.toggleBlockMenu();
     }, timer += 200);
