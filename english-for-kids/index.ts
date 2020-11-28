@@ -1,6 +1,8 @@
 /* eslint-disable import/extensions */
 import './scss/index.scss';
 import cards from './src/cards';
+import initBurgerMenu from './src/burger-menu';
+
 
 const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
 const audio: HTMLAudioElement = new Audio();
@@ -39,13 +41,13 @@ function addListenersToCards() {
       }
     });
     buttonsCollection[index].addEventListener('click', () => {
-      card.classList.toggle('active');
+      card.classList.toggle('active_card');
       setTimeout(() => { isFlipped = true; }, 500);
     });
     card.addEventListener('mouseleave', () => {
       setTimeout(() => {
         if (isFlipped) {
-          card.classList.toggle('active');
+          card.classList.toggle('active_card');
           isFlipped = false;
         }
       }, 500);
@@ -80,4 +82,5 @@ window.onpopstate = () => {
   openSelectedSet(window.location.hash.slice(1));
 };
 
+initBurgerMenu();
 createMainPageContent();
