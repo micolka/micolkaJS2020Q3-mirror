@@ -5,7 +5,7 @@ export function initBurgerMenu() {
   const mobileMenu = document.querySelector('.header-mobile-menu');
   const body = document.querySelector('body');
   const backgroundMenu = document.querySelector('.header-menu-background');
-
+  const headerWrapper = document.querySelector('.header_wrapper');
   const { categories, hashData } = cards;
 
   const menuInnerHTML = categories.map((elem, index) => `<li><a class="header-nav-link" href="#${hashData[index]}">${elem}</a></li>`);
@@ -24,6 +24,14 @@ export function initBurgerMenu() {
   mobileMenu.addEventListener('click', toggleMobileMenu);
   backgroundMenu.addEventListener('click', toggleMobileMenu);
   linksList.forEach((elem) => elem.addEventListener('click', toggleMobileMenu));
+  headerWrapper.addEventListener('click', (event) => {
+    if (event.target === headerWrapper) {
+      mobileMenu.classList.remove('active_menu');
+      navMenu.classList.remove('active_menu');
+      body.classList.remove('active_menu');
+      backgroundMenu.classList.remove('active_menu');
+    }
+  });
 }
 
 export function changeMenuActiveLink(hash:string) {

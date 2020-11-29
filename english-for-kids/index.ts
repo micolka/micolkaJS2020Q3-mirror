@@ -3,6 +3,7 @@ import './src/scss/index.scss';
 import cards from './src/cardsConfig';
 import { initBurgerMenu, changeMenuActiveLink } from './src/components/burgerMenu';
 import getCardInnerHTML from './src/components/card';
+import initSwitchButton from './src/components/switchButton';
 
 const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
 const audio: HTMLAudioElement = new Audio();
@@ -72,4 +73,5 @@ window.onpopstate = () => {
 };
 
 createMainPageContent();
+initSwitchButton();
 initBurgerMenu();
