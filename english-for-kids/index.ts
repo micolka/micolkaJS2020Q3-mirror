@@ -1,14 +1,12 @@
 /* eslint-disable import/extensions */
-import './scss/index.scss';
-import cards from './src/cards';
-import initBurgerMenu from './src/burger-menu';
-
+import './src/scss/index.scss';
+import cards from './src/cardsConfig';
+import initBurgerMenu from './src/components/burgerMenu';
+import getCardInnerHTML from './src/components/card';
 
 const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
 const audio: HTMLAudioElement = new Audio();
 let currentCollectionIndex: number;
-
-const createIconHTML = (icon:string) => `<i class="material-icons">${icon}</i>`;
 
 function playSound(filename:string) {
   if (window.location.hash.slice(1) === '') return;
@@ -61,18 +59,7 @@ function openSelectedSet(hash: string): void {
   } else {
     currentCollectionIndex = cards.hashData.findIndex((el) => el === hash);
     const cardsData = cards.data[currentCollectionIndex];
-    const cardsContent:string[] = cardsData.map((elem) => `
-        <div class="card_container">
-          <div class="card_front">
-            <img src="./assets/${elem.image}" alt="">
-            <div class="card_bottom">
-              <div>${elem.word}</div>
-              <div class="btn_rotate">${createIconHTML('cached')}</div>
-            </div>
-          </div>
-          <div class="card_back">${elem.translation}</div>
-        </div>
-      `);
+    const cardsContent:string[] = cardsData.map((elem) => getCardInnerHTML(elem));
     rootDiv.innerHTML = cardsContent.join('');
   }
   addListenersToCards();
