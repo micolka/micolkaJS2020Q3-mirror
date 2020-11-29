@@ -1,21 +1,21 @@
 /* eslint-disable import/extensions */
 import './src/scss/index.scss';
 import cards from './src/cardsConfig';
-import initBurgerMenu from './src/components/burgerMenu';
+import { initBurgerMenu, changeMenuActiveLink } from './src/components/burgerMenu';
 import getCardInnerHTML from './src/components/card';
 
 const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
 const audio: HTMLAudioElement = new Audio();
 let currentCollectionIndex: number;
 
-function playSound(filename:string) {
+function playSound(filename:string): void {
   if (window.location.hash.slice(1) === '') return;
   audio.preload = 'auto';
   audio.src = `assets/${filename}`;
   audio.play();
 }
 
-function createMainPageContent() {
+function createMainPageContent(): void {
   const cardsSections:string[] = cards.categories;
   const cardsWrapperContent:string[] = cardsSections.map((elem, index) => `
     <a class="card_container" href="#${cards.hashData[index]}">
@@ -24,7 +24,7 @@ function createMainPageContent() {
   rootDiv.innerHTML = cardsWrapperContent.join('');
 }
 
-function addListenersToCards() {
+function addListenersToCards(): void {
   const cardsData = cards.data[currentCollectionIndex];
   const cardsCollection:NodeListOf<HTMLElement> = document.querySelectorAll('.card_container');
   const buttonsCollection:NodeListOf<HTMLElement> = document.querySelectorAll('.btn_rotate');
@@ -61,13 +61,15 @@ function openSelectedSet(hash: string): void {
     const cardsData = cards.data[currentCollectionIndex];
     const cardsContent:string[] = cardsData.map((elem) => getCardInnerHTML(elem));
     rootDiv.innerHTML = cardsContent.join('');
+    addListenersToCards();
   }
-  addListenersToCards();
 }
 
 window.onpopstate = () => {
-  openSelectedSet(window.location.hash.slice(1));
+  const hash: string = window.location.hash.slice(1);
+  openSelectedSet(hash);
+  changeMenuActiveLink(hash);
 };
 
-initBurgerMenu();
 createMainPageContent();
+initBurgerMenu();
