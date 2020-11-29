@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
-import createIconHTML from '../utils';
+import state from '../appState';
+import { createIconHTML } from '../utils';
 
 type TCardDataType = {
   word: string;
@@ -8,13 +9,13 @@ type TCardDataType = {
   audioSrc: string;
 };
 
-function getCardInnerHTML(cardProps:TCardDataType) {
+export function getTrainCardInnerHTML(cardProps:TCardDataType):string {
   return `
   <div class="card_container">
   <div class="card_front">
     <img src="./assets/${cardProps.image}" alt="">
     <div class="card_bottom">
-      <div>${cardProps.word}</div>
+      <div class="card_info">${cardProps.word}</div>
       <div class="btn_rotate">${createIconHTML('cached')}</div>
     </div>
   </div>
@@ -23,4 +24,10 @@ function getCardInnerHTML(cardProps:TCardDataType) {
 `;
 }
 
-export default getCardInnerHTML;
+export function transformCardsMode() {
+  const cardBottom:NodeListOf<HTMLElement> = document.querySelectorAll('.card_bottom');
+  const text:string = state.isTrainModeOn ? 'flex' : 'none';
+  cardBottom.forEach((_, index) => {
+    cardBottom[index].style.display = text;
+  });
+}

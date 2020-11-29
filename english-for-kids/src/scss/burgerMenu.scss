@@ -12,7 +12,7 @@ body.active_menu{
   width: 320px;
   height: 100vh;
   flex-direction: column;
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease-out;
   z-index: 2;
 }
 
@@ -62,6 +62,7 @@ body.active_menu{
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.5s ease-out;
+  z-index: 10;
 }
 
 .header-mobile-menu:hover {
@@ -74,7 +75,6 @@ body.active_menu{
   width: 40px;
   border-top: 3px solid #000000;
   transition: all 0.5s ease-out;
-  z-index: 10;
 }
 
 .sp1 {

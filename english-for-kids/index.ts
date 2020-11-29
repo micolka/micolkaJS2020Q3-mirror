@@ -2,19 +2,13 @@
 import './src/scss/index.scss';
 import cards from './src/cardsConfig';
 import { initBurgerMenu, changeMenuActiveLink } from './src/components/burgerMenu';
-import getCardInnerHTML from './src/components/card';
+import { getTrainCardInnerHTML, transformCardsMode } from './src/components/card';
 import initSwitchButton from './src/components/switchButton';
+import state from './src/appState';
+import { playSound } from './src/utils';
 
 const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
 const audio: HTMLAudioElement = new Audio();
-let currentCollectionIndex: number;
-
-function playSound(filename:string): void {
-  if (window.location.hash.slice(1) === '') return;
-  audio.preload = 'auto';
-  audio.src = `assets/${filename}`;
-  audio.play();
-}
 
 function createMainPageContent(): void {
   const cardsSections:string[] = cards.categories;
@@ -26,7 +20,7 @@ function createMainPageContent(): void {
 }
 
 function addListenersToCards(): void {
-  const cardsData = cards.data[currentCollectionIndex];
+  const cardsData = cards.data[state.currentCollectionIndex];
   const cardsCollection:NodeListOf<HTMLElement> = document.querySelectorAll('.card_container');
   const buttonsCollection:NodeListOf<HTMLElement> = document.querySelectorAll('.btn_rotate');
 
@@ -36,7 +30,11 @@ function addListenersToCards(): void {
     card.addEventListener('click', (e) => {
       if (e.target !== buttonsCollection[index]
           && e.target !== buttonsCollection[index].firstChild) {
-        playSound(cardsData[index].audioSrc);
+        if (state.isTrainModeOn) {
+          playSound(cardsData[index].audioSrc, audio);
+        } else {
+          console.log(123);
+        }
       }
     });
     buttonsCollection[index].addEventListener('click', () => {
@@ -54,23 +52,28 @@ function addListenersToCards(): void {
   });
 }
 
-function openSelectedSet(hash: string): void {
+function openSelectedSet(): void {
+  const hash: string = window.location.hash.slice(1);
   if (hash === '') {
-    createMainPageContent();
+    if (hash !== state.currentHash) createMainPageContent();
   } else {
-    currentCollectionIndex = cards.hashData.findIndex((el) => el === hash);
-    const cardsData = cards.data[currentCollectionIndex];
-    const cardsContent:string[] = cardsData.map((elem) => getCardInnerHTML(elem));
+    state.currentCollectionIndex = cards.hashData.findIndex((el) => el === hash);
+    const cardsData = cards.data[state.currentCollectionIndex];
+    const cardsContent:string[] = cardsData.map((elem) => getTrainCardInnerHTML(elem));
     rootDiv.innerHTML = cardsContent.join('');
     addListenersToCards();
   }
+  changeMenuActiveLink(hash);
+  state.currentHash = hash;
 }
 
 window.onpopstate = () => {
-  const hash: string = window.location.hash.slice(1);
-  openSelectedSet(hash);
-  changeMenuActiveLink(hash);
+  openSelectedSet();
 };
+
+document.addEventListener('modeChanged', () => {
+  transformCardsMode();
+});
 
 createMainPageContent();
 initSwitchButton();
