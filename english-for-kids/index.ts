@@ -6,6 +6,7 @@ import { getTrainCardInnerHTML, transformCardsMode } from './src/components/card
 import initSwitchButton from './src/components/switchButton';
 import state from './src/appState';
 import { playSound } from './src/utils';
+import { initStartGameButton, showGameButton } from './src/components/gameButton';
 
 const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
 const audio: HTMLAudioElement = new Audio();
@@ -33,7 +34,7 @@ function addListenersToCards(): void {
         if (state.isTrainModeOn) {
           playSound(cardsData[index].audioSrc, audio);
         } else {
-          console.log(123);
+          // если игра начата вызывать функцию проверки правильности нажатия на карточку
         }
       }
     });
@@ -69,12 +70,15 @@ function openSelectedSet(): void {
 
 window.onpopstate = () => {
   openSelectedSet();
+  // если на главной странице переключатель неактивен.
 };
 
 document.addEventListener('modeChanged', () => {
   transformCardsMode();
+  showGameButton();
 });
 
 createMainPageContent();
-initSwitchButton();
+initSwitchButton(audio);
+initStartGameButton(audio);
 initBurgerMenu();
