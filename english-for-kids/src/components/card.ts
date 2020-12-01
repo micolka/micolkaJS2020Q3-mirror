@@ -9,9 +9,9 @@ type TCardDataType = {
   audioSrc: string;
 };
 
-export function getTrainCardInnerHTML(cardProps:TCardDataType):string {
+export function getTrainCardInnerHTML(cardProps:TCardDataType, id:number):string {
   return `
-  <div class="card_container">
+  <div id="${id}" class="card_container">
   <div class="card_front">
     <img src="./assets/${cardProps.image}" alt="">
     <div class="card_bottom">

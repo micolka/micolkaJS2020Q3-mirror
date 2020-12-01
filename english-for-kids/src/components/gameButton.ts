@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import state from '../appState';
-import { startNewGame } from '../gameEngine';
+import { playSoundWithDelay, startNewGame } from '../gameEngine';
 import { playSound } from '../utils';
 
 export function showGameButton() {
@@ -14,9 +14,9 @@ function prepareToGame(gameButton:HTMLElement, audio:HTMLAudioElement) {
     btn.innerText = 'Repeat';
     btn.classList.add('repeat');
     playSound('audio/_click.mp3', audio);
-    startNewGame();
+    startNewGame(audio);
   } else {
-    // повторять текущий аудио
+    playSoundWithDelay(audio);
   }
 }
 

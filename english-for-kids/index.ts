@@ -7,6 +7,7 @@ import initSwitchButton from './src/components/switchButton';
 import state from './src/appState';
 import { playSound } from './src/utils';
 import { initStartGameButton, showGameButton } from './src/components/gameButton';
+import { nextGameStep } from './src/gameEngine';
 
 const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
 const audio: HTMLAudioElement = new Audio();
@@ -31,10 +32,10 @@ function addListenersToCards(): void {
     card.addEventListener('click', (e) => {
       if (e.target !== buttonsCollection[index]
           && e.target !== buttonsCollection[index].firstChild) {
-        if (state.isTrainModeOn) {
-          playSound(cardsData[index].audioSrc, audio);
-        } else {
-          // если игра начата вызывать функцию проверки правильности нажатия на карточку
+        if (state.isTrainModeOn) playSound(cardsData[index].audioSrc, audio);
+        if (state.isGameStarted) {
+          const clickedCard = e.currentTarget as HTMLElement;
+          nextGameStep(clickedCard, audio);
         }
       }
     });
@@ -60,7 +61,7 @@ function openSelectedSet(): void {
   } else {
     state.currentCollectionIndex = cards.hashData.findIndex((el) => el === hash);
     const cardsData = cards.data[state.currentCollectionIndex];
-    const cardsContent:string[] = cardsData.map((elem) => getTrainCardInnerHTML(elem));
+    const cardsContent:string[] = cardsData.map((elem, index) => getTrainCardInnerHTML(elem, index));
     rootDiv.innerHTML = cardsContent.join('');
     addListenersToCards();
   }
