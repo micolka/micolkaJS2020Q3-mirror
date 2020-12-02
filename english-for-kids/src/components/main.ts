@@ -1,12 +1,12 @@
 /* eslint-disable import/extensions */
 import state from '../appState';
 import cards from '../cardsConfig';
-import { getHash } from '../utils';
+import { getHash, getRootElement } from '../utils';
 import { changeMenuActiveLink } from './burgerMenu';
 import { addListenersToCards, getTrainCardInnerHTML } from './card';
 
 export function createMainPageContent(): void {
-  const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
+  const rootDiv: HTMLElement = getRootElement();
   const cardsSections:string[] = cards.categories;
   const cardsWrapperContent:string[] = cardsSections.map((elem, index) => `
     <a class="card_container" href="#${cards.hashData[index]}">
@@ -19,7 +19,7 @@ export function createMainPageContent(): void {
 }
 
 export function openSelectedSet(): void {
-  const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
+  const rootDiv: HTMLElement = getRootElement();
   const hash:string = getHash();
   if (hash === '') {
     if (hash !== state.currentHash) createMainPageContent();

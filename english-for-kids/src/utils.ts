@@ -7,7 +7,7 @@ export function playSound(filename:string, audioElem:HTMLAudioElement): void {
   audio.play();
 }
 
-export function genRandomListOfIndexes() {
+export function genRandomListOfIndexes():number[] {
   const arr = [0, 1, 2, 3, 4, 5, 6, 7];
   const shuffledArr = [];
   for (let i = 8; i > 0; i -= 1) {
@@ -18,6 +18,10 @@ export function genRandomListOfIndexes() {
   return shuffledArr;
 }
 
-export function getHash() {
+export function getHash():string {
   return window.location.hash.slice(1);
+}
+
+export function getRootElement():HTMLElement {
+  return document.querySelector('.cards_wrapper');
 }
