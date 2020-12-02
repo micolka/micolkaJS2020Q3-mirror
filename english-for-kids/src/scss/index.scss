@@ -46,7 +46,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  background-color: blue;
   gap: 40px;
   align-items: center;
   justify-content: space-between;
@@ -61,6 +60,7 @@ body {
   text-decoration: none;
   color: azure;
   transform: none;
+  font-size: 40px;
   transform-style: preserve-3d;
   backface-visibility: initial;
   transition: all .5s ease-in-out;
