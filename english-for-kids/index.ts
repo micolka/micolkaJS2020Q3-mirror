@@ -3,20 +3,23 @@ import './src/scss/index.scss';
 import cards from './src/cardsConfig';
 import { initBurgerMenu, changeMenuActiveLink } from './src/components/burgerMenu';
 import { getTrainCardInnerHTML, transformCardsMode } from './src/components/card';
-import initSwitchButton from './src/components/switchButton';
+import { initSwitchButton, resetSwitchButton } from './src/components/switchButton';
 import state from './src/appState';
 import { playSound } from './src/utils';
-import { initStartGameButton, showGameButton } from './src/components/gameButton';
+import { initStartGameButton, resetGameButton, showGameButton } from './src/components/gameButton';
 import { nextGameStep } from './src/gameEngine';
 
 const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
-const audio: HTMLAudioElement = new Audio();
+state.audioInstance = new Audio();
 
 function createMainPageContent(): void {
   const cardsSections:string[] = cards.categories;
   const cardsWrapperContent:string[] = cardsSections.map((elem, index) => `
     <a class="card_container" href="#${cards.hashData[index]}">
-      <img src="./assets/${cards.data[index][0].image}" alt="">${elem}
+      <img src="./assets/${cards.data[index][0].image}" alt="">
+      <div class="card_bottom">
+        <div class="card_info">${elem}</div>
+      </div>
     </a>`);
   rootDiv.innerHTML = cardsWrapperContent.join('');
 }
@@ -32,10 +35,10 @@ function addListenersToCards(): void {
     card.addEventListener('click', (e) => {
       if (e.target !== buttonsCollection[index]
           && e.target !== buttonsCollection[index].firstChild) {
-        if (state.isTrainModeOn) playSound(cardsData[index].audioSrc, audio);
+        if (state.isTrainModeOn) playSound(cardsData[index].audioSrc, state.audioInstance);
         if (state.isGameStarted) {
           const clickedCard = e.currentTarget as HTMLElement;
-          nextGameStep(clickedCard, audio);
+          nextGameStep(clickedCard);
         }
       }
     });
@@ -61,7 +64,8 @@ function openSelectedSet(): void {
   } else {
     state.currentCollectionIndex = cards.hashData.findIndex((el) => el === hash);
     const cardsData = cards.data[state.currentCollectionIndex];
-    const cardsContent:string[] = cardsData.map((elem, index) => getTrainCardInnerHTML(elem, index));
+    const cardsContent:string[] = cardsData.map((elem, index) => getTrainCardInnerHTML(elem,
+      index));
     rootDiv.innerHTML = cardsContent.join('');
     addListenersToCards();
   }
@@ -79,7 +83,13 @@ document.addEventListener('modeChanged', () => {
   showGameButton();
 });
 
+document.addEventListener('resetMainPage', () => {
+  createMainPageContent();
+  resetGameButton();
+  resetSwitchButton();
+});
+
 createMainPageContent();
-initSwitchButton(audio);
-initStartGameButton(audio);
+initSwitchButton();
+initStartGameButton();
 initBurgerMenu();

@@ -13,12 +13,13 @@ export function getTrainCardInnerHTML(cardProps:TCardDataType, id:number):string
   return `
   <div id="${id}" class="card_container">
   <div class="card_front">
-    <img src="./assets/${cardProps.image}" alt="">
+    <img src="./assets/${cardProps.image}" alt="${cardProps.word}">
     <div class="card_bottom">
       <div class="card_info">${cardProps.word}</div>
       <div class="btn_rotate">${createIconHTML('cached')}</div>
     </div>
   </div>
+  <div class="card_curtain"></div>
   <div class="card_back">${cardProps.translation}</div>
 </div>
 `;

@@ -42,22 +42,21 @@ body {
 }
 
 .cards_wrapper {
-  width: 100%;
-  height: 100%;
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
-  gap: 40px 40px;
-  grid-auto-flow: dense;
-  justify-content: center;
+  margin: 40px 40px 40px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: blue;
+  gap: 40px;
   align-items: center;
+  justify-content: space-between;
+  font-size: 120px;
+  text-shadow: 2px 2px 0 #4074b5, 2px -2px 0 #4074b5, -2px 2px 0 #4074b5, -2px -2px 0 #4074b5, 2px 0px 0 #4074b5, 0px 2px 0 #4074b5, -2px 0px 0 #4074b5, 0px -2px 0 #4074b5;
 }
 
 .card_container {
-  height: 250px;
+  height: 200px;
   background-color: darkblue;
-  -webkit-box-shadow: 10px 10px 5px -4px rgba(181,78,181,1);
-  -moz-box-shadow: 10px 10px 5px -4px rgba(181,78,181,1);
   box-shadow: 10px 10px 5px -4px rgba(181,78,181,1);
   text-decoration: none;
   color: azure;
@@ -73,13 +72,17 @@ body {
 
 .card_container img {
   width: 300px;
+  height: 200px;
 }
 
 .card_container:hover {
   cursor: pointer;
-  -webkit-box-shadow: -11px -9px 5px -4px rgba(79,179,139,1);
-  -moz-box-shadow: -11px -9px 5px -4px rgba(79,179,139,1);
   box-shadow: -11px -9px 5px -4px rgba(79,179,139,1);
+}
+
+.card_container.off {
+  pointer-events: none;
+  box-shadow: none;
 }
 
 .card_bottom {
@@ -87,6 +90,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  bottom: 60px;
+  font-size: 40px;
+  text-shadow: 2px 2px 0 #4074b5, 2px -2px 0 #4074b5, -2px 2px 0 #4074b5, -2px -2px 0 #4074b5, 2px 0px 0 #4074b5, 0px 2px 0 #4074b5, -2px 0px 0 #4074b5, 0px -2px 0 #4074b5;
+  z-index: 1;
 }
 
 .card_front {
@@ -98,15 +106,32 @@ body {
   top: 0;
   left: 0;
   width: 100%;
+  height: 100px;
+  background-color: blueviolet;
   font-size: 40px;
+  line-height: 100px;
   text-align: center;
   transform: rotateY(180deg);  
 }
 
+.card_curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0;
+  transition: all .5s ease-in-out;
+}
+
 .btn_rotate {
-  width: 30px;
-  height: 30px;
-  background: chocolate;
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer {

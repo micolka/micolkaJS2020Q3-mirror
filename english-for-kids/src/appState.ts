@@ -8,6 +8,7 @@ type TAppState = {
   isTrainModeOn: boolean,
   isGameStarted: boolean,
   currentHash: string,
+  audioInstance: HTMLAudioElement,
   gameStatus: TGameStatus,
 };
 
@@ -16,6 +17,7 @@ const state: TAppState = {
   isTrainModeOn: true,
   isGameStarted: false,
   currentHash: '',
+  audioInstance: undefined,
   gameStatus: {
     wordsIdList: [],
     mistakesCount: 0,

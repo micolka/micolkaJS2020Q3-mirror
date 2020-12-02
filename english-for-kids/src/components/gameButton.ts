@@ -8,22 +8,29 @@ export function showGameButton() {
   gameButton.classList.toggle('visible');
 }
 
-function prepareToGame(gameButton:HTMLElement, audio:HTMLAudioElement) {
+function prepareToGame(gameButton:HTMLElement) {
   const btn:HTMLElement = gameButton;
   if (!state.isGameStarted) {
     btn.innerText = 'Repeat';
     btn.classList.add('repeat');
-    playSound('audio/_click.mp3', audio);
-    startNewGame(audio);
+    playSound('audio/_click.mp3', state.audioInstance);
+    startNewGame();
   } else {
-    playSoundWithDelay(audio);
+    playSoundWithDelay();
   }
 }
 
-export function initStartGameButton(audio:HTMLAudioElement) {
+export function initStartGameButton() {
   const gameButton:HTMLElement = document.querySelector('.start-game-btn');
 
   gameButton.addEventListener('click', () => {
-    prepareToGame(gameButton, audio);
+    prepareToGame(gameButton);
   });
+}
+
+export function resetGameButton() {
+  const gameButton:HTMLElement = document.querySelector('.start-game-btn');
+  gameButton.classList.remove('visible');
+  gameButton.classList.remove('repeat');
+  gameButton.innerText = 'Start Game';
 }

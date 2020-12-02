@@ -35,7 +35,7 @@ export function initBurgerMenu() {
 }
 
 export function changeMenuActiveLink(hash:string) {
-  const linksList = document.querySelectorAll('.header-nav-link');
+  const linksList:NodeListOf<HTMLElement> = document.querySelectorAll('.header-nav-link');
   linksList.forEach((link) => {
     link.classList.remove('header-nav-active');
     if (hash === link.hash.slice(1)) link.classList.add('header-nav-active');
