@@ -1,7 +1,8 @@
 @import "normalize";
 @import "burgerMenu";
 @import "switchButton";
-@import "gameButton.scss";
+@import "gameButton";
+@import "stars";
 
 body {
   width: 100%;
@@ -139,4 +140,13 @@ body {
   height: 10vh;
   margin: 0 auto;
   background-color: brown;
+}
+
+@media (max-width: 440px) {
+  .cards_wrapper {
+    margin: 20px 10px;
+  }
+  .stars_wrapper{
+    margin: 0 10px;
+  }
 }

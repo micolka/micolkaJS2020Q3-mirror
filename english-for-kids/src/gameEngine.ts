@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import state from './appState';
 import cards from './cardsConfig';
+import { addBlackStar, addGoldStar } from './components/stars';
 import { genRandomListOfIndexes, playSound } from './utils';
 
 function getCurrentWordIndex() {
@@ -74,6 +75,7 @@ export function nextGameStep(target:HTMLElement) {
   if (+target.id === wordIndex) {
     playSound('audio/_correct.mp3', state.audioInstance);
     makeCardInactive(target);
+    addGoldStar();
     state.gameStatus.wordsIdList.pop();
     if (isGameFinished()) {
       showFinalMessage();
@@ -83,5 +85,6 @@ export function nextGameStep(target:HTMLElement) {
   } else {
     state.gameStatus.mistakesCount += 1;
     playSound('audio/_wrong.mp3', state.audioInstance);
+    addBlackStar();
   }
 }

@@ -6,6 +6,7 @@ import { initSwitchButton, resetSwitchButton, setSwitcherAvailability } from './
 import state from './src/appState';
 import { initStartGameButton, resetGameButton, showGameButton } from './src/components/gameButton';
 import { createMainPageContent, openSelectedSet } from './src/components/main';
+import { resetStarsQueue } from './src/components/stars';
 
 state.audioInstance = new Audio();
 
@@ -23,6 +24,8 @@ document.addEventListener('resetMainPage', () => {
   createMainPageContent();
   resetGameButton();
   resetSwitchButton();
+  resetStarsQueue();
+  window.location.href = '/#';
 });
 
 createMainPageContent();
