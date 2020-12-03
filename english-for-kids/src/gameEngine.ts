@@ -2,7 +2,7 @@
 import state from './appState';
 import cards from './cardsConfig';
 import { addBlackStar, addGoldStar } from './components/stars';
-import { saveStatsToLocalStorage, setGameRightsCount, setGameWrongsCount } from './components/statistics';
+import { saveStatsToLocalStorage, setGameCorrectAnswersCount, setGameWrongAnswersCount } from './statsLogger';
 import { genRandomListOfIndexes, playSound } from './utils';
 
 function getCurrentWordIndex() {
@@ -84,11 +84,11 @@ export function nextGameStep(target:HTMLElement) {
     } else {
       playSoundWithDelay();
     }
-    setGameRightsCount(wordIndex);
+    setGameCorrectAnswersCount(wordIndex);
   } else {
     state.gameStatus.mistakesCount += 1;
     playSound('audio/_wrong.mp3', state.audioInstance);
     addBlackStar();
-    setGameWrongsCount(wordIndex);
+    setGameWrongAnswersCount(wordIndex);
   }
 }

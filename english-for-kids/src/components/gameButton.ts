@@ -2,7 +2,7 @@
 import state from '../appState';
 import { playSoundWithDelay, startNewGame } from '../gameEngine';
 import { playSound } from '../utils';
-import { saveStatsToLocalStorage } from './statistics';
+import { saveStatsToLocalStorage } from '../statsLogger';
 
 export function showGameButton() {
   const gameButton:HTMLElement = document.querySelector('.start-game-btn');

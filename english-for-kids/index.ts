@@ -7,7 +7,7 @@ import state from './src/appState';
 import { initStartGameButton, resetGameButton, showGameButton } from './src/components/gameButton';
 import { createMainPageContent, openSelectedSet } from './src/components/main';
 import { resetStarsQueue } from './src/components/stars';
-import { initStatsData } from './src/components/statistics';
+import { initStatsData } from './src/statsLogger';
 
 state.audioInstance = new Audio();
 

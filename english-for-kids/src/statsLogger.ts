@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
-import state, { TLogData } from '../appState';
-import cards from '../cardsConfig';
+import state, { TLogData } from './appState';
+import cards from './cardsConfig';
 
 type TLogObj = {
   clicksCount: number;
@@ -39,11 +39,11 @@ export function setTrainClicksCount(index:number) {
   state.logData[state.currentCollectionIndex][index].clicksCount += 1;
 }
 
-export function setGameWrongsCount(index:number) {
+export function setGameWrongAnswersCount(index:number) {
   state.logData[state.currentCollectionIndex][index].wrongCount += 1;
 }
 
-export function setGameRightsCount(index:number) {
+export function setGameCorrectAnswersCount(index:number) {
   state.logData[state.currentCollectionIndex][index].rightCount += 1;
 }
 export function saveStatsToLocalStorage() {

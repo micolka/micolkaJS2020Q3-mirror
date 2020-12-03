@@ -7,7 +7,7 @@ export function getSwitchButton():HTMLElement {
 }
 
 export function setSwitcherAvailability() {
-  if (getHash() === '') {
+  if (getHash() === '' || getHash() === 'stats') {
     getSwitchButton().classList.add('invisible');
   } else {
     getSwitchButton().classList.remove('invisible');

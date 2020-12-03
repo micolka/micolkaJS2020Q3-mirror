@@ -3,7 +3,7 @@ import state from '../appState';
 import cards from '../cardsConfig';
 import { nextGameStep } from '../gameEngine';
 import { createIconHTML, playSound } from '../utils';
-import { setTrainClicksCount } from './statistics';
+import { setTrainClicksCount } from '../statsLogger';
 
 type TCardDataType = {
   word: string;

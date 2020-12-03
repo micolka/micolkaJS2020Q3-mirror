@@ -4,6 +4,7 @@ import cards from '../cardsConfig';
 import { getHash, getRootElement } from '../utils';
 import { changeMenuActiveLink } from './burgerMenu';
 import { addListenersToCards, getTrainCardInnerHTML } from './card';
+import { generateStatsPage } from './stats';
 
 export function createMainPageContent(): void {
   const rootDiv: HTMLElement = getRootElement();
@@ -23,6 +24,8 @@ export function openSelectedSet(): void {
   const hash:string = getHash();
   if (hash === '') {
     if (hash !== state.currentHash) createMainPageContent();
+  } else if (hash === 'stats') {
+    if (hash !== state.currentHash) generateStatsPage();
   } else {
     state.currentCollectionIndex = cards.hashData.findIndex((el) => el === hash);
     const cardsData = cards.data[state.currentCollectionIndex];

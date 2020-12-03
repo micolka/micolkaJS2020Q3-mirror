@@ -10,6 +10,7 @@ export function initBurgerMenu() {
 
   const menuInnerHTML = categories.map((elem, index) => `<li><a class="header-nav-link" href="#${hashData[index]}">${elem}</a></li>`);
   menuInnerHTML.unshift('<li><a class="header-nav-link header-nav-active" href="#">Main</a></li>');
+  menuInnerHTML.push('<li><a class="header-nav-link" href="#stats">Statistics</a></li>');
   const navMenu = document.querySelector('.header-nav-menu');
   navMenu.innerHTML = `<ul>${menuInnerHTML.join('')}</ul>`;
   const linksList = document.querySelectorAll('.header-nav-link');
