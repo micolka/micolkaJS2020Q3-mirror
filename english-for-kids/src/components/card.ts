@@ -3,6 +3,7 @@ import state from '../appState';
 import cards from '../cardsConfig';
 import { nextGameStep } from '../gameEngine';
 import { createIconHTML, playSound } from '../utils';
+import { setTrainClicksCount } from './statistics';
 
 type TCardDataType = {
   word: string;
@@ -46,7 +47,10 @@ export function addListenersToCards(): void {
     card.addEventListener('click', (e) => {
       if (e.target !== buttonsCollection[index]
           && e.target !== buttonsCollection[index].firstChild) {
-        if (state.isTrainModeOn) playSound(cardsData[index].audioSrc, state.audioInstance);
+        if (state.isTrainModeOn) {
+          playSound(cardsData[index].audioSrc, state.audioInstance);
+          setTrainClicksCount(index);
+        }
         if (state.isGameStarted) {
           const clickedCard = e.currentTarget as HTMLElement;
           nextGameStep(clickedCard);
@@ -55,6 +59,7 @@ export function addListenersToCards(): void {
     });
     buttonsCollection[index].addEventListener('click', () => {
       card.classList.toggle('active_card');
+      setTrainClicksCount(index);
       setTimeout(() => { isFlipped = true; }, 500);
     });
     card.addEventListener('mouseleave', () => {

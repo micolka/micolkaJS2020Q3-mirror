@@ -2,6 +2,7 @@
 import state from '../appState';
 import { playSoundWithDelay, startNewGame } from '../gameEngine';
 import { playSound } from '../utils';
+import { saveStatsToLocalStorage } from './statistics';
 
 export function showGameButton() {
   const gameButton:HTMLElement = document.querySelector('.start-game-btn');
@@ -10,6 +11,7 @@ export function showGameButton() {
 
 function prepareToGame(gameButton:HTMLElement) {
   const btn:HTMLElement = gameButton;
+  saveStatsToLocalStorage();
   if (!state.isGameStarted) {
     btn.innerText = 'Repeat';
     btn.classList.add('repeat');

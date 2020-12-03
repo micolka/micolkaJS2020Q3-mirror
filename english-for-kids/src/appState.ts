@@ -3,6 +3,12 @@ type TGameStatus = {
   mistakesCount: number,
 };
 
+export type TLogData = {
+  clicksCount: number;
+  wrongCount: number;
+  rightCount: number;
+}[][];
+
 type TAppState = {
   currentCollectionIndex: number,
   isTrainModeOn: boolean,
@@ -10,6 +16,7 @@ type TAppState = {
   currentHash: string,
   audioInstance: HTMLAudioElement,
   gameStatus: TGameStatus,
+  logData: TLogData;
 };
 
 const state: TAppState = {
@@ -22,6 +29,7 @@ const state: TAppState = {
     wordsIdList: [],
     mistakesCount: 0,
   },
+  logData: null,
 };
 
 export default state;

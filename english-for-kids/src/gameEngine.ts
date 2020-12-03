@@ -2,6 +2,7 @@
 import state from './appState';
 import cards from './cardsConfig';
 import { addBlackStar, addGoldStar } from './components/stars';
+import { saveStatsToLocalStorage, setGameRightsCount, setGameWrongsCount } from './components/statistics';
 import { genRandomListOfIndexes, playSound } from './utils';
 
 function getCurrentWordIndex() {
@@ -36,6 +37,7 @@ export function showFinalMessage() {
   const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
   let url:string = '';
   let mistakesMessage:string = '';
+  saveStatsToLocalStorage();
   if (state.gameStatus.mistakesCount > 0) {
     playSound('audio/_failure.mp3', state.audioInstance);
     url = '_lose';
@@ -82,9 +84,11 @@ export function nextGameStep(target:HTMLElement) {
     } else {
       playSoundWithDelay();
     }
+    setGameRightsCount(wordIndex);
   } else {
     state.gameStatus.mistakesCount += 1;
     playSound('audio/_wrong.mp3', state.audioInstance);
     addBlackStar();
+    setGameWrongsCount(wordIndex);
   }
 }
