@@ -9,3 +9,8 @@
 .stats_table, th, td {
   border: 1px solid black;
 }
+
+th:hover {
+  cursor: pointer;
+  background-color: aquamarine;
+}
