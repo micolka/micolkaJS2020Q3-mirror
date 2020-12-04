@@ -46,6 +46,7 @@ export function setGameWrongAnswersCount(index:number) {
 export function setGameCorrectAnswersCount(index:number) {
   state.logData[state.currentCollectionIndex][index].rightCount += 1;
 }
+
 export function saveStatsToLocalStorage() {
   localStorage.setItem('appLog', JSON.stringify(state.logData));
 }

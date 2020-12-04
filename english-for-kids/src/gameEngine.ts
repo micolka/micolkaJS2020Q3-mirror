@@ -2,7 +2,7 @@
 import state from './appState';
 import { addBlackStar, addGoldStar } from './components/stars';
 import { saveStatsToLocalStorage, setGameCorrectAnswersCount, setGameWrongAnswersCount } from './statsLogger';
-import { genRandomListOfIndexes, playSound } from './utils';
+import { genRandomListOfIndexes, getRootElement, playSound } from './utils';
 
 function getCurrentWordIndex() {
   return state.gameStatus.wordsIdList[state.gameStatus.wordsIdList.length - 1];
@@ -34,7 +34,7 @@ function resetGame(rootDiv:HTMLElement) {
 }
 
 export function showFinalMessage() {
-  const rootDiv: HTMLElement = document.querySelector('.cards_wrapper');
+  const rootDiv: HTMLElement = getRootElement();
   let url:string = '';
   let mistakesMessage:string = '';
   saveStatsToLocalStorage();

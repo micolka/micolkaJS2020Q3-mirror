@@ -7,11 +7,12 @@ import state from './src/appState';
 import { initStartGameButton, resetGameButton, showGameButton } from './src/components/gameButton';
 import { createMainPageContent, openSelectedSet } from './src/components/main';
 import { resetStarsQueue } from './src/components/stars';
-import { initStatsData } from './src/statsLogger';
+import { initStatsData, saveStatsToLocalStorage } from './src/statsLogger';
 
 state.audioInstance = new Audio();
 
 window.onpopstate = () => {
+  saveStatsToLocalStorage();
   openSelectedSet();
   setSwitcherAvailability();
 };

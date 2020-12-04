@@ -4,7 +4,10 @@ export function playSound(filename:string, audioElem:HTMLAudioElement): void {
   const audio = audioElem;
   audio.preload = 'auto';
   audio.src = `assets/${filename}`;
-  audio.play();
+  const audioPromise = audio.play();
+  if (audioPromise !== undefined) {
+    audioPromise.catch(() => {});
+  }
 }
 
 export function genRandomListOfIndexes():number[] {

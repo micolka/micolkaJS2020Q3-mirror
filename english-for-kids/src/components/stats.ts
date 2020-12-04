@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import state, { TCardsData } from '../appState';
 import cards from '../cardsConfig';
+import { createStatsData, saveStatsToLocalStorage } from '../statsLogger';
 import { getRootElement } from '../utils';
 import { addListenersToCards, getTrainCardInnerHTML } from './card';
 import { getSwitchButton } from './switchButton';
@@ -55,7 +56,9 @@ function generateCardsForRepeating():TCardsData {
     })
     .filter((el, index) => index < 8)
     .map((el) => el.id.split(':'));
-
+  if (sortedRows.length === 0) {
+    return null;
+  }
   sortedRows.forEach((elem) => {
     const [collectionIndex, cardIndex] = elem;
     cardsData.push(cards.data[+collectionIndex][+cardIndex]);
@@ -64,8 +67,9 @@ function generateCardsForRepeating():TCardsData {
   return cardsData;
 }
 
-function removeStatsButtons() {
+export function removeStatsButtons() {
   const rootDiv: HTMLElement = document.querySelector('.stars_wrapper');
+  rootDiv.classList.remove('stats-buttons-wrapper');
   rootDiv.innerHTML = '';
 }
 
@@ -75,29 +79,22 @@ function repeatHardWords() {
   getSwitchButton().classList.remove('invisible');
   const rootDiv: HTMLElement = getRootElement();
   state.currentCollection = generateCardsForRepeating();
-  const cardsContent:string[] = state.currentCollection
-    .map((elem, index) => getTrainCardInnerHTML(elem, index));
-  rootDiv.innerHTML = cardsContent.join('');
-  addListenersToCards();
-}
-
-export function insertButtons() {
-  const rootDiv: HTMLElement = document.querySelector('.stars_wrapper');
-  rootDiv.classList.add('stats-buttons-wrapper');
-  rootDiv.innerHTML = `<div class="stats-btn repeat-words">Repeat difficult words</div>
-                      <div class="stats-btn reset">Reset</div>`;
-
-  const repeat = document.querySelector('.repeat-words');
-  repeat.addEventListener('click', repeatHardWords);
-
-  const reset = document.querySelector('.reset');
-  reset.addEventListener('click', () => {
-    console.log('reset'); // !! Реализовать.
-  });
+  if (state.currentCollection) {
+    const cardsContent:string[] = state.currentCollection
+      .map((elem, index) => getTrainCardInnerHTML(elem, index));
+    rootDiv.innerHTML = cardsContent.join('');
+    addListenersToCards();
+  } else {
+    rootDiv.innerHTML = `
+    <img src="./assets/img/_lose.png" alt="win">
+    <div>Nothing to train...</div>
+  `;
+  }
 }
 
 export function generateStatsPage() {
   const rootDiv: HTMLElement = getRootElement();
+  rootDiv.innerHTML = '';
   const rowsArray:string[] = [];
   let counter:number = 0;
 
@@ -127,5 +124,21 @@ export function generateStatsPage() {
   `;
 
   addEventListeners();
-  insertButtons();
+}
+
+export function insertStatsButtons() {
+  const rootDiv: HTMLElement = document.querySelector('.stars_wrapper');
+  rootDiv.classList.add('stats-buttons-wrapper');
+  rootDiv.innerHTML = `<div class="stats-btn repeat-words">Repeat difficult words</div>
+                      <div class="stats-btn reset">Reset</div>`;
+
+  const repeat = document.querySelector('.repeat-words');
+  repeat.addEventListener('click', repeatHardWords);
+
+  const reset = document.querySelector('.reset');
+  reset.addEventListener('click', () => {
+    createStatsData();
+    saveStatsToLocalStorage();
+    generateStatsPage();
+  });
 }
