@@ -1,6 +1,5 @@
 /* eslint-disable import/extensions */
 import state from './appState';
-import cards from './cardsConfig';
 import { addBlackStar, addGoldStar } from './components/stars';
 import { saveStatsToLocalStorage, setGameCorrectAnswersCount, setGameWrongAnswersCount } from './statsLogger';
 import { genRandomListOfIndexes, playSound } from './utils';
@@ -23,6 +22,7 @@ function resetGame(rootDiv:HTMLElement) {
   state.currentCollectionIndex = null;
   state.isTrainModeOn = true;
   state.isGameStarted = false;
+  state.isRepeatModeOn = false;
   state.currentHash = '';
   state.gameStatus = {
     wordsIdList: [],
@@ -59,10 +59,9 @@ export function showFinalMessage() {
 }
 
 export function playSoundWithDelay() {
-  const cardsData = cards.data[state.currentCollectionIndex];
   const wordIndex:number = getCurrentWordIndex();
   setTimeout(() => {
-    playSound(cardsData[wordIndex].audioSrc, state.audioInstance);
+    playSound(state.currentCollection[wordIndex].audioSrc, state.audioInstance);
   }, 1000);
 }
 
@@ -84,11 +83,11 @@ export function nextGameStep(target:HTMLElement) {
     } else {
       playSoundWithDelay();
     }
-    setGameCorrectAnswersCount(wordIndex);
+    if (!state.isRepeatModeOn) setGameCorrectAnswersCount(wordIndex);
   } else {
     state.gameStatus.mistakesCount += 1;
     playSound('audio/_wrong.mp3', state.audioInstance);
     addBlackStar();
-    setGameWrongAnswersCount(wordIndex);
+    if (!state.isRepeatModeOn) setGameWrongAnswersCount(wordIndex);
   }
 }

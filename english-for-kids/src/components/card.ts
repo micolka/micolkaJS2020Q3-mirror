@@ -1,6 +1,5 @@
 /* eslint-disable import/extensions */
 import state from '../appState';
-import cards from '../cardsConfig';
 import { nextGameStep } from '../gameEngine';
 import { createIconHTML, playSound } from '../utils';
 import { setTrainClicksCount } from '../statsLogger';
@@ -37,7 +36,6 @@ export function transformCardsMode() {
 }
 
 export function addListenersToCards(): void {
-  const cardsData = cards.data[state.currentCollectionIndex];
   const cardsCollection:NodeListOf<HTMLElement> = document.querySelectorAll('.card_container');
   const buttonsCollection:NodeListOf<HTMLElement> = document.querySelectorAll('.btn_rotate');
 
@@ -48,8 +46,8 @@ export function addListenersToCards(): void {
       if (e.target !== buttonsCollection[index]
           && e.target !== buttonsCollection[index].firstChild) {
         if (state.isTrainModeOn) {
-          playSound(cardsData[index].audioSrc, state.audioInstance);
-          setTrainClicksCount(index);
+          playSound(state.currentCollection[index].audioSrc, state.audioInstance);
+          if (!state.isRepeatModeOn) setTrainClicksCount(index);
         }
         if (state.isGameStarted) {
           const clickedCard = e.currentTarget as HTMLElement;
@@ -59,7 +57,7 @@ export function addListenersToCards(): void {
     });
     buttonsCollection[index].addEventListener('click', () => {
       card.classList.toggle('active_card');
-      setTrainClicksCount(index);
+      if (!state.isRepeatModeOn) setTrainClicksCount(index);
       setTimeout(() => { isFlipped = true; }, 500);
     });
     card.addEventListener('mouseleave', () => {

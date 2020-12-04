@@ -28,9 +28,9 @@ export function openSelectedSet(): void {
     if (hash !== state.currentHash) generateStatsPage();
   } else {
     state.currentCollectionIndex = cards.hashData.findIndex((el) => el === hash);
-    const cardsData = cards.data[state.currentCollectionIndex];
-    const cardsContent:string[] = cardsData.map((elem, index) => getTrainCardInnerHTML(elem,
-      index));
+    state.currentCollection = cards.data[state.currentCollectionIndex];
+    const cardsContent:string[] = state.currentCollection
+      .map((elem, index) => getTrainCardInnerHTML(elem, index));
     rootDiv.innerHTML = cardsContent.join('');
     addListenersToCards();
   }

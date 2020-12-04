@@ -9,10 +9,19 @@ export type TLogData = {
   rightCount: number;
 }[][];
 
+export type TCardsData = {
+  word: string;
+  translation: string;
+  image: string;
+  audioSrc: string;
+}[];
+
 type TAppState = {
   currentCollectionIndex: number,
+  currentCollection: TCardsData,
   isTrainModeOn: boolean,
   isGameStarted: boolean,
+  isRepeatModeOn: boolean,
   currentHash: string,
   audioInstance: HTMLAudioElement,
   gameStatus: TGameStatus,
@@ -21,8 +30,10 @@ type TAppState = {
 
 const state: TAppState = {
   currentCollectionIndex: null,
+  currentCollection: null,
   isTrainModeOn: true,
   isGameStarted: false,
+  isRepeatModeOn: false,
   currentHash: '',
   audioInstance: undefined,
   gameStatus: {

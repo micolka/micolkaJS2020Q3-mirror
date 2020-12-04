@@ -14,3 +14,21 @@ th:hover {
   cursor: pointer;
   background-color: aquamarine;
 }
+
+.stats-buttons-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stats-btn {
+  padding: 0 10px;
+  background-color: cadetblue;
+  height: 40px;
+  line-height: 40px;
+}
+
+.stats-btn:hover {
+  cursor: pointer;
+  background-color: darkgreen;
+}

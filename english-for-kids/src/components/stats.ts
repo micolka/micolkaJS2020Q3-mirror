@@ -1,7 +1,9 @@
 /* eslint-disable import/extensions */
-import state from '../appState';
+import state, { TCardsData } from '../appState';
 import cards from '../cardsConfig';
 import { getRootElement } from '../utils';
+import { addListenersToCards, getTrainCardInnerHTML } from './card';
+import { getSwitchButton } from './switchButton';
 
 function addEventListeners() {
   const table = document.querySelector('.stats_table');
@@ -40,6 +42,60 @@ function addEventListeners() {
   });
 }
 
+function generateCardsForRepeating():TCardsData {
+  const cardsData:TCardsData = [];
+  const tableRows:NodeListOf<HTMLTableRowElement> = document.querySelectorAll('tr');
+  const sortedRows = Array.from(tableRows)
+    .slice(1)
+    .filter((el) => el.cells[6].innerHTML !== '0')
+    .sort((a, b) => {
+      let out = 0;
+      out = +a.cells[7].innerHTML > +b.cells[7].innerHTML ? 1 : -1;
+      return out;
+    })
+    .filter((el, index) => index < 8)
+    .map((el) => el.id.split(':'));
+
+  sortedRows.forEach((elem) => {
+    const [collectionIndex, cardIndex] = elem;
+    cardsData.push(cards.data[+collectionIndex][+cardIndex]);
+  });
+
+  return cardsData;
+}
+
+function removeStatsButtons() {
+  const rootDiv: HTMLElement = document.querySelector('.stars_wrapper');
+  rootDiv.innerHTML = '';
+}
+
+function repeatHardWords() {
+  removeStatsButtons();
+  state.isRepeatModeOn = true;
+  getSwitchButton().classList.remove('invisible');
+  const rootDiv: HTMLElement = getRootElement();
+  state.currentCollection = generateCardsForRepeating();
+  const cardsContent:string[] = state.currentCollection
+    .map((elem, index) => getTrainCardInnerHTML(elem, index));
+  rootDiv.innerHTML = cardsContent.join('');
+  addListenersToCards();
+}
+
+export function insertButtons() {
+  const rootDiv: HTMLElement = document.querySelector('.stars_wrapper');
+  rootDiv.classList.add('stats-buttons-wrapper');
+  rootDiv.innerHTML = `<div class="stats-btn repeat-words">Repeat difficult words</div>
+                      <div class="stats-btn reset">Reset</div>`;
+
+  const repeat = document.querySelector('.repeat-words');
+  repeat.addEventListener('click', repeatHardWords);
+
+  const reset = document.querySelector('.reset');
+  reset.addEventListener('click', () => {
+    console.log('reset'); // !! Реализовать.
+  });
+}
+
 export function generateStatsPage() {
   const rootDiv: HTMLElement = getRootElement();
   const rowsArray:string[] = [];
@@ -53,7 +109,7 @@ export function generateStatsPage() {
         ? 0 : Math.round((rightCount * 100) / (wrongCount + rightCount));
       counter += 1;
       rowsArray.push(`
-        <tr>
+        <tr id="${colIndex}:${cardIndex}">
           <td>${counter}</td><td>${set}</td><td>${card.word}</td><td>${card.translation}</td>
           <td>${clicksCount}</td><td>${rightCount}</td><td>${wrongCount}</td><td>${percent}</td>
         </tr>
@@ -71,8 +127,5 @@ export function generateStatsPage() {
   `;
 
   addEventListeners();
-}
-
-export function doNothing() {
-
+  insertButtons();
 }
