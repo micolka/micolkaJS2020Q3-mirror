@@ -1,5 +1,6 @@
 .stars_wrapper {
   margin: 0 40px;
+  width: 95%;
   height: 40px;
   display: flex;
   justify-content: flex-end;
@@ -8,4 +9,18 @@
 
 .stars_wrapper img {
   height: 35px;
+}
+
+.lose-win-picture {
+  width: 200px;
+}
+
+.lose-win-message {
+  font-size: 100px;
+}
+
+@media (max-width: 440px) {
+  .lose-win-message {
+    font-size: 50px;
+  }
 }

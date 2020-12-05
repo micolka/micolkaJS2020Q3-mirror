@@ -28,9 +28,9 @@ function addEventListeners() {
       .sort((a, b) => {
         let result:number;
         if (colName === 'Set' || colName === 'Word' || colName === 'Translation') {
-          result = a.cells[thIndex].innerHTML > b.cells[thIndex].innerHTML ? 1 : -1;
+          result = a.cells[thIndex].innerHTML < b.cells[thIndex].innerHTML ? 1 : -1;
         } else {
-          result = +a.cells[thIndex].innerHTML > +b.cells[thIndex].innerHTML ? 1 : -1;
+          result = +a.cells[thIndex].innerHTML < +b.cells[thIndex].innerHTML ? 1 : -1;
         }
         if (isSorted) result *= -1;
         return result;

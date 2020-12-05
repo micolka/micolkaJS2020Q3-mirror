@@ -5,7 +5,7 @@ body.active_menu{
 .header-nav-menu {
   display: flex;
   position: fixed;
-  background: #d66565;
+  background: linear-gradient(135deg, #4da8e4, #9dcff0 80%);
   padding-top: 120px;
   top: 0;
   left: -320px;
@@ -37,14 +37,14 @@ body.active_menu{
   font-size: 0px;
   font-weight: 400;
   line-height: 51.2px;
-  transition: all 0.5s ease-out;
-  color: #e3e70c;
+  transition: all 0.3s ease-out;
+  color: #FAFAFA;
 }
 
 .header-nav-active, .header-nav-link:hover {
-  color: #FAFAFA;
+  color: #e3e70c;
   padding-bottom: 3px;
-  border-bottom: 3px solid #19dd39;
+  border-bottom: 3px solid #438fc2;
   cursor: pointer;
 }
 

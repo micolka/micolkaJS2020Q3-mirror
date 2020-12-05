@@ -10,7 +10,7 @@ export function createMainPageContent(): void {
   const rootDiv: HTMLElement = getRootElement();
   const cardsSections:string[] = cards.categories;
   const cardsWrapperContent:string[] = cardsSections.map((elem, index) => `
-    <a class="card_container" href="#${cards.hashData[index]}">
+    <a class="card_container card_effects" href="#${cards.hashData[index]}">
       <img src="./assets/${cards.data[index][0].image}" alt="">
       <div class="card_bottom">
         <div class="card_info">${elem}</div>

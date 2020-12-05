@@ -13,7 +13,7 @@ type TCardDataType = {
 
 export function getTrainCardInnerHTML(cardProps:TCardDataType, id:number):string {
   return `
-  <div id="${id}" class="card_container">
+  <div id="${id}" class="card_container card_effects">
   <div class="card_front">
     <img src="./assets/${cardProps.image}" alt="${cardProps.word}">
     <div class="card_bottom">
@@ -57,6 +57,7 @@ export function addListenersToCards(): void {
     });
     buttonsCollection[index].addEventListener('click', () => {
       card.classList.toggle('active_card');
+      card.classList.toggle('card_effects');
       if (!state.isRepeatModeOn) setTrainClicksCount(index);
       setTimeout(() => { isFlipped = true; }, 500);
     });
@@ -64,6 +65,7 @@ export function addListenersToCards(): void {
       setTimeout(() => {
         if (isFlipped) {
           card.classList.toggle('active_card');
+          card.classList.toggle('card_effects');
           isFlipped = false;
         }
       }, 500);

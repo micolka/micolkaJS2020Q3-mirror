@@ -1,0 +1,109 @@
+.cards_wrapper {
+  max-width: 1425px;
+  margin: 40px auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 120px;
+  text-shadow: $text-shadow;
+}
+
+.card_container {
+  height: 200px;
+  background-color: $primary-color;
+  box-shadow: 0px 2px 2px 1px $shadow-color;
+  border-radius: 10px;
+  text-decoration: none;
+  color: azure;
+  transform: none;
+  font-size: 40px;
+  transform-style: preserve-3d;
+  backface-visibility: initial;
+  transition: all .3s ease-in-out;
+  border-radius: 10px;
+}
+
+.active_card,
+.card_effects:hover {
+  cursor: pointer;
+  box-shadow: 0px 5px 8px 8px $shadow-color;
+  transform: scale(1.05);
+}
+
+.active_card {
+  transform: rotateY(180deg);
+}
+
+.card_container img {
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.card_container.off {
+  pointer-events: none;
+  box-shadow: none;
+}
+
+.card_bottom {
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  bottom: 60px;
+  font-size: 40px;
+  letter-spacing: 2px;
+  border-radius: 10px;
+  text-shadow: $text-shadow;
+  z-index: 1;
+}
+
+.card_front {
+  backface-visibility: hidden;
+}
+
+.card_back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  font-size: 40px;
+  letter-spacing: 2px;
+  line-height: 200px;
+  text-align: center;
+  transform: rotateY(180deg);
+  border-radius: 10px;
+}
+
+.card_curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0;
+  border-radius: 10px;
+  transition: all .5s ease-in-out;
+}
+
+.btn_rotate {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 440px) {
+  .active_card,
+  .card_effects:hover {
+    transform: scale(1);
+  }
+}

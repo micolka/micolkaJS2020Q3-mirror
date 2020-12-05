@@ -52,8 +52,8 @@ export function showFinalMessage() {
   }
   rootDiv.style.flexDirection = 'column';
   rootDiv.innerHTML = `
-    <img src="./assets/img/${url}.png" alt="win">
-    <div>${mistakesMessage}</div>
+    <img class="lose-win-picture" src="./assets/img/${url}.png" alt="win">
+    <div class="lose-win-message">${mistakesMessage}</div>
   `;
 
   setTimeout(() => {
