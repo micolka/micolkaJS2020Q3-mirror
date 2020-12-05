@@ -8,10 +8,12 @@ import { initStartGameButton, resetGameButton, showGameButton } from './src/comp
 import { createMainPageContent, openSelectedSet } from './src/components/main';
 import { resetStarsQueue } from './src/components/stars';
 import { initStatsData, saveStatsToLocalStorage } from './src/statsLogger';
+import { resetGame } from './src/gameEngine';
 
 state.audioInstance = new Audio();
 
 window.onpopstate = () => {
+  resetGame();
   saveStatsToLocalStorage();
   openSelectedSet();
   setSwitcherAvailability();

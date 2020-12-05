@@ -1,5 +1,5 @@
 const cards = {
-  categories: ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions'],
+  categories: ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions', 'Transport', 'Professions'],
   data:
   [
     [
@@ -302,8 +302,108 @@ const cards = {
         audioSrc: 'audio/laugh.mp3',
       },
     ],
+    [
+      {
+        word: 'car',
+        translation: 'автомобиль',
+        image: 'img/car.jpg',
+        audioSrc: 'audio/car.mp3',
+      },
+      {
+        word: 'truck',
+        translation: 'грузовик',
+        image: 'img/truck.jpg',
+        audioSrc: 'audio/truck.mp3',
+      },
+      {
+        word: 'train',
+        translation: 'поезд',
+        image: 'img/train.jpg',
+        audioSrc: 'audio/train.mp3',
+      },
+      {
+        word: 'ship',
+        translation: 'корабль',
+        image: 'img/ship.jpg',
+        audioSrc: 'audio/ship.mp3',
+      },
+      {
+        word: 'motorcycle',
+        translation: 'мотоцикл',
+        image: 'img/motorcycle.jpg',
+        audioSrc: 'audio/motorcycle.mp3',
+      },
+      {
+        word: 'helicopter',
+        translation: 'вертолет',
+        image: 'img/helicopter.jpg',
+        audioSrc: 'audio/helicopter.mp3',
+      },
+      {
+        word: 'bicycle',
+        translation: 'велосипед',
+        image: 'img/bicycle.jpg',
+        audioSrc: 'audio/bicycle.mp3',
+      },
+      {
+        word: 'airplane',
+        translation: 'самолет',
+        image: 'img/airplane.jpg',
+        audioSrc: 'audio/airplane.mp3',
+      },
+    ],
+    [
+      {
+        word: 'astronaut',
+        translation: 'космонафт',
+        image: 'img/astronaut.jpg',
+        audioSrc: 'audio/astronaut.mp3',
+      },
+      {
+        word: 'clown',
+        translation: 'клоун',
+        image: 'img/clown.jpg',
+        audioSrc: 'audio/clown.mp3',
+      },
+      {
+        word: 'doctor',
+        translation: 'доктор',
+        image: 'img/doctor.jpg',
+        audioSrc: 'audio/doctor.mp3',
+      },
+      {
+        word: 'farmer',
+        translation: 'фермер',
+        image: 'img/farmer.jpg',
+        audioSrc: 'audio/farmer.mp3',
+      },
+      {
+        word: 'fireman',
+        translation: 'пожарный',
+        image: 'img/fireman.jpg',
+        audioSrc: 'audio/fireman.mp3',
+      },
+      {
+        word: 'mechanic',
+        translation: 'механик',
+        image: 'img/mechanic.jpg',
+        audioSrc: 'audio/mechanic.mp3',
+      },
+      {
+        word: 'painter',
+        translation: 'художник',
+        image: 'img/painter.jpg',
+        audioSrc: 'audio/painter.mp3',
+      },
+      {
+        word: 'teacher',
+        translation: 'учитель',
+        image: 'img/teacher.jpg',
+        audioSrc: 'audio/teacher.mp3',
+      },
+    ],
   ],
-  hashData: ['actionA', 'actionB', 'animalA', 'animalB', 'clothes', 'emotions'],
+  hashData: ['actionA', 'actionB', 'animalA', 'animalB', 'clothes', 'emotions', 'transport', 'professions'],
 };
 
 export default cards;

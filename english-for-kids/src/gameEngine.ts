@@ -18,19 +18,23 @@ function isGameFinished() {
   return state.gameStatus.wordsIdList.length === 0;
 }
 
-function resetGame(rootDiv:HTMLElement) {
+export function resetGame() {
   state.currentCollectionIndex = null;
+  state.currentCollection = null;
   state.isTrainModeOn = true;
   state.isGameStarted = false;
   state.isRepeatModeOn = false;
-  state.currentHash = '';
+  state.currentHash = '/';
   state.gameStatus = {
     wordsIdList: [],
     mistakesCount: 0,
   };
+}
 
+export function resetMainPage() {
+  resetGame();
   const event = new Event('resetMainPage', { bubbles: true });
-  rootDiv.dispatchEvent(event);
+  getRootElement().dispatchEvent(event);
 }
 
 export function showFinalMessage() {
@@ -54,7 +58,7 @@ export function showFinalMessage() {
 
   setTimeout(() => {
     rootDiv.style.flexDirection = 'row';
-    resetGame(rootDiv);
+    resetMainPage();
   }, 5000);
 }
 

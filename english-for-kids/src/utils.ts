@@ -1,3 +1,6 @@
+/* eslint-disable import/extensions */
+import state from './appState';
+
 export const createIconHTML = (icon:string) => `<i class="material-icons">${icon}</i>`;
 
 export function playSound(filename:string, audioElem:HTMLAudioElement): void {
@@ -11,12 +14,11 @@ export function playSound(filename:string, audioElem:HTMLAudioElement): void {
 }
 
 export function genRandomListOfIndexes():number[] {
-  const arr = [0, 1, 2, 3, 4, 5, 6, 7];
-  const shuffledArr = [];
-  for (let i = 8; i > 0; i -= 1) {
-    const indx = Math.floor(Math.random() * i);
-    shuffledArr.push(arr[indx]);
-    arr.splice(indx, 1);
+  const n:number = state.currentCollection.length;
+  const shuffledArr:number[] = [];
+  while (shuffledArr.length < n) {
+    const indx = Math.floor(Math.random() * n);
+    if (!shuffledArr.includes(indx)) shuffledArr.push(indx);
   }
   return shuffledArr;
 }
