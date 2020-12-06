@@ -107,3 +107,9 @@
     transform: scale(1);
   }
 }
+
+@media (max-width: 690px) {
+  .cards_wrapper {
+    flex-direction: column;
+  }
+}

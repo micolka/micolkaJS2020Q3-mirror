@@ -1,8 +1,9 @@
 /* eslint-disable import/extensions */
 import state, { TCardsData } from '../appState';
 import cards from '../cardsConfig';
+import { resetMainPage } from '../gameEngine';
 import { createStatsData, saveStatsToLocalStorage } from '../statsLogger';
-import { getRootElement } from '../utils';
+import { createIconHTML, getRootElement } from '../utils';
 import { addListenersToCards, getTrainCardInnerHTML } from './card';
 import { getSwitchButton } from './switchButton';
 
@@ -85,10 +86,16 @@ function repeatHardWords() {
     rootDiv.innerHTML = cardsContent.join('');
     addListenersToCards();
   } else {
+    rootDiv.style.flexDirection = 'column';
     rootDiv.innerHTML = `
-    <img src="./assets/img/_lose.png" alt="win">
-    <div>Nothing to train...</div>
+    <img class="lose-win-picture" src="./assets/img/_nothing.png" alt="win">
+    <div class="lose-win-message" >Nothing to train...</div>
   `;
+
+    setTimeout(() => {
+      rootDiv.style.flexDirection = 'row';
+      resetMainPage();
+    }, 3000);
   }
 }
 
@@ -107,7 +114,7 @@ export function generateStatsPage() {
       counter += 1;
       rowsArray.push(`
         <tr id="${colIndex}:${cardIndex}">
-          <td>${counter}</td><td>${set}</td><td>${card.word}</td><td>${card.translation}</td>
+          <td>${counter}</td><td class="table-stats_set">${set}</td><td>${card.word}</td><td>${card.translation}</td>
           <td>${clicksCount}</td><td>${rightCount}</td><td>${wrongCount}</td><td>${percent}</td>
         </tr>
       `);
@@ -117,7 +124,11 @@ export function generateStatsPage() {
   rootDiv.innerHTML = `
     <table class="stats_table">
       <tr>
-        <th>№</th><th>Set</th><th>Word</th><th>Translation</th><th>Clicks</th><th>Correct</th><th>Wrong</th><th>%</th>
+        <th>№</th><th class="table-stats_set">Set</th><th>Word</th><th>Translation</th>
+        <th>${createIconHTML('fitness_center')}</th>
+        <th>${createIconHTML('check')}</th>
+        <th>${createIconHTML('clear')}</th>
+        <th>%</th>
       </tr>
       ${rowsArray.join('')}
     </table>

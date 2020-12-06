@@ -17,6 +17,8 @@ window.onpopstate = () => {
   saveStatsToLocalStorage();
   openSelectedSet();
   setSwitcherAvailability();
+  resetGameButton();
+  resetSwitchButton();
 };
 
 document.addEventListener('modeChanged', () => {

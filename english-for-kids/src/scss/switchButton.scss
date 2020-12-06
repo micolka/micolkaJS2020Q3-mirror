@@ -1,10 +1,10 @@
 // the concept of the switch element taken on: https://itchief.ru/html-and-css/toggle-switch
 .switch-btn {
   display: inline-block;
-  width: 62px; /* ширина переключателя */
-  height: 24px; /* высота переключателя */
-  border-radius: 12px; /* радиус скругления */
-  background: #bfbfbf; /* цвет фона */
+  width: 88px; /* ширина переключателя */
+  height: 36px; /* высота переключателя */
+  border-radius: 16px; /* радиус скругления */
+  background: $shadow-color; /* цвет фона */
   z-index: 0;
   margin: 0;
   padding: 0;
@@ -12,6 +12,12 @@
   cursor: pointer;
   position: relative;
   transition-duration: 300ms; /* анимация */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  padding-left: 0;
+  color: white;
 }
 .switch-btn::after {
   content: "";
@@ -19,7 +25,7 @@
   width: 36px; /* ширина кнопки */
   border-radius: 18px; /* радиус кнопки */
   background: $secondary-color; /* цвет кнопки */
-  top: -6px; /* положение кнопки по вертикали относительно основы */
+  top: 0; /* положение кнопки по вертикали относительно основы */
   left: -6px; /* положение кнопки по горизонтали относительно основы */
   transition-duration: 300ms; /* анимация */
   box-shadow: 0 0 10px 0 #999999; /* тень */
@@ -29,12 +35,20 @@
 .switch-on {
   background: $secondary-color;
   box-shadow: inset 0 0 10px 0 #999999; /* тень */
+  justify-content: flex-start;
+  padding-left: 10px;
+  padding-right: 0;
+  color: black;
 }
 .switch-on::after {
-  left: 30px;
+  left: 60px;
   background: $shadow-color;
 }
 
 .switch-btn.invisible {
   display: none;
+}
+
+.switch-wrapper {
+  width: 98px;
 }

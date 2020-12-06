@@ -7,10 +7,6 @@
 @import "stars";
 @import "statistics";
 
-body {
-
-}
-
 .app-container {
   width: 100%;
   height: 100%;
@@ -40,12 +36,6 @@ body {
   align-items: center;
 }
 
-// .nav_menu {
-//   width: 50px;
-//   height: 50px;
-//   background-color: cornflowerblue;
-// }
-
 .main {
   padding: 20px 0;
   width: 95%;
@@ -54,14 +44,34 @@ body {
 }
 
 .footer {
+  width: 100%;
   max-width: 1500px;
   margin: 0 auto;
-  // background-color: brown;
 }
 
 .footer-wrapper {
   width: 95%;
   height: 120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rs-logo {
+  height: 40px;
+}
+
+.app-author {
+  font-size: 20px;
+}
+
+.app-author a {
+  text-decoration: none;
+  color: black;
+}
+
+.app-author a:hover {
+  color: $shadow-color;
 }
 
 @media (max-width: 440px) {
@@ -69,7 +79,7 @@ body {
     width: 100%;
   }
   .cards_wrapper {
-    margin: 20px 0;
+    margin: 20px auto;
   }
   .stars_wrapper{
     margin: 0 10px;

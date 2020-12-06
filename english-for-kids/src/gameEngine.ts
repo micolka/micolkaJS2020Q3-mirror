@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 import state from './appState';
 import { addBlackStar, addGoldStar } from './components/stars';
+import { setSwitcherAvailability } from './components/switchButton';
 import { saveStatsToLocalStorage, setGameCorrectAnswersCount, setGameWrongAnswersCount } from './statsLogger';
 import { genRandomListOfIndexes, getRootElement, playSound } from './utils';
 
@@ -29,6 +30,7 @@ export function resetGame() {
     wordsIdList: [],
     mistakesCount: 0,
   };
+  getRootElement().style.flexDirection = 'row';
 }
 
 export function resetMainPage() {
@@ -59,7 +61,7 @@ export function showFinalMessage() {
   setTimeout(() => {
     rootDiv.style.flexDirection = 'row';
     resetMainPage();
-  }, 5000);
+  }, 3000);
 }
 
 export function playSoundWithDelay() {
@@ -73,6 +75,7 @@ export function startNewGame() {
   state.gameStatus.wordsIdList = genRandomListOfIndexes();
   state.isGameStarted = true;
   playSoundWithDelay();
+  setSwitcherAvailability();
 }
 
 export function nextGameStep(target:HTMLElement) {

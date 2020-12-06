@@ -7,7 +7,7 @@ export function getSwitchButton():HTMLElement {
 }
 
 export function setSwitcherAvailability() {
-  if (getHash() === '' || getHash() === 'stats') {
+  if (getHash() === '' || getHash() === 'stats' || state.isGameStarted) {
     getSwitchButton().classList.add('invisible');
   } else {
     getSwitchButton().classList.remove('invisible');
@@ -22,6 +22,7 @@ export function initSwitchButton() {
     switchButton.classList.toggle('switch-on');
     playSound('audio/_switch.mp3', state.audioInstance);
     state.isTrainModeOn = !state.isTrainModeOn;
+    switchButton.innerText = state.isTrainModeOn ? 'TRAIN' : 'GAME';
     switchButton.dispatchEvent(event);
   });
 
@@ -30,5 +31,11 @@ export function initSwitchButton() {
 
 export function resetSwitchButton() {
   const switchButton:HTMLElement = getSwitchButton();
-  switchButton.classList.remove('switch-on');
+  if (!state.isTrainModeOn) {
+    switchButton.classList.add('switch-on');
+    switchButton.innerText = 'GAME';
+  } else {
+    switchButton.classList.remove('switch-on');
+    switchButton.innerText = 'TRAIN';
+  }
 }
