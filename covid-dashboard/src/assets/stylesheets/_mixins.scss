@@ -1,0 +1,39 @@
+@import 'variables';
+
+@mixin wrapper-props() {
+  margin: 3px;
+  background-color: $primary-color;
+  color: #ffffff;
+}
+
+@mixin fullscreen-btn() {
+  .fullscreen-container_wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  .fullScreenButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    z-index: 1000;
+    cursor: pointer;
+  
+    border-radius: 3px;
+    text-align: center;
+    background-color: $text-red-color;
+    transition: all 0.3s ease-out;
+  }
+  
+  .fullScreenButton:hover {
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  
+  .fullScreenButton i {
+    font-size: 40px;
+  }
+}

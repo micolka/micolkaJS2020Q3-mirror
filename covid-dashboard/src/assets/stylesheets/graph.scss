@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+@import 'variables';
+@import 'mixins';
+
+.graph-wrapper {
+  @include wrapper-props;
+  @include fullscreen-btn;
+  grid-area: graph;
+}
+
+.fullScreenButton {
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.hide-graph {
+  display: none;
+}

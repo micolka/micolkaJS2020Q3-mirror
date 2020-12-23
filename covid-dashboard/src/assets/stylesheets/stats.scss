@@ -1,0 +1,90 @@
+@charset "UTF-8";
+
+@import 'variables';
+@import 'mixins';
+
+.stats-wrapper {
+  @include wrapper-props;
+  @include fullscreen-btn;
+  .stats-full-screen{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: larger;
+    padding: 5% 20%;
+    .stats-full-screen-title{
+      justify-content: center;
+      font-size: larger;
+      padding-bottom: 2em;
+      margin: 0;
+    }
+  }
+  grid-area: stats;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.1em;
+  .stats-table{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 40%;
+  }
+  .stats-main-title{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 1em 0;
+    .stats-flag-img{
+      width: 1.5em;
+      height: 1em;
+      margin-right: 1em;
+    }
+  }
+  .stats-toggle-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3.3em;
+  }
+  .stats-toggle-container_fullScreen{
+    width: 40%;
+  }
+
+  .stats-table {
+    display: flex;
+    justify-content: space-between;
+    .stats-title, .stats-data-title{
+      margin: .3em 0;
+    }
+    .stats-data{
+      margin: .5em;
+    }
+    .recovered {
+      color: $text-green-color;
+    }
+    .confirmed{
+      color: $text-yellow-color;
+    }
+    .deaths{
+      color: $text-red-color;
+    }
+  }
+}
+
+.hide-stats {
+  display: none;
+}
+
+@media (max-width: 1027px) {
+  .stats-wrapper {
+    .stats-full-screen{
+      font-size: medium;
+      padding: 0 10%;
+    }
+    .stats-toggle-container_fullScreen{
+      width: 67%;
+    }
+  }
+}

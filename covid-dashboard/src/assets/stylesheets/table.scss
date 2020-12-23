@@ -1,0 +1,112 @@
+@charset 'UTF-8';
+@import 'variables';
+@import 'mixins';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.table-wrapper {
+  @include wrapper-props;
+  @include fullscreen-btn;
+  grid-area: table;
+  text-align: center;
+  overflow-y: scroll;
+  min-height: 100%;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.table-wrapper::-webkit-scrollbar {
+  width: 12px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background:$text-red-color;
+  border-radius: 10px;
+}
+
+.countryHeader {
+  padding: 14px 0;
+  font-size: 21px;
+  color: rgb(179, 130, 130);
+}
+
+.container {
+  text-align: left;
+  color: #d6d6d6;
+  margin-top: 5px;
+}
+
+.flagImg {
+  padding-top: 0px;
+}
+
+.coutrywrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.coutrywrapFullScr {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.coutrywrap:hover {
+  cursor: pointer;
+  background: #586068;
+}
+
+.countries {
+  padding-left: 5px;
+}
+
+.countriesValue {
+  color: #e60000;
+}
+
+.findArea {
+  width: 140px;
+  background: #7c7971;
+  outline: none;
+  color: #d6d6d6;
+}
+
+.selectors {
+  width: 150px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.containerSelectors {
+  display: flex;
+  padding: 6px 0;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.butNextCointry {
+  color: #d1512a;
+  background: #000;
+  outline: none;
+}
+
+.butNextCointry:hover {
+  cursor: pointer;
+}
+
+.simple-keyboard {
+  max-width: 850px;
+  z-index: 1000000;
+}
+
+.hide-table {
+  display: none;
+}

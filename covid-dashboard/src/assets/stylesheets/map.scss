@@ -1,0 +1,108 @@
+@charset 'UTF-8';
+@import 'variables';
+@import 'mixins';
+
+.map-wrapper {
+  @include wrapper-props;
+  @include fullscreen-btn;
+  
+  grid-area: map;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease-out;
+}
+
+.map_buttons-wrapper{
+  margin: 5px auto;
+  width: 95%;
+  display: flex;
+  height: 4.5%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.map_buttons-params_selector {
+  min-width: 30%;
+  display: flex;
+  align-items: center;
+}
+
+.map_button {
+  height:100%;
+  padding: 0 10px;
+  line-height: 40px;
+  border-radius: 3px;
+  text-align: center;
+  background-color: $text-red-color;
+  transition: all 0.3s ease-out;
+}
+
+.map_button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.btn-active,
+.menu_btn-active {
+  border: 2px $text-red-color solid;
+  background-color: $primary-color;
+  color: $text-red-color;
+}
+
+.btn-active:hover {
+  cursor: default;
+  opacity: 1;
+}
+
+.menu_btn-active:hover {
+  opacity: 1;
+}
+
+.maps_list-menu {
+  position: relative;
+  width: 95%;
+  margin: 0 auto;
+  height: 0%;
+  transition: all 0.3s ease-out;
+  overflow-y: scroll;
+}
+
+.maps_list-active {
+  height: 20%;
+}
+
+.maps_list-menu::-webkit-scrollbar {
+  width: 12px;
+}
+
+.maps_list-menu::-webkit-scrollbar-thumb {
+  background:$text-red-color;
+  border-radius: 10px;
+}
+
+.layer-selector {
+  background-color: $primary-color;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  text-align: end;
+  transition: all 0.3s ease-out;
+  font-size: 18px;
+}
+
+.layer-selector:hover {
+  cursor: pointer;
+  border: 2px $text-red-color solid;
+  color: $text-red-color;
+}
+
+.hide-map {
+  display: none;
+}
+
+@media (max-width: 1027px) {
+  .map_buttons-wrapper{
+    height: 8%;
+  }
+}
