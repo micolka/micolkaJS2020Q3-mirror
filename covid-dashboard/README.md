@@ -1,1 +1,1 @@
-# covid-dashboard
+deploy: https://micolka-covid-dashboard.netlify.app/
