@@ -1,2 +1,1 @@
-# micolka-JS2020Q3
-Private repository for @micolka
+deploy: https://micolka-english-for-kids.netlify.app/
